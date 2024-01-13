@@ -4,18 +4,24 @@
 
 package frc.robot;
 
+import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.SwerveDriveCommand;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrive;
 
 public class RobotContainer {
   private SwerveDrive driveBase = new SwerveDrive(4, 2*Math.PI, "geared upright",  Constants.kinematics, Constants.config);
+  private Shooter shooter = new Shooter();
   private final CommandXboxController driver = new CommandXboxController(0);
+  private final CommandXboxController operator = new CommandXboxController(1);
   public RobotContainer() {
     driveBase.enableDebugMode();
     driveBase.setHeadingAdjustment(180);
@@ -23,7 +29,11 @@ public class RobotContainer {
     driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, driveBase));
     }
 
-  private void configureBindings() {}
+  private void configureBindings() {
+
+    operator.a().onTrue(new ShooterCommand(.5)).onFalse(new ShooterCommand(0));
+
+  }
 
   double getXSpeed(){ 
     int pov = driver.getHID().getPOV();
