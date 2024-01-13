@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 
 //Class containing all functions and variables pertaining to the SwerveDrive
@@ -111,8 +112,18 @@ public class SwerveDrive extends SubsystemBase
       */
       odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d(), getSwerveModulePositions());
       
+      gyro.setAngleAdjustment(headingAdjustment);
       //Initialize a PathPlanner AutoBuilder object for autonomous driving
-      AutoBuilder.configureHolonomic(this::getPose, this::resetPose, this::getChassisSpeeds, this::driveRobotOriented, config, this);
+      AutoBuilder.configureHolonomic(this::getPose, this::resetPose, this::getChassisSpeeds, this::driveRobotOriented, config, () -> {
+          // Boolean supplier that controls when the path will be mirrored for the red alliance
+          // This will flip the path being followed to the red side of the field.
+          // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+          var alliance = DriverStation.getAlliance();
+          if (alliance.isPresent()) {
+              return alliance.get() == DriverStation.Alliance.Red;
+          }
+          return false;
+      }, this);
   }
 
   /**
