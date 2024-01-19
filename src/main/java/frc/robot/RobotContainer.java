@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrive;
+import frc.robot.subsystems.Shooter.ShooterSpeed;
 
 public class RobotContainer {
   private SwerveDrive driveBase = new SwerveDrive(4, 2*Math.PI, "geared upright",  Constants.kinematics, Constants.config);
@@ -31,7 +32,7 @@ public class RobotContainer {
 
   private void configureBindings() {
 
-    operator.a().onTrue(new ShooterCommand(.5)).onFalse(new ShooterCommand(0));
+    driver.a().onTrue(new ShooterCommand(ShooterSpeed.AMP));
 
   }
 

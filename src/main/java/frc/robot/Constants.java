@@ -9,7 +9,16 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 
 public final class Constants {
-     public static final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
+
+    public static final class  ShooterConstants {
+    
+        public static final int shooterPrimary = 5;
+        public static final int shooterSecondary = 6;
+        
+    }
+
+
+    public static final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
     new Translation2d(Units.inchesToMeters(-10), Units.inchesToMeters(-7)), // Front Left
     new Translation2d(Units.inchesToMeters(-10), Units.inchesToMeters(7)), // Front Right
     new Translation2d(Units.inchesToMeters(10), Units.inchesToMeters(-15)), // Back Left

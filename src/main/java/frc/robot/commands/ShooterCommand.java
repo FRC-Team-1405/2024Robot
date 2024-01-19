@@ -6,36 +6,40 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Shooter.ShooterSpeed;
 
 public class ShooterCommand extends Command {
+  public Shooter shooter = new Shooter();
+  public ShooterSpeed speed; 
   /** Creates a new ShooterCommand. */
-  private Shooter shooter; 
-  private double speed;
-  public ShooterCommand( double speed ) {
+  public ShooterCommand(ShooterSpeed speed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    shooter = new Shooter();
+    this.addRequirements(shooter);
     this.speed = speed;
+    
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    shooter.setWheelSpeed(speed);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooter.setWheelSpeed(speed);
+   
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.setWheelSpeed(0);
+    shooter.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return shooter.atSpeed();
   }
 }
