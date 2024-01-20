@@ -7,6 +7,7 @@ import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Preferences;
 
 public final class Constants {
     public static final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
@@ -42,7 +43,19 @@ public final class Constants {
 
         public final static int FLYSWATTER_PRIMARY = 7;
         public final static int FLYSWATTER_SECONDARY = 8;
+
+        public final static int LIDAR = 17;
     }
+
+    public final class Intake {
+        static {
+            Preferences.initDouble("Intake/Lidar distance tolerance", 40.0);
+            DISTANCE_TOLERANCE = Preferences.getDouble("Intake/Lidar distance tolerance", 40.0);
+        }
+        public final static double DISTANCE_TOLERANCE;  
+        
+    }
+
     public final class BatteryMonitor {
         public final static double MAXVOLTAGE = 12;
         public final static double MINVOLTAGE = 9;

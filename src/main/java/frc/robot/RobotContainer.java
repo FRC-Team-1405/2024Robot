@@ -4,11 +4,8 @@
 
 package frc.robot;
 
-<<<<<<< HEAD
 import frc.robot.commands.LEDManager;
-=======
 import frc.robot.commands.ControlIntake;
->>>>>>> 94a17bfc784fbb4f6430097a9f2784602d60d0db
 import frc.robot.commands.SwerveDriveCommand;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;

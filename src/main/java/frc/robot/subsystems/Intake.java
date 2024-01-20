@@ -14,7 +14,10 @@ import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.sensors.FusionTimeofFlight;
 
 public class Intake extends SubsystemBase {
 
@@ -33,6 +36,9 @@ public class Intake extends SubsystemBase {
 
   private Map<Position,Double> positionValue = new HashMap<Position,Double>() ;
   private Map<Speed,Double> speedValue = new HashMap<Speed,Double>();
+
+  private FusionTimeofFlight lidar = new FusionTimeofFlight(Constants.CanBus.LIDAR);
+  private double distance = 0.0;
 
 public Intake() {
   if ( !Preferences.containsKey("Intake/Position/Raised") ){
@@ -67,6 +73,7 @@ public Intake() {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    distance = lidar.Measure();
   }
 
   public void setPosition(Position target) {
@@ -93,6 +100,6 @@ public Intake() {
     moterSpeed.set(0);
   }
   public boolean hasNote() {
-    return false;
+    return distance < Constants.Intake.DISTANCE_TOLERANCE;
   }
 }
