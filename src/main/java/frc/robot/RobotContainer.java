@@ -4,7 +4,11 @@
 
 package frc.robot;
 
+<<<<<<< HEAD
 import frc.robot.commands.LEDManager;
+=======
+import frc.robot.commands.ControlIntake;
+>>>>>>> 94a17bfc784fbb4f6430097a9f2784602d60d0db
 import frc.robot.commands.SwerveDriveCommand;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -12,6 +16,8 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.subsystems.FlySwatter;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.tools.LEDs.BatteryLED;
 import frc.robot.tools.LEDs.IAddressableLEDHelper;
@@ -20,6 +26,9 @@ import frc.robot.tools.LEDs.ShootLED;
 
 public class RobotContainer {
   private SwerveDrive driveBase = new SwerveDrive(4, 2*Math.PI, "geared upright",  Constants.kinematics, Constants.config);
+  private FlySwatter flySwatter = new FlySwatter();
+  
+  private Intake intake = new Intake();
   private final CommandXboxController driver = new CommandXboxController(0);
   public RobotContainer() {
     driveBase.enableDebugMode();
@@ -42,7 +51,11 @@ public class RobotContainer {
     ledManager.schedule();
   }
 
-  private void configureBindings() {}
+  private void configureBindings() {
+    driver.a()
+      .onTrue( new ControlIntake(intake, Intake.Position.LOWER) )
+      .onFalse( new ControlIntake(intake, Intake.Position.RAISED));
+  }
 
   double getXSpeed() { 
     int pov = driver.getHID().getPOV();
