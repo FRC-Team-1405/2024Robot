@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
@@ -24,15 +25,8 @@ public class Intake extends SubsystemBase {
   public enum Speed { IN, OUT, STOP } ;
   private Speed activeSpeed = Speed.STOP;
 
-  private Map<Position,Double> positionValue = Map.of(
-      Position.RAISED, .9,
-      Position.LOWER, .2
-  );
-  private Map<Speed,Double> speedValue = Map.of(
-    Speed.OUT, 0.5,
-    Speed.IN, -0.4,
-    Speed.STOP, .0
-  );
+  private Map<Position,Double> positionValue = new HashMap<Position,Double>() ;
+  private Map<Speed,Double> speedValue = new HashMap<Speed,Double>();
 
 public Intake() {
   if ( !Preferences.containsKey("Intake/Position/Raised") ){
