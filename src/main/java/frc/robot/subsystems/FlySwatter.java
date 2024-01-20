@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.ctre.phoenix6.StatusSignal;
@@ -29,7 +30,7 @@ public class FlySwatter extends SubsystemBase {
 
   private StatusSignal<Double> position = primary.getPosition();
 
-  private Map<Position,Double> positionValues = new Map<Position,Double>();
+  private Map<Position,Double> positionValues = new HashMap<Position,Double>();
 
   /** Creates a new FlySwatter. */
   public FlySwatter() {
