@@ -6,19 +6,21 @@ package frc.robot;
 
 import frc.robot.commands.CloseIntake;
 import frc.robot.commands.CommandFlySwatter;
-import frc.robot.commands.ControlIntake;
 import frc.robot.commands.OpenIntake;
+import frc.robot.commands.LEDManager;
 import frc.robot.commands.SwerveDriveCommand;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.SwerveDrive;
-import frc.robot.subsystems.FlySwatter.Position;
+import frc.robot.tools.LEDs.BatteryLED;
+import frc.robot.tools.LEDs.IAddressableLEDHelper;
+import frc.robot.tools.LEDs.MultiFunctionLED;
+import frc.robot.tools.LEDs.ShootLED;
 
 public class RobotContainer {
   private SwerveDrive driveBase = new SwerveDrive(4, 2*Math.PI, "geared upright",  Constants.kinematics, Constants.config);
@@ -32,7 +34,21 @@ public class RobotContainer {
     driveBase.setHeadingAdjustment(180);
     configureBindings();
     driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, driveBase));
-    }
+  }
+
+  private IAddressableLEDHelper[] leds;
+  private MultiFunctionLED multifucntion;
+  private LEDManager ledManager;
+  public void ConfigureLEDs() {
+    multifucntion = new MultiFunctionLED(
+      new ShootLED(15),
+      new BatteryLED(15));
+
+    leds = new IAddressableLEDHelper[]{multifucntion};
+
+    ledManager = new LEDManager(1, leds);
+    ledManager.schedule();
+  }
 
   private void configureBindings() {
     driver.a()
@@ -45,7 +61,7 @@ public class RobotContainer {
 
   }
 
-  double getXSpeed(){ 
+  double getXSpeed() { 
     int pov = driver.getHID().getPOV();
     double finalX;
 
@@ -61,7 +77,7 @@ public class RobotContainer {
     return -finalX;
   }
 
-  public double getYSpeed(){ 
+  public double getYSpeed() { 
     int pov = driver.getHID().getPOV();
 
     double finalY;
@@ -77,7 +93,7 @@ public class RobotContainer {
     return -finalY; 
   } 
   
-  public double getRotationSpeed(){ 
+  public double getRotationSpeed() { 
     double finalRotation;
 
       finalRotation = driver.getRightX();
