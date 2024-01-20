@@ -1,23 +1,24 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.util.Units;
+import frc.robot.Constants;
 
 public final class SwerveConstants 
 {
-    public final static int DRIVEFRONTLEFT = 1;
-    public final static int DRIVEFRONTRIGHT = 2;
-    public final static int DRIVEBACKLEFT = 3;
-    public final static int DRIVEBACKRIGHT = 4;
+    public final static int DRIVEFRONTLEFT = Constants.CanBus.DRIVEFRONTLEFT;
+    public final static int DRIVEFRONTRIGHT = Constants.CanBus.DRIVEFRONTRIGHT;
+    public final static int DRIVEBACKLEFT = Constants.CanBus.DRIVEBACKLEFT;
+    public final static int DRIVEBACKRIGHT = Constants.CanBus.DRIVEBACKRIGHT;
 
-    public final static int ROTATIONFRONTLEFT = 21;
-    public final static int ROTATIONFRONTRIGHT = 22;
-    public final static int ROTATIONBACKLEFT = 23;
-    public final static int ROTATIONBACKRIGHT = 24;
+    public final static int ROTATIONFRONTLEFT = Constants.CanBus.ROTATIONFRONTLEFT;
+    public final static int ROTATIONFRONTRIGHT = Constants.CanBus.ROTATIONFRONTRIGHT;
+    public final static int ROTATIONBACKLEFT = Constants.CanBus.ROTATIONBACKLEFT;
+    public final static int ROTATIONBACKRIGHT = Constants.CanBus.ROTATIONBACKRIGHT;
 
-    public final static int ENCODERFRONTLEFT = 31;
-    public final static int ENCODERFRONTRIGHT = 32;
-    public final static int ENCODERBACKLEFT = 33;
-    public final static int ENCODERBACKRIGHT = 34;
+    public final static int ENCODERFRONTLEFT = Constants.CanBus.ENCODERFRONTLEFT;
+    public final static int ENCODERFRONTRIGHT = Constants.CanBus.ENCODERFRONTRIGHT;
+    public final static int ENCODERBACKLEFT = Constants.CanBus.ENCODERBACKLEFT;
+    public final static int ENCODERBACKRIGHT = Constants.CanBus.ENCODERBACKRIGHT;
 
     public final static double WHEELRADIUS = 2; // inches
     public final static double WHEEL_CIRCUMFERENCE = Units.inchesToMeters(WHEELRADIUS * 2 * Math.PI);
