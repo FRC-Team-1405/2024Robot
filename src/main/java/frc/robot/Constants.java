@@ -24,6 +24,25 @@ public final class Constants {
         new ReplanningConfig() // Default path replanning config. See the API for the options here
     );
 
+    public static class CanBus {
+        public final static int DRIVEFRONTLEFT = 1;
+        public final static int DRIVEFRONTRIGHT = 2;
+        public final static int DRIVEBACKLEFT = 3;
+        public final static int DRIVEBACKRIGHT = 4;
+    
+        public final static int ROTATIONFRONTLEFT = 21;
+        public final static int ROTATIONFRONTRIGHT = 22;
+        public final static int ROTATIONBACKLEFT = 23;
+        public final static int ROTATIONBACKRIGHT = 24;
+    
+        public final static int ENCODERFRONTLEFT = 31;
+        public final static int ENCODERFRONTRIGHT = 32;
+        public final static int ENCODERBACKLEFT = 33;
+        public final static int ENCODERBACKRIGHT = 34;
+
+        public final static int FLYSWATTER_PRIMARY = 7;
+        public final static int FLYSWATTER_SECONDARY = 8;
+    }
     public final class BatteryMonitor {
         public final static double MAXVOLTAGE = 12;
         public final static double MINVOLTAGE = 9;

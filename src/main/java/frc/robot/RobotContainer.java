@@ -12,11 +12,14 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.SwerveDrive;
 
 public class RobotContainer {
   private SwerveDrive driveBase = new SwerveDrive(4, 2*Math.PI, "geared upright",  Constants.kinematics, Constants.config);
+  private FlySwatter flySwatter = new FlySwatter();
+  
   private Intake intake = new Intake();
   private final CommandXboxController driver = new CommandXboxController(0);
   public RobotContainer() {
