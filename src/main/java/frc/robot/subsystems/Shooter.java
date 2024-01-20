@@ -31,8 +31,8 @@ public class Shooter extends SubsystemBase {
   );
 
   public Shooter() {
-    primary = new TalonFX(Constants.ShooterConstants.shooterPrimary);
-    secondary = new TalonFX(Constants.ShooterConstants.shooterSecondary);
+    primary = new TalonFX(Constants.CanBus.SHOOTER_PRIMARY);
+    secondary = new TalonFX(Constants.CanBus.SHOOTER_SECONDARY);
     secondary.setControl(new Follower(5, true));
   }
 

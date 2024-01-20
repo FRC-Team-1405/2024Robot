@@ -41,6 +41,8 @@ public final class Constants {
         public final static int ENCODERBACKLEFT = 33;
         public final static int ENCODERBACKRIGHT = 34;
 
+        public final static int SHOOTER_PRIMARY = 5;
+        public final static int SHOOTER_SECONDARY = 6;
         public final static int FLYSWATTER_PRIMARY = 7;
         public final static int FLYSWATTER_SECONDARY = 8;
 
@@ -64,4 +66,5 @@ public final class Constants {
     
         public final static double BRIGHTNESS = 0.2;
       };
+
 }
