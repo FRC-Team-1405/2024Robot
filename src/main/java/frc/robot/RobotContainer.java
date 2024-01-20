@@ -4,7 +4,10 @@
 
 package frc.robot;
 
+import frc.robot.commands.CloseIntake;
+import frc.robot.commands.CommandFlySwatter;
 import frc.robot.commands.ControlIntake;
+import frc.robot.commands.OpenIntake;
 import frc.robot.commands.SwerveDriveCommand;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -15,13 +18,15 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.SwerveDrive;
+import frc.robot.subsystems.FlySwatter.Position;
 
 public class RobotContainer {
   private SwerveDrive driveBase = new SwerveDrive(4, 2*Math.PI, "geared upright",  Constants.kinematics, Constants.config);
   private FlySwatter flySwatter = new FlySwatter();
-  
   private Intake intake = new Intake();
+  
   private final CommandXboxController driver = new CommandXboxController(0);
+  
   public RobotContainer() {
     driveBase.enableDebugMode();
     driveBase.setHeadingAdjustment(180);
@@ -31,8 +36,13 @@ public class RobotContainer {
 
   private void configureBindings() {
     driver.a()
-      .onTrue( new ControlIntake(intake, Intake.Position.LOWER) )
-      .onFalse( new ControlIntake(intake, Intake.Position.RAISED));
+      .onTrue( new OpenIntake(intake, flySwatter))
+      .onFalse( new CloseIntake(intake, flySwatter));
+
+    driver.y()
+      .onTrue(new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH))
+      .onFalse(new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
+
   }
 
   double getXSpeed(){ 
