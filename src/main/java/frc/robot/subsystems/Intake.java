@@ -6,7 +6,10 @@ package frc.robot.subsystems;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
 
+import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -15,9 +18,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
 
+// Motor names and Id
   private TalonFX moterIntake = new TalonFX(1); 
   private TalonFX moterSpeed = new TalonFX(2);
-// Motor names and Id
+
+  private static final double POSITION_ERROR_DELTA = 0.1;
+  private Supplier<Double> intakePosition = moterIntake.getPosition().asSupplier();
 
   public enum Position { RAISED, LOWER } ;
   private Position activeTarget = Position.RAISED;
@@ -70,6 +76,10 @@ public Intake() {
   public void setSpeed(Speed target) {
     activeSpeed = target;
     moterSpeed.setControl( new MotionMagicVoltage(speedValue.get(activeSpeed)) );
+  } 
+
+  public boolean isAtPosition(){
+    return Math.abs( positionValue.get(activeTarget) - intakePosition.get())  < POSITION_ERROR_DELTA  ;
   }
   public void stop() {
     stopIntake();
@@ -82,5 +92,7 @@ public Intake() {
   public void stopSpeed() {
     moterSpeed.set(0);
   }
-
+  public boolean hasNote() {
+    return false;
+  }
 }
