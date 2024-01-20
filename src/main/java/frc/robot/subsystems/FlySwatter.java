@@ -29,11 +29,7 @@ public class FlySwatter extends SubsystemBase {
 
   private StatusSignal<Double> position = primary.getPosition();
 
-  private Map<Position,Double> positionValues = Map.of(
-    Position.LOW, 0.0,
-    Position.MEDIUM, 45.0,
-    Position.HIGH, 90.0
-  );
+  private Map<Position,Double> positionValues = new Map<Position,Double>();
 
   /** Creates a new FlySwatter. */
   public FlySwatter() {
