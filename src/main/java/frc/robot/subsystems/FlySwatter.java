@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -35,21 +34,16 @@ public class FlySwatter extends SubsystemBase {
 
   /** Creates a new FlySwatter. */
   public FlySwatter() {
-    if ( !Preferences.containsKey("FLySwatter/Position/Low") ){
-      Preferences.setDouble("FLySwatter/Position/Low", 0);
-    }
-    if ( !Preferences.containsKey("FLySwatter/Position/Medium") ){
-      Preferences.setDouble("FLySwatter/Position/Medium", 0);
-    }
-    if ( !Preferences.containsKey("FLySwatter/Position/High"));{
-      Preferences.setDouble("FLySwatter/Position/High", 0);
-    }
-    
-    positionValues.put(Position.LOW, Preferences.getDouble("FLySwatter/Position/Low", 0));
-    positionValues.put(Position.MEDIUM, Preferences.getDouble("FLySwatter/Position/Medium", 0));
-    positionValues.put(Position.HIGH, Preferences.getDouble("FLySwatter/Position/High", 0));
+   Preferences.initDouble("FLySwatter/Position/Low", 0);
+   positionValues.put(Position.LOW, Preferences.getDouble("FLySwatter/Position/Low", 0));
 
-    secondary.setControl(new Follower(Constants.CanBus.FLYSWATTER_PRIMARY, false));
+   Preferences.initDouble("FLySwatter/Position/Medium", 0);
+   positionValues.put(Position.MEDIUM, Preferences.getDouble("FLySwatter/Position/Medium", 0));
+
+   Preferences.initDouble("FLySwatter/Position/High", 0);
+   positionValues.put(Position.HIGH, Preferences.getDouble("FLySwatter/Position/High", 0));
+
+   secondary.setControl(new Follower(Constants.CanBus.FLYSWATTER_PRIMARY, false));
   }
 
   public void setPosition(Position target) 
