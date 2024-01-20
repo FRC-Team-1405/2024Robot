@@ -35,12 +35,34 @@ public class Intake extends SubsystemBase {
   );
 
 public Intake() {
-  if ( !Preferences.containsKey("Intake/Position/In") ){
-      Preferences.setDouble("Intake/Position/In", -0.4);
+  if ( !Preferences.containsKey("Intake/Position/Raised") ){
+      Preferences.setDouble("Intake/Position/Raised", .9);
   }
-  intakeValues.put(Intake.IN, Preferences.getDouble("Intake/Position/Out",0) );
+  if ( !Preferences.containsKey("Intake/Position/Lower") ){
+      Preferences.setDouble("Intake/Position/Lower",.2); 
+  }
 
+  positionValue.put(Position.RAISED, Preferences.getDouble("Intake/Position/Raised",.9) );
+  positionValue.put(Position.LOWER, Preferences.getDouble("Intake/Position/Lower",.2) );
+
+  if ( !Preferences.containsKey("Intake/Speed/Out") ){
+      Preferences.setDouble("Intake/Speed/Out", .5);
+  }
+  if ( !Preferences.containsKey("Intake/Speed/In") ){
+      Preferences.setDouble("Intake/Speed/In",-.4); 
+
+  if ( !Preferences.containsKey("Intake/Speed/Stop") ){
+      Preferences.setDouble("Intake/Speed/Stop",0);  
+  }
+
+
+  speedValue.put(Speed.OUT, Preferences.getDouble("Intake/Speed/Out",.5) );
+  speedValue.put(Speed.IN, Preferences.getDouble("Intake/Speed/In",-.4) );
+  speedValue.put(Speed.STOP, Preferences.getDouble("Intake/Speed/Stop",.0) );
 }
+  }
+
+
 
   @Override
   public void periodic() {
