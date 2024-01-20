@@ -6,15 +6,12 @@ package frc.robot.subsystems;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
-import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.Preferences;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.sensors.FusionTimeofFlight;
@@ -41,31 +38,20 @@ public class Intake extends SubsystemBase {
   private double distance = 0.0;
 
 public Intake() {
-  if ( !Preferences.containsKey("Intake/Position/Raised") ){
-      Preferences.setDouble("Intake/Position/Raised", .9);
-  }
-  if ( !Preferences.containsKey("Intake/Position/Lower") ){
-      Preferences.setDouble("Intake/Position/Lower",.2); 
-  }
-
+  Preferences.initDouble("Intake/Position/Raised",9);
   positionValue.put(Position.RAISED, Preferences.getDouble("Intake/Position/Raised",.9) );
+
+  Preferences.initDouble("Intake/Position/Lower",.2); 
   positionValue.put(Position.LOWER, Preferences.getDouble("Intake/Position/Lower",.2) );
 
-  if ( !Preferences.containsKey("Intake/Speed/Out") ){
-      Preferences.setDouble("Intake/Speed/Out", .5);
-  }
-  if ( !Preferences.containsKey("Intake/Speed/In") ){
-      Preferences.setDouble("Intake/Speed/In",-.4); 
-
-  if ( !Preferences.containsKey("Intake/Speed/Stop") ){
-      Preferences.setDouble("Intake/Speed/Stop",0);  
-  }
-
-
+  Preferences.initDouble("Intake/Speed/Out", .5);
   speedValue.put(Speed.OUT, Preferences.getDouble("Intake/Speed/Out",.5) );
+
+  Preferences.initDouble("Intake/Speed/In",-.4); 
   speedValue.put(Speed.IN, Preferences.getDouble("Intake/Speed/In",-.4) );
+
+  Preferences.initDouble("Intake/Speed/Stop",0);  
   speedValue.put(Speed.STOP, Preferences.getDouble("Intake/Speed/Stop",.0) );
-}
   }
 
 
