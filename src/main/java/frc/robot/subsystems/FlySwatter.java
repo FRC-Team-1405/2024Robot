@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import java.util.Map;
+import java.util.function.Supplier;
 
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
@@ -19,17 +20,20 @@ public class FlySwatter extends SubsystemBase {
     MEDIUM,
     LOW 
   }
-
+  
   private Position targetPosition = Position.LOW;
   private TalonFX primary = new TalonFX(Constants.CanBus.FLYSWATTER_PRIMARY);
   private TalonFX secondary = new TalonFX(Constants.CanBus.FLYSWATTER_SECONDARY);
+
+  private static final double POSITION_ERROR_DELTA = 0.1;
+  private Supplier<Double> position = primary.getPosition().asSupplier();
 
   private Map<Position,Double> positionValues = Map.of(
     Position.LOW, 0.0,
     Position.MEDIUM, 45.0,
     Position.HIGH, 90.0
   );
-
+  
   /** Creates a new FlySwatter. */
   public FlySwatter() {
     secondary.setControl(new Follower(Constants.CanBus.FLYSWATTER_PRIMARY, false));
@@ -42,9 +46,8 @@ public class FlySwatter extends SubsystemBase {
   }
 
   public boolean isAtPosition()
-  {
-   
-   return false;
+  { 
+    return Math.abs(positionValues.get(targetPosition) - position.get()) < POSITION_ERROR_DELTA;
   }
 
   public void stop()
