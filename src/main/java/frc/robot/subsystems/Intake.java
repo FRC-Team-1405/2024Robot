@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
@@ -25,37 +23,45 @@ public class Intake extends SubsystemBase {
   private static final double POSITION_ERROR_DELTA = 0.1;
   private Supplier<Double> intakePosition = moterIntake.getPosition().asSupplier();
 
-  public enum Position { RAISED, LOWER } ;
+  public enum Position { 
+    RAISED(9),
+    LOWER(2);
+
+    private Position(double value){
+      Preferences.initDouble("Intake/Position/"+this.name(), value);
+      this.value = Preferences.getDouble("Intake/Position/"+this.name(), value);
+    }
+
+    private double value;
+    public double getValue(){
+      return value;
+    }
+  } 
+
   private Position activeTarget = Position.RAISED;
 
-  public enum Speed { IN, OUT, STOP } ;
-  private Speed activeSpeed = Speed.STOP;
+  public enum Speed { 
+    OUT(5),
+    IN(4),
+    STOP(0);
 
-  private Map<Position,Double> positionValue = new HashMap<Position,Double>() ;
-  private Map<Speed,Double> speedValue = new HashMap<Speed,Double>();
+    private Speed(double value){
+      Preferences.initDouble("Intake/Speed/"+this.name(), value);
+      this.value = Preferences.getDouble("Intake/Speed/"+this.name(), value);
+    }
+
+    private double value;
+    public double getValue(){
+      return value;
+    }
+  }
+  private Speed activeSpeed = Speed.STOP;
 
   private FusionTimeofFlight lidar = new FusionTimeofFlight(Constants.CanBus.LIDAR);
   private double distance = 0.0;
 
-public Intake() {
-  Preferences.initDouble("Intake/Position/Raised",9);
-  positionValue.put(Position.RAISED, Preferences.getDouble("Intake/Position/Raised",.9) );
-
-  Preferences.initDouble("Intake/Position/Lower",.2); 
-  positionValue.put(Position.LOWER, Preferences.getDouble("Intake/Position/Lower",.2) );
-
-  Preferences.initDouble("Intake/Speed/Out", .5);
-  speedValue.put(Speed.OUT, Preferences.getDouble("Intake/Speed/Out",.5) );
-
-  Preferences.initDouble("Intake/Speed/In",-.4); 
-  speedValue.put(Speed.IN, Preferences.getDouble("Intake/Speed/In",-.4) );
-
-  Preferences.initDouble("Intake/Speed/Stop",0);  
-  speedValue.put(Speed.STOP, Preferences.getDouble("Intake/Speed/Stop",.0) );
-  }
-
-
-
+  public Intake() {}
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
@@ -64,15 +70,15 @@ public Intake() {
 
   public void setPosition(Position target) {
     activeTarget = target;
-    moterIntake.setControl( new MotionMagicVoltage(positionValue.get(activeTarget)) );
+    moterIntake.setControl( new MotionMagicVoltage(activeTarget.getValue()) );
   }
   public void setSpeed(Speed target) {
     activeSpeed = target;
-    moterSpeed.setControl( new MotionMagicVoltage(speedValue.get(activeSpeed)) );
+    moterSpeed.setControl( new MotionMagicVoltage(activeSpeed.getValue()) );
   } 
 
   public boolean isAtPosition(){
-    return Math.abs( positionValue.get(activeTarget) - intakePosition.get())  < POSITION_ERROR_DELTA  ;
+    return Math.abs(activeTarget.getValue() - intakePosition.get())  < POSITION_ERROR_DELTA  ;
   }
   public void stop() {
     stopIntake();
