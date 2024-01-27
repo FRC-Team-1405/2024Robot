@@ -1,0 +1,35 @@
+DRIVER
+right stick-Rotation
+left stick-Driving
+A button-Scoring
+B button- 
+X button-
+Y button-
+Left Bumper-
+Right Bumper-While Held Intake 
+Left Trigger-
+Right Trigger-
+Back button-Field Orientation 
+Start Button-Non-Field Orientation 
+D-Pad Left-slow strafe left
+D-Pad Right-slow strafe right
+D-Pad Up-climbing down when climbing mode is active
+D-Pad Down-climbing up when climbing mode is active 
+
+OPERATOR
+right stick-  
+left stick- 
+A button-
+B button-
+Y button-Flyswatter up and down 
+X button-
+Left Bumber-Climbing and toggles climbing mode 
+Right Bumber-Climbing and toggles climbing mode 
+Left Trigger-
+Right Triger-
+Back button-Reset NavX
+Start Button-
+D-Pad Left- 
+D-Pad Right- 
+D-Pad Up-Amp Scoring Selection
+D-Pad Down-Speaker Scoring Selection

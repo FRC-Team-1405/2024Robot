@@ -36,6 +36,7 @@ public class RobotContainer {
   private Shooter shooter = new Shooter();
   
   private final CommandXboxController driver = new CommandXboxController(0);
+  private final CommandXboxController operator = new CommandXboxController(1);
   
   public RobotContainer() {
     driveBase.enableDebugMode();
@@ -61,12 +62,12 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    driver.a()
+    driver.rightBumper()
       .onTrue( new OpenIntake(intake, flySwatter))
       .onFalse( new CloseIntake(intake, flySwatter));
 
     driver.b().onTrue(new ShooterCommand(shooter, ShooterSpeed.SPEAKER));
-    driver.y()
+    operator.y()
       .onTrue(new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH))
       .onFalse(new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
 
