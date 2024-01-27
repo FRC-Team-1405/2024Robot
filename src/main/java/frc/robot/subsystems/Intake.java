@@ -74,7 +74,7 @@ public class Intake extends SubsystemBase {
   }
   public void setSpeed(Speed target) {
     activeSpeed = target;
-    moterSpeed.set( activeTarget.getValue());
+    moterSpeed.set( activeSpeed.getValue());
   } 
 
   public boolean isAtPosition(){
