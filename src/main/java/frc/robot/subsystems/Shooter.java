@@ -4,12 +4,12 @@
 
 package frc.robot.subsystems;
 
-import java.util.Map;
 
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVelocityDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -18,17 +18,22 @@ public class Shooter extends SubsystemBase {
   private TalonFX primary;
   private TalonFX secondary;
 
-  private double targetSpeed = 0; 
+  private ShooterSpeed targetSpeed; 
 
   public enum ShooterSpeed {
-    AMP,
-    SPEAKER
-  }
+    AMP(25),
+    SPEAKER(50);
 
-  private Map<ShooterSpeed,Double> shooterMap = Map.of(
-     ShooterSpeed.AMP, 15.0,
-     ShooterSpeed.SPEAKER, 30.0
-  );
+    private ShooterSpeed(double value) {
+      Preferences.initDouble("Shooter/Speed/"+this.name(), value);
+      this.value = Preferences.getDouble("Shooter/Speed/"+this.name(), value);
+    }
+    
+    private double value;
+    public double getValue(){
+      return value;
+    }
+  }
 
   public Shooter() {
     primary = new TalonFX(Constants.CanBus.SHOOTER_PRIMARY);
@@ -39,14 +44,14 @@ public class Shooter extends SubsystemBase {
 
 public void setWheelSpeed(ShooterSpeed speed)
  {
-   targetSpeed = shooterMap.get(speed);
+   targetSpeed = speed;
 
-   primary.setControl(new MotionMagicVelocityDutyCycle(targetSpeed));
+   primary.setControl(new MotionMagicVelocityDutyCycle(targetSpeed.getValue()));
 
  } 
 
 public boolean atSpeed(){
-    if(Math.abs(primary.getRotorVelocity().getValueAsDouble() - targetSpeed) <= 3) {
+    if(Math.abs(primary.getRotorVelocity().getValueAsDouble() - targetSpeed.getValue()) <= 3) {
       return true; 
     }
     else{
