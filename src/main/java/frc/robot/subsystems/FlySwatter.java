@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.controls.Follower;
@@ -18,9 +16,19 @@ import frc.robot.Constants;
 
 public class FlySwatter extends SubsystemBase {
   public enum Position {
-    HIGH,
-    MEDIUM,
-    LOW 
+    HIGH(0.9),
+    MEDIUM(0.45),
+    LOW(0.0);
+
+    private Position(double value){
+      Preferences.initDouble("FLySwatter/Position/"+this.name(), value);
+      this.value = Preferences.getDouble("FLySwatter/Position/"+this.name(), value);
+    }
+
+    private double value;
+    public double getValue(){
+      return value;
+    }
   }
   
   private Position targetPosition = Position.LOW;
@@ -30,31 +38,20 @@ public class FlySwatter extends SubsystemBase {
 
   private Supplier<Double> position = primary.getPosition().asSupplier();
 
-  private Map<Position,Double> positionValues = new HashMap<Position,Double>();
-
   /** Creates a new FlySwatter. */
   public FlySwatter() {
-   Preferences.initDouble("FLySwatter/Position/Low", 0);
-   positionValues.put(Position.LOW, Preferences.getDouble("FLySwatter/Position/Low", 0));
-
-   Preferences.initDouble("FLySwatter/Position/Medium", 0);
-   positionValues.put(Position.MEDIUM, Preferences.getDouble("FLySwatter/Position/Medium", 0));
-
-   Preferences.initDouble("FLySwatter/Position/High", 0);
-   positionValues.put(Position.HIGH, Preferences.getDouble("FLySwatter/Position/High", 0));
-
    secondary.setControl(new Follower(Constants.CanBus.FLYSWATTER_PRIMARY, false));
   }
 
   public void setPosition(Position target) 
   {
       targetPosition = target;
-      primary.setControl( new MotionMagicVoltage(positionValues.get(targetPosition)) );
+      primary.setControl( new MotionMagicVoltage(targetPosition.getValue()) );
   }
 
   public boolean isAtPosition()
   { 
-    return Math.abs(positionValues.get(targetPosition) - position.get()) < POSITION_ERROR_DELTA;
+    return Math.abs(targetPosition.getValue() - position.get()) < POSITION_ERROR_DELTA;
   }
 
 
