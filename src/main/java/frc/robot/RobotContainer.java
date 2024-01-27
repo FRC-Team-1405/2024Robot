@@ -75,7 +75,7 @@ public class RobotContainer {
   private void configureShuffleboard(){
     SmartDashboard.putData("Intake", new IntakeNote(intake));
     SmartDashboard.putData("StopIntake", intake.run(() -> { intake.setSpeed(Intake.Speed.STOP); }));
-    SmartDashboard.putData("Intake", new OutputNote(intake));
+    SmartDashboard.putData("Output", new OutputNote(intake));
   }
 
   double getXSpeed() { 
