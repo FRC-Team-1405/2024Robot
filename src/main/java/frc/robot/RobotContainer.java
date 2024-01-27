@@ -32,7 +32,7 @@ public class RobotContainer {
 
   private void configureBindings() {
 
-    driver.a().onTrue(new ShooterCommand(ShooterSpeed.AMP));
+    driver.a().onTrue(new ShooterCommand(ShooterSpeed.SPEAKER));
 
   }
 
