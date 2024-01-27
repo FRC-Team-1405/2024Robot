@@ -8,6 +8,7 @@ import frc.robot.commands.CloseIntake;
 import frc.robot.commands.CommandFlySwatter;
 import frc.robot.commands.IntakeNote;
 import frc.robot.commands.OpenIntake;
+import frc.robot.commands.OutputNote;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.LEDManager;
 import frc.robot.commands.SwerveDriveCommand;
@@ -74,7 +75,7 @@ public class RobotContainer {
   private void configureShuffleboard(){
     SmartDashboard.putData("Intake", new IntakeNote(intake));
     SmartDashboard.putData("StopIntake", intake.run(() -> { intake.setSpeed(Intake.Speed.STOP); }));
-
+    SmartDashboard.putData("Intake", new OutputNote(intake));
   }
 
   double getXSpeed() { 

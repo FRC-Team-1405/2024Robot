@@ -59,6 +59,7 @@ public class Intake extends SubsystemBase {
 
   private FusionTimeofFlight lidar = new FusionTimeofFlight(Constants.CanBus.LIDAR);
   private double distance = 0.0;
+  private boolean hasNote = false;
 
   public Intake() {}
   
@@ -92,6 +93,13 @@ public class Intake extends SubsystemBase {
     moterSpeed.set(0);
   }
   public boolean hasNote() {
-    return distance < Constants.Intake.DISTANCE_TOLERANCE;
+    boolean noteClose = distance < Constants.Intake.DISTANCE_IN_TOLERANCE;
+    boolean noteFar = distance > Constants.Intake.DISTANCE_OUT_TOLERANCE;
+    if (hasNote && noteFar ) {
+      hasNote = false;
+    } else if (!hasNote && noteClose) {
+      hasNote = true;
+    }
+    return hasNote;
   }
 }
