@@ -13,6 +13,7 @@ import frc.robot.commands.SwerveDriveCommand;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.FlySwatter;
@@ -37,6 +38,8 @@ public class RobotContainer {
     driveBase.enableDebugMode();
     driveBase.setHeadingAdjustment(180);
     configureBindings();
+    configureShuffleboard();
+
     driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, driveBase));
   }
 
@@ -63,6 +66,12 @@ public class RobotContainer {
     driver.y()
       .onTrue(new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH))
       .onFalse(new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
+
+  }
+
+  private void configureShuffleboard(){
+    SmartDashboard.putData("Intake", 
+                          intake.run( () -> { intake.setSpeed(Intake.Speed.IN); }));
 
   }
 

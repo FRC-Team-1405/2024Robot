@@ -17,8 +17,8 @@ import frc.robot.sensors.FusionTimeofFlight;
 public class Intake extends SubsystemBase {
 
 // Motor names and Id
-  private TalonFX moterIntake = new TalonFX(1); 
-  private TalonFX moterSpeed = new TalonFX(2);
+  private TalonFX moterIntake = new TalonFX(Constants.CanBus.MOTER_INTAKE); 
+  private TalonFX moterSpeed = new TalonFX(Constants.CanBus.MOTER_SPEED);
 
   private static final double POSITION_ERROR_DELTA = 0.1;
   private Supplier<Double> intakePosition = moterIntake.getPosition().asSupplier();
@@ -42,7 +42,7 @@ public class Intake extends SubsystemBase {
 
   public enum Speed { 
     OUT(5),
-    IN(4),
+    IN(0.25),
     STOP(0);
 
     private Speed(double value){
@@ -74,7 +74,7 @@ public class Intake extends SubsystemBase {
   }
   public void setSpeed(Speed target) {
     activeSpeed = target;
-    moterSpeed.setControl( new MotionMagicVoltage(activeSpeed.getValue()) );
+    moterSpeed.set( activeTarget.getValue());
   } 
 
   public boolean isAtPosition(){

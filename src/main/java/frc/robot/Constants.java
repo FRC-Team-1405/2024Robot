@@ -45,6 +45,8 @@ public final class Constants {
         public final static int SHOOTER_SECONDARY = 6;
         public final static int FLYSWATTER_PRIMARY = 7;
         public final static int FLYSWATTER_SECONDARY = 8;
+        public final static int MOTER_INTAKE = 9;
+        public final static int MOTER_SPEED = 10;
 
         public final static int LIDAR = 17;
     }

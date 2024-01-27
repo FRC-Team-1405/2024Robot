@@ -14,10 +14,10 @@ public class ShooterCommand extends Command {
 
   /** Creates a new ShooterCommand. */
   public ShooterCommand(Shooter subsystem, ShooterSpeed speed) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.addRequirements(shooter);
     this.speed = speed;
     this.shooter = subsystem;
+    // Use addRequirements() here to declare subsystem dependencies.
+    this.addRequirements(shooter);
     
   }
 
