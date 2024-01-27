@@ -18,6 +18,7 @@ public class Shooter extends SubsystemBase {
   private TalonFX primary;
   private TalonFX secondary;
 
+  private static final double SPEED_ERROR_DELTA = 3;
   private ShooterSpeed targetSpeed; 
 
   public enum ShooterSpeed {
@@ -51,7 +52,7 @@ public void setWheelSpeed(ShooterSpeed speed)
  } 
 
 public boolean atSpeed(){
-    if(Math.abs(primary.getRotorVelocity().getValueAsDouble() - targetSpeed.getValue()) <= 3) {
+    if(Math.abs(primary.getRotorVelocity().getValueAsDouble() - targetSpeed.getValue()) <= SPEED_ERROR_DELTA) {
       return true; 
     }
     else{

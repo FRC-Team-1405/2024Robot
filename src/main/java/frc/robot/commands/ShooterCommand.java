@@ -9,13 +9,15 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.ShooterSpeed;
 
 public class ShooterCommand extends Command {
-  public Shooter shooter = new Shooter();
-  public ShooterSpeed speed; 
+  private Shooter shooter;
+  private ShooterSpeed speed; 
+
   /** Creates a new ShooterCommand. */
-  public ShooterCommand(ShooterSpeed speed) {
+  public ShooterCommand(Shooter subsystem, ShooterSpeed speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.addRequirements(shooter);
     this.speed = speed;
+    this.shooter = subsystem;
     
   }
 

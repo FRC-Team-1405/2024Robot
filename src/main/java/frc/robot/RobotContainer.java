@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrive;
 import frc.robot.subsystems.Shooter.ShooterSpeed;
 import frc.robot.tools.LEDs.BatteryLED;
@@ -28,6 +29,7 @@ public class RobotContainer {
   private SwerveDrive driveBase = new SwerveDrive(4, 2*Math.PI, "geared upright",  Constants.kinematics, Constants.config);
   private FlySwatter flySwatter = new FlySwatter();
   private Intake intake = new Intake();
+  private Shooter shooter = new Shooter();
   
   private final CommandXboxController driver = new CommandXboxController(0);
   
@@ -57,7 +59,7 @@ public class RobotContainer {
       .onTrue( new OpenIntake(intake, flySwatter))
       .onFalse( new CloseIntake(intake, flySwatter));
 
-    driver.b().onTrue(new ShooterCommand(ShooterSpeed.SPEAKER));
+    driver.b().onTrue(new ShooterCommand(shooter, ShooterSpeed.SPEAKER));
     driver.y()
       .onTrue(new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH))
       .onFalse(new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
