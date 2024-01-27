@@ -16,8 +16,10 @@ import frc.robot.commands.SwerveDriveCommand;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
@@ -76,7 +78,13 @@ public class RobotContainer {
   private void configureShuffleboard(){
     SmartDashboard.putData("Intake", new IntakeNote(intake));
     SmartDashboard.putData("StopIntake", intake.run(() -> { intake.setSpeed(Intake.Speed.STOP); }));
-    SmartDashboard.putData("Intake", new OutputNote(intake));
+    SmartDashboard.putData("Output", new OutputNote(intake));
+
+    SmartDashboard.putData("Reset Preferences", new InstantCommand(Preferences::removeAll));
+  }
+
+  private void resetPrefs(){
+    Preferences.removeAll();;
   }
 
   double getXSpeed() { 
