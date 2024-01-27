@@ -18,7 +18,7 @@ public class ShootNoteAmp extends SequentialCommandGroup {
      addRequirements(intake, shooter, flySwatter);
 
     this.addCommands( new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH),
-                      new ShooterCommand(shooter, Shooter.ShooterSpeed.SPEAKER),
+                      new ShooterCommand(shooter, Shooter.ShooterSpeed.AMP),
                       new OutputNote(intake),
                       shooter.runOnce( shooter::stop ));
     // Add your commands in the addCommands() call, e.g.
