@@ -358,4 +358,9 @@ public class SwerveDrive extends SubsystemBase
       headingAdjustment = adjustmentDeg; 
       System.out.printf("Set an angle adjustment of %.2f degrees", adjustmentDeg);
     }
+
+  public static void useStopAngle(boolean b) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'useStopAngle'");
+  }
 }

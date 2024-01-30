@@ -19,7 +19,9 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
@@ -68,11 +70,23 @@ public class RobotContainer {
       .onTrue( new OpenIntake(intake, flySwatter))
       .onFalse( new CloseIntake(intake, flySwatter));
 
+    driver.back().whileTrue( Commands.startEnd( () -> { SwerveDrive.useStopAngle(true);},
+      () -> { SwerveDrive.useStopAngle(false);}));  
+    driver.a().onTrue(new ShooterCommand(shooter, ShooterSpeed.AMP));
     driver.b().onTrue(new ShooterCommand(shooter, ShooterSpeed.SPEAKER));
+
+    //if(operator.leftBumper().onTrue(Commands.startEnd(() -> {FlySwatter.climbingMode(true);}, () -> {FlySwatter.climbingMode(false);}, flySwatter)) && operator.rightBumper().onTrue(Commands.startEnd(() -> {FlySwatter.climbingMode(true);}, () -> {FlySwatter.climbingMode(false);}, flySwatter)))){
+        //I Wrote this for the climbing i couldnt figure it out so i just commented it out
+  
+
     operator.y()
       .onTrue(new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH))
       .onFalse(new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
-
+    operator.back().onTrue( new InstantCommand( driveBase::resetGyro ) {
+        public boolean runsWhenDisabled() {
+          return true;
+        }    
+      });
   }
 
   private void configureShuffleboard(){
@@ -90,12 +104,7 @@ public class RobotContainer {
   double getXSpeed() { 
     int pov = driver.getHID().getPOV();
     double finalX;
-
-    if ( pov == 0 )
-      finalX = -0.75;
-    else if(pov == 180)
-      finalX = 0.75;
-    else if (Math.abs(driver.getLeftY()) <= 0.1)
+    if (Math.abs(driver.getLeftY()) <= 0.1)
       finalX = 0.0;
     else
       finalX = driver.getLeftY();

@@ -1,16 +1,16 @@
 DRIVER
 right stick-Rotation
 left stick-Driving
-A button-Scoring
-B button- 
+A button-Scoring Amp
+B button-Scoring Speaker
 X button-
 Y button-
 Left Bumper-
 Right Bumper-While Held Intake 
 Left Trigger-
 Right Trigger-
-Back button-Field Orientation 
-Start Button-Non-Field Orientation 
+Back button-
+Start Button-
 D-Pad Left-slow strafe left
 D-Pad Right-slow strafe right
 D-Pad Up-climbing down when climbing mode is active
@@ -31,5 +31,5 @@ Back button-Reset NavX
 Start Button-
 D-Pad Left- 
 D-Pad Right- 
-D-Pad Up-Amp Scoring Selection
-D-Pad Down-Speaker Scoring Selection
+D-Pad Up-
+D-Pad Down-

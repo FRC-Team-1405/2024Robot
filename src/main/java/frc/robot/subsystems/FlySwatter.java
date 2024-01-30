@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class FlySwatter extends SubsystemBase {
+  public static boolean climbingMode = false; 
   public enum Position {
     HIGH(0.9),
     MEDIUM(0.45),
@@ -62,5 +63,9 @@ public class FlySwatter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public static void climbingMode(boolean enabled){
+    climbingMode = enabled;
   }
 }
