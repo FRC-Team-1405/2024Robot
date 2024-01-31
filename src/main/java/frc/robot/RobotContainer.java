@@ -13,15 +13,15 @@ import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.LEDManager;
 import frc.robot.commands.SwerveDriveCommand;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
@@ -90,15 +90,24 @@ public class RobotContainer {
   }
 
   private void configureShuffleboard(){
-    SmartDashboard.putData("Intake", new IntakeNote(intake));
-    SmartDashboard.putData("StopIntake", intake.run(() -> { intake.setSpeed(Intake.Speed.STOP); }));
-    SmartDashboard.putData("Output", new OutputNote(intake));
+    Command command;
+    
+    command = new IntakeNote(intake);
+    command.setName("Intake");
+    SmartDashboard.putData("Intake/Input", command);
 
-    SmartDashboard.putData("Reset Preferences", new InstantCommand(Preferences::removeAll));
-  }
+    command = intake.run(() -> { intake.setSpeed(Intake.Speed.STOP); });
+    command.setName("Stop");
+    SmartDashboard.putData("Intake/Stop", command);
 
-  private void resetPrefs(){
-    Preferences.removeAll();;
+    command = new OutputNote(intake);
+    command.setName("Output");
+    SmartDashboard.putData("Intake/Output", command);
+
+    command = new InstantCommand(Preferences::removeAll).ignoringDisable(true);
+    command.setName("Reset Prefs");
+    SmartDashboard.putData("Preferences/Reset", command);
+
   }
 
   double getXSpeed() { 
