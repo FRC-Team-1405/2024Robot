@@ -45,8 +45,6 @@ public class SwerveDrive extends SubsystemBase
   //Odometry determines the robots position on the field
   private final SwerveDriveOdometry odometry; 
 
-  //This switch is used as an external input to tell the SwerveDrive to normalize the Swerve Modules
-  private DigitalInput normalizeSwitch = new DigitalInput(0);  
   //This switch is used as an external input to tell the SwerveDrive to reset the odometry
   private DigitalInput resetOdometry = new DigitalInput(1);
 
@@ -79,6 +77,15 @@ public class SwerveDrive extends SubsystemBase
       */
       odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d(), getSwerveModulePositions());
           
+      //This switch is used as an external input to tell the SwerveDrive to normalize the Swerve Modules
+      DigitalInput normalizeSwitch = new DigitalInput(0);  
+
+      //Normalize the modules when the normalize switch is pressed (DIO switches are ACTIVE LOW)
+      if(!normalizeSwitch.get()) {
+          normalizeModules();
+      }
+      normalizeSwitch.close();
+
   }
 
   /**
@@ -142,12 +149,6 @@ public class SwerveDrive extends SubsystemBase
     {
       //Periodically update the swerve odometry
       updateOdometry(); 
-
-      //Normalize the modules when the normalize switch is pressed (DIO switches are ACTIVE LOW)
-      if(!normalizeSwitch.get())
-        {
-          normalizeModules();
-        }
 
       //Reset the odometry readings when reset odometry switch is pressed (DIO switches are ACTIVE LOW)
       if(!resetOdometry.get())
