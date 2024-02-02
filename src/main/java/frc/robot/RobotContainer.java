@@ -107,7 +107,22 @@ public class RobotContainer {
     command = new InstantCommand(Preferences::removeAll).ignoringDisable(true);
     command.setName("Reset Prefs");
     SmartDashboard.putData("Preferences/Reset", command);
+    
+    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW);
+    command.setName("Low");
+    SmartDashboard.putData("FlySwatter/Low", command);
 
+    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM);
+    command.setName("Medium");
+    SmartDashboard.putData("Flyswatter/Medium", command);
+
+    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH);
+    command.setName("High");
+    SmartDashboard.putData("Flyswatter/High", command);
+
+    command = flySwatter.run(() -> { flySwatter.stop(); });
+    command.setName("Stop");
+    SmartDashboard.putData("Flyswatter/Stop", command);
   }
 
   double getXSpeed() { 
