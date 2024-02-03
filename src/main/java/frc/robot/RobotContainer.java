@@ -134,6 +134,14 @@ public class RobotContainer {
     command = intake.runOnce(() -> { intake.stop(); });
     command.setName("Stop");
     SmartDashboard.putData("Intake/Position/Stop", command);
+
+    command = new ShooterCommand(shooter, Shooter.ShooterSpeed.SPEAKER);
+    command.setName("Speaker");
+    SmartDashboard.putData("Shooter/Speaker", command);
+
+    command = shooter.runOnce(() -> { shooter.stop(); });
+    command.setName("Stop");
+    SmartDashboard.putData("Shooter/Stop", command);
   }
 
   double getXSpeed() { 

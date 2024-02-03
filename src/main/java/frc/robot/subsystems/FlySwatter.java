@@ -31,6 +31,8 @@ public class FlySwatter extends SubsystemBase {
       return value;
     }
   }
+
+  private double MAX_POSITION_CHANGE = 100;
   
   private Position targetPosition = Position.LOW;
   private TalonFX primary = new TalonFX(Constants.CanBus.FLYSWATTER_PRIMARY);
@@ -38,16 +40,25 @@ public class FlySwatter extends SubsystemBase {
   private static final double POSITION_ERROR_DELTA = 0.1;
 
   private Supplier<Double> position = primary.getPosition().asSupplier();
+  private MotionMagicVoltage setPosition = new MotionMagicVoltage(targetPosition.getValue());
 
   /** Creates a new FlySwatter. */
   public FlySwatter() {
-   secondary.setControl(new Follower(Constants.CanBus.FLYSWATTER_PRIMARY, false));
+    Preferences.initDouble("Intake/MaxPosition/", MAX_POSITION_CHANGE);
+    MAX_POSITION_CHANGE = Preferences.getDouble("Intake/MaxPosition/", MAX_POSITION_CHANGE);
+
+    secondary.setControl(new Follower(Constants.CanBus.FLYSWATTER_PRIMARY, false));
   }
 
   public void setPosition(Position target) 
   {
       targetPosition = target;
-      primary.setControl( new MotionMagicVoltage(targetPosition.getValue()) );
+      primary.setControl( setPosition.withPosition(targetPosition.getValue()) );
+  }
+
+  public void adjustPosition(double amount) {
+    double target = targetPosition.getValue() + (MAX_POSITION_CHANGE * amount);
+    primary.setControl( setPosition.withPosition(target) );
   }
 
   public boolean isAtPosition()
