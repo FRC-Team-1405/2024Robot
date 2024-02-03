@@ -10,6 +10,7 @@ import frc.robot.commands.ControlIntake;
 import frc.robot.commands.IntakeNote;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.OutputNote;
+import frc.robot.commands.ShootNoteSpeaker;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.LEDManager;
 import frc.robot.commands.SwerveDriveCommand;
@@ -139,9 +140,21 @@ public class RobotContainer {
     command.setName("Speaker");
     SmartDashboard.putData("Shooter/Speaker", command);
 
+    command = new ShooterCommand(shooter, Shooter.ShooterSpeed.AMP);
+    command.setName("Amp");
+    SmartDashboard.putData("Shooter/Amp", command);
+
     command = shooter.runOnce(() -> { shooter.stop(); });
     command.setName("Stop");
     SmartDashboard.putData("Shooter/Stop", command);
+
+    command = new ShootNoteSpeaker(intake, shooter);
+    command.setName("Speaker");
+    SmartDashboard.putData("System/Speaker", command);
+
+    command = new IntakeNote(intake).andThen( new ControlIntake(intake, Intake.Position.RAISED) );
+    command.setName("Pickup Note");
+    SmartDashboard.putData("Input Note", command);
   }
 
   double getXSpeed() { 
