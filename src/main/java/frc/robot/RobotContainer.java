@@ -36,17 +36,18 @@ import frc.robot.tools.LEDs.ShootLED;
 public class RobotContainer {
   private SwerveDrive driveBase = new SwerveDrive(4, 2*Math.PI, "geared upright",  Constants.kinematics, Constants.config);
   private FlySwatter flySwatter = new FlySwatter();
-  private Intake intake = new Intake();
-  private Shooter shooter = new Shooter();
+  // private Intake intake = new Intake();
+  // private Shooter shooter = new Shooter();
   
   private final CommandXboxController driver = new CommandXboxController(0);
-  private final CommandXboxController operator = new CommandXboxController(1);
+  // private final CommandXboxController operator = new CommandXboxController(0);
   
   public RobotContainer() {
     driveBase.enableDebugMode();
     driveBase.setHeadingAdjustment(180);
     configureBindings();
-    configureShuffleboard();
+    // configureShuffleboard();
+    
 
     driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, driveBase));
   }
@@ -66,49 +67,52 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    driver.rightBumper()
-      .onTrue( new OpenIntake(intake, flySwatter))
-      .onFalse( new CloseIntake(intake, flySwatter));
+    // driver.rightBumper()
+    //   .onTrue( new OpenIntake(intake, flySwatter))
+    //   .onFalse( new CloseIntake(intake, flySwatter));
 
     driver.back().whileTrue( Commands.startEnd( () -> { SwerveDrive.useStopAngle(true);},
       () -> { SwerveDrive.useStopAngle(false);}));  
-    driver.a().onTrue(new ShooterCommand(shooter, ShooterSpeed.AMP));
-    driver.b().onTrue(new ShooterCommand(shooter, ShooterSpeed.SPEAKER));
+    // driver.a().onTrue(new ShooterCommand(shooter, ShooterSpeed.AMP));
+    // driver.b().onTrue(new ShooterCommand(shooter, ShooterSpeed.SPEAKER));
 
     //if(operator.leftBumper().onTrue(Commands.startEnd(() -> {FlySwatter.climbingMode(true);}, () -> {FlySwatter.climbingMode(false);}, flySwatter)) && operator.rightBumper().onTrue(Commands.startEnd(() -> {FlySwatter.climbingMode(true);}, () -> {FlySwatter.climbingMode(false);}, flySwatter)))){
         //I Wrote this for the climbing i couldnt figure it out so i just commented it out
   
 
-    operator.y()
-      .onTrue(new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH))
-      .onFalse(new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
-    operator.back().onTrue( new InstantCommand( driveBase::resetGyro ) {
-        public boolean runsWhenDisabled() {
-          return true;
-        }    
-      });
+    // operator.y()
+      // .onTrue(new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH));
+      // .onFalse(new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
+
+    // operator.a().onTrue(new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
+    // operator.b().onTrue(new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH));
+    // operator.back().onTrue( new InstantCommand( driveBase::resetGyro ) {
+    //     public boolean runsWhenDisabled() {
+    //       return true;
+    //     }    
+    //   });
   }
 
-  private void configureShuffleboard(){
-    Command command;
+  // private void configureShuffleboard(){
+  //   Command command;
     
-    command = new IntakeNote(intake);
-    command.setName("Intake");
-    SmartDashboard.putData("Intake/Input", command);
+  //   command = new IntakeNote(intake);
+  //   command.setName("Intake");
+  //   SmartDashboard.putData("Intake/Input", command);
 
-    command = intake.run(() -> { intake.setSpeed(Intake.Speed.STOP); });
-    command.setName("Stop");
-    SmartDashboard.putData("Intake/Stop", command);
+  //   command = intake.run(() -> { intake.setSpeed(Intake.Speed.STOP); });
+  //   command.setName("Stop");
+  //   SmartDashboard.putData("Intake/Stop", command);
 
-    command = new OutputNote(intake);
-    command.setName("Output");
-    SmartDashboard.putData("Intake/Output", command);
+  //   command = new OutputNote(intake);
+  //   command.setName("Output");
+  //   SmartDashboard.putData("Intake/Output", command);
 
-    command = new InstantCommand(Preferences::removeAll).ignoringDisable(true);
-    command.setName("Reset Prefs");
-    SmartDashboard.putData("Preferences/Reset", command);
+  //   command = new InstantCommand(Preferences::removeAll).ignoringDisable(true);
+  //   command.setName("Reset Prefs");
+  //   SmartDashboard.putData("Preferences/Reset", command);
 
-  }
+  // }
 
   double getXSpeed() { 
     int pov = driver.getHID().getPOV();

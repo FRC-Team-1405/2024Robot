@@ -34,19 +34,20 @@ public class FlySwatter extends SubsystemBase {
   
   private Position targetPosition = Position.LOW;
   private TalonFX primary = new TalonFX(Constants.CanBus.FLYSWATTER_PRIMARY);
-  private TalonFX secondary = new TalonFX(Constants.CanBus.FLYSWATTER_SECONDARY);
+  // private TalonFX secondary = new TalonFX(Constants.CanBus.FLYSWATTER_SECONDARY);
   private static final double POSITION_ERROR_DELTA = 0.1;
 
   private Supplier<Double> position = primary.getPosition().asSupplier();
 
   /** Creates a new FlySwatter. */
   public FlySwatter() {
-   secondary.setControl(new Follower(Constants.CanBus.FLYSWATTER_PRIMARY, false));
+  //  secondary.setControl(new Follower(Constants.CanBus.FLYSWATTER_PRIMARY, false));
   }
 
   public void setPosition(Position target) 
   {
       targetPosition = target;
+      System.out.println("set position to: " + targetPosition.getValue());
       primary.setControl( new MotionMagicVoltage(targetPosition.getValue()) );
   }
 
