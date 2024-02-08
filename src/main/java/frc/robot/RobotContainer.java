@@ -138,7 +138,7 @@ public class RobotContainer {
     // command = intake.runOnce(() -> { intake.stop(); });
     // command.setName("Stop");
     // SmartDashboard.putData("Intake/Position/Stop", command);
-  }
+  // }
 
   double getXSpeed() { 
     int pov = driver.getHID().getPOV();
