@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.commands.CloseIntake;
 import frc.robot.commands.CommandFlySwatter;
+import frc.robot.commands.ControlIntake;
 import frc.robot.commands.IntakeNote;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.OutputNote;
@@ -16,8 +17,6 @@ import frc.robot.commands.SwerveDriveCommand;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Preferences;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -100,19 +99,46 @@ public class RobotContainer {
   //   command.setName("Intake");
   //   SmartDashboard.putData("Intake/Input", command);
 
-  //   command = intake.run(() -> { intake.setSpeed(Intake.Speed.STOP); });
-  //   command.setName("Stop");
-  //   SmartDashboard.putData("Intake/Stop", command);
+    // command = intake.runOnce(() -> { intake.setSpeed(Intake.Speed.STOP); });
+    // command.setName("Stop");
+    // SmartDashboard.putData("Intake/Stop", command);
 
   //   command = new OutputNote(intake);
   //   command.setName("Output");
   //   SmartDashboard.putData("Intake/Output", command);
 
-  //   command = new InstantCommand(Preferences::removeAll).ignoringDisable(true);
-  //   command.setName("Reset Prefs");
-  //   SmartDashboard.putData("Preferences/Reset", command);
+    // command = new InstantCommand(Preferences::removeAll).ignoringDisable(true);
+    // command.setName("Reset Prefs");
+    // SmartDashboard.putData("Preferences/Reset", command);
+    
+    // command = new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW);
+    // command.setName("Low");
+    // SmartDashboard.putData("FlySwatter/Low", command);
 
-  // }
+    // command = new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM);
+    // command.setName("Medium");
+    // SmartDashboard.putData("Flyswatter/Medium", command);
+
+    // command = new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH);
+    // command.setName("High");
+    // SmartDashboard.putData("Flyswatter/High", command);
+
+    // command = flySwatter.runOnce(() -> { flySwatter.stop(); });
+    // command.setName("Stop");
+    // SmartDashboard.putData("Flyswatter/Stop", command);
+
+    // command = new ControlIntake(intake, Intake.Position.LOWER);
+    // command.setName("Lower");
+    // SmartDashboard.putData("Intake/Position/Lower", command);
+
+    // command = new ControlIntake(intake, Intake.Position.RAISED);
+    // command.setName("Raised");
+    // SmartDashboard.putData("Intake/Position/Raised", command);
+
+    // command = intake.runOnce(() -> { intake.stop(); });
+    // command.setName("Stop");
+    // SmartDashboard.putData("Intake/Position/Stop", command);
+  }
 
   double getXSpeed() { 
     int pov = driver.getHID().getPOV();
