@@ -33,6 +33,7 @@ public class FlySwatter extends SubsystemBase {
   }
   private double MAX_POSITION_CHANGE = 100;
 
+  private boolean climbActive = false;
   private Position targetPosition = Position.LOW;
   private TalonFX primary = new TalonFX(Constants.CanBus.FLYSWATTER_PRIMARY);
   private TalonFX secondary = new TalonFX(Constants.CanBus.FLYSWATTER_SECONDARY);
@@ -53,11 +54,15 @@ public class FlySwatter extends SubsystemBase {
   {
       targetPosition = target;
       primary.setControl( setPosition.withPosition(targetPosition.getValue()) );
+      
+      climbActive = (target == Position.CLIMB);
   }
 
   public void adjustPosition(double amount) {
-    double target = targetPosition.getValue() + (MAX_POSITION_CHANGE * amount);
-    primary.setControl( setPosition.withPosition(target) );
+    if (climbActive){
+      double target = targetPosition.getValue() + (MAX_POSITION_CHANGE * amount);
+      primary.setControl( setPosition.withPosition(target) );
+    }
   }
 
   public boolean isAtPosition()
