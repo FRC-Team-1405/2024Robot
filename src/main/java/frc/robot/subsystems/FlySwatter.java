@@ -15,11 +15,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class FlySwatter extends SubsystemBase {
-  public static boolean climbingMode = false; 
   public enum Position {
     HIGH(0.9),
     MEDIUM(0.45),
-    LOW(0.0);
+    LOW(0.0),
+    CLIMB(0.75);
 
     private Position(double value){
       Preferences.initDouble("FLySwatter/Position/"+this.name(), value);
@@ -31,28 +31,39 @@ public class FlySwatter extends SubsystemBase {
       return value;
     }
   }
-  
+  private double MAX_POSITION_CHANGE = 100;
+
   private Position targetPosition = Position.LOW;
   private TalonFX primary = new TalonFX(Constants.CanBus.FLYSWATTER_PRIMARY);
   private TalonFX secondary = new TalonFX(Constants.CanBus.FLYSWATTER_SECONDARY);
   private static final double POSITION_ERROR_DELTA = 0.1;
 
-  private Supplier<Double> position = primary.getPosition().asSupplier();
+  private Supplier<Double> getPosition = primary.getPosition().asSupplier();
+  private MotionMagicVoltage setPosition = new MotionMagicVoltage(targetPosition.getValue());
 
   /** Creates a new FlySwatter. */
   public FlySwatter() {
    secondary.setControl(new Follower(Constants.CanBus.FLYSWATTER_PRIMARY, false));
-  }
+
+   Preferences.initDouble("FlySwatter/MaxPosition/", MAX_POSITION_CHANGE);
+   MAX_POSITION_CHANGE = Preferences.getDouble("FlySwatter/MaxPosition/", MAX_POSITION_CHANGE);
+}
 
   public void setPosition(Position target) 
   {
       targetPosition = target;
-      primary.setControl( new MotionMagicVoltage(targetPosition.getValue()) );
+      primary.setControl( setPosition.withPosition(targetPosition.getValue()) );
+  }
+
+  public void adjustPosition(double amount) {
+    double target = targetPosition.getValue() + (MAX_POSITION_CHANGE * amount);
+    primary.setControl( setPosition.withPosition(target) );
   }
 
   public boolean isAtPosition()
   { 
-    return Math.abs(targetPosition.getValue() - position.get()) < POSITION_ERROR_DELTA;
+    boolean result =Math.abs(targetPosition.getValue() - getPosition.get()) < POSITION_ERROR_DELTA;
+    return result;
   }
 
 
@@ -63,9 +74,5 @@ public class FlySwatter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-  }
-
-  public static void climbingMode(boolean enabled){
-    climbingMode = enabled;
   }
 }

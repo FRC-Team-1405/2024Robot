@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.CloseIntake;
 import frc.robot.commands.CommandFlySwatter;
 import frc.robot.commands.ControlIntake;
@@ -21,6 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
@@ -134,6 +136,14 @@ public class RobotContainer {
     command = intake.runOnce(() -> { intake.stop(); });
     command.setName("Stop");
     SmartDashboard.putData("Intake/Position/Stop", command);
+
+    SmartDashboard.putNumber("FlySwatter/Climb/Adjust", 0.0);
+    command = new SequentialCommandGroup( 
+                  new CommandFlySwatter(flySwatter, FlySwatter.Position.CLIMB),
+                  new ClimbCommand(flySwatter, () -> { return SmartDashboard.getNumber("FlySwatter/ ", 0.0) ; } )
+                  );
+    command.setName("Climb");
+    SmartDashboard.putData("FlySwatter/Climb/Active", command);
   }
 
   double getXSpeed() { 

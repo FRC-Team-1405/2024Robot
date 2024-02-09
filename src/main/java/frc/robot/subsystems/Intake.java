@@ -21,7 +21,6 @@ public class Intake extends SubsystemBase {
   private TalonFX moterSpeed = new TalonFX(Constants.CanBus.MOTER_SPEED);
 
   private static final double POSITION_ERROR_DELTA = 0.1;
-  private double MAX_POSITION_CHANGE = 100;
 
 
   public enum Position { 
@@ -66,8 +65,6 @@ public class Intake extends SubsystemBase {
   private boolean hasNote = false;
 
   public Intake() {
-      Preferences.initDouble("Intake/MaxPosition/", MAX_POSITION_CHANGE);
-      MAX_POSITION_CHANGE = Preferences.getDouble("Intake/MaxPosition/", MAX_POSITION_CHANGE);
   }
   
   @Override
@@ -79,11 +76,6 @@ public class Intake extends SubsystemBase {
   public void setPosition(Position target) {
     activeTarget = target;
     moterIntake.setControl( intakeSetPosition.withPosition(activeTarget.getValue()) );
-  }
-
-  public void adjustPosition(double amount) {
-    double target = intakePosition.get() + (MAX_POSITION_CHANGE * amount);
-    moterIntake.setControl( intakeSetPosition.withPosition(target) );
   }
 
   public void setSpeed(Speed target) {
