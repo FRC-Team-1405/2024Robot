@@ -88,6 +88,13 @@ public class RobotContainer {
           return true;
         }    
       });
+
+    operator.leftBumper()
+      .and(operator.rightBumper())
+      .onTrue( new SequentialCommandGroup( 
+                  new CommandFlySwatter(flySwatter, FlySwatter.Position.CLIMB),
+                  new ClimbCommand(flySwatter, () -> { return operator.getRightTriggerAxis() - operator.getLeftTriggerAxis() ; } )
+                  ) );
   }
 
   private void configureShuffleboard(){
