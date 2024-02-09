@@ -263,8 +263,13 @@ public double getDistance()
 */ 
 public void brakeMode()
   { 
-    driveMotor.setNeutralMode(NeutralModeValue.Coast);  
+    driveMotor.setNeutralMode(NeutralModeValue.Brake);  
   } 
+
+  public void coastMode()
+  {
+    driveMotor.setNeutralMode(NeutralModeValue.Coast); 
+  }
 
 
 /**

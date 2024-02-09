@@ -180,6 +180,15 @@ public class RobotContainer {
 
 
   public Command getAutonomousCommand() {
-    return new PathPlannerAuto("New Auto");
+    PathPlannerAuto myAuto = new PathPlannerAuto("New Auto");
+    return myAuto;
+  }
+
+  public void setCoastMode(){
+    this.driveBase.coastMode();
+  }
+
+  public void setBrakeMode(){
+    this.driveBase.brakeMode();
   }
 }

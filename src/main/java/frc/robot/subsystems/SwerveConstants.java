@@ -23,8 +23,11 @@ public final class SwerveConstants
     public final static double WHEELRADIUS = 2; // inches
     public final static double WHEEL_CIRCUMFERENCE = Units.inchesToMeters(WHEELRADIUS * 2 * Math.PI);
 
-    public static final double GEAR_RATIO_WCP_BELTED = 6.55; 
-    public static final double GEAR_RATIO_WCP_GEARED = 6.55; 
-    public static final double GEAR_RATIO_WCP_UPRIGHT = 7.42;
+    public static final double GEAR_RATIO_WCP_BELTED = 6.55;
+    public static final double GEAR_RATIO_WCP_GEARED = 6.55;
+    public static final double GEAR_RATIO_WCP_UPRIGHT = 6.68; // TESTED ON OLD DRIVE BASE!
+    // public static final double GEAR_RATIO_WCP_UPRIGHT = 7.42; //OLD NUMBER
+
+    // told the robot to go 6M 62in it went 87in
 
 }

@@ -137,6 +137,7 @@ public class SwerveDrive extends SubsystemBase
    */
   public void resetGyro()
   {
+    System.out.println("RESET GYRO");
     if (gyro != null)
     {
       gyro.reset();
@@ -323,6 +324,14 @@ public class SwerveDrive extends SubsystemBase
       backRight.brakeMode();
     }
   
+
+  public void coastMode()
+  {
+    frontLeft.coastMode();
+    backLeft.coastMode(); 
+    frontRight.coastMode(); 
+    backRight.coastMode();
+  }
   //Enable the "parking brake" feature of the robot (commanding the modules to an 45 degree angle)
   public void enableStopAngle(boolean enabled)
     { 
