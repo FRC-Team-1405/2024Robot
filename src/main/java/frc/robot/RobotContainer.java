@@ -151,6 +151,15 @@ public class RobotContainer {
                   );
     command.setName("Climb");
     SmartDashboard.putData("FlySwatter/Climb/Active", command);
+
+    command = new SequentialCommandGroup(
+                  new ControlIntake(intake, Intake.Position.LOWER),
+                  new IntakeNote(intake),
+                  new ControlIntake(intake, Intake.Position.RAISED)
+                  );
+    command.setName("Pick Up Note");
+    SmartDashboard.putData("Intake/PickUpNote", command);
+     
   }
 
   double getXSpeed() { 
