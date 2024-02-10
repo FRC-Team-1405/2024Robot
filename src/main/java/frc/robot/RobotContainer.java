@@ -4,8 +4,10 @@
 
 package frc.robot;
 
+import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.CloseIntake;
 import frc.robot.commands.CommandFlySwatter;
+import frc.robot.commands.ControlIntake;
 import frc.robot.commands.IntakeNote;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.OutputNote;
@@ -13,7 +15,6 @@ import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.LEDManager;
 import frc.robot.commands.SwerveDriveCommand;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Preferences;
@@ -21,7 +22,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
@@ -87,18 +88,78 @@ public class RobotContainer {
           return true;
         }    
       });
+
+    operator.leftBumper()
+      .and(operator.rightBumper())
+      .onTrue( new SequentialCommandGroup( 
+                  new CommandFlySwatter(flySwatter, FlySwatter.Position.CLIMB),
+                  new ClimbCommand(flySwatter, () -> { return operator.getRightTriggerAxis() - operator.getLeftTriggerAxis() ; } )
+                  ) );
   }
 
   private void configureShuffleboard(){
-    SmartDashboard.putData("Intake", new IntakeNote(intake));
-    SmartDashboard.putData("StopIntake", intake.run(() -> { intake.setSpeed(Intake.Speed.STOP); }));
-    SmartDashboard.putData("Output", new OutputNote(intake));
+    Command command;
+    
+    command = new IntakeNote(intake);
+    command.setName("Intake");
+    SmartDashboard.putData("Intake/Input", command);
 
-    SmartDashboard.putData("Reset Preferences", new InstantCommand(Preferences::removeAll));
-  }
+    command = intake.runOnce(() -> { intake.setSpeed(Intake.Speed.STOP); });
+    command.setName("Stop");
+    SmartDashboard.putData("Intake/Stop", command);
 
-  private void resetPrefs(){
-    Preferences.removeAll();;
+    command = new OutputNote(intake);
+    command.setName("Output");
+    SmartDashboard.putData("Intake/Output", command);
+
+    command = new InstantCommand(Preferences::removeAll).ignoringDisable(true);
+    command.setName("Reset Prefs");
+    SmartDashboard.putData("Preferences/Reset", command);
+    
+    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW);
+    command.setName("Low");
+    SmartDashboard.putData("FlySwatter/Low", command);
+
+    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM);
+    command.setName("Medium");
+    SmartDashboard.putData("Flyswatter/Medium", command);
+
+    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH);
+    command.setName("High");
+    SmartDashboard.putData("Flyswatter/High", command);
+
+    command = flySwatter.runOnce(() -> { flySwatter.stop(); });
+    command.setName("Stop");
+    SmartDashboard.putData("Flyswatter/Stop", command);
+
+    command = new ControlIntake(intake, Intake.Position.LOWER);
+    command.setName("Lower");
+    SmartDashboard.putData("Intake/Position/Lower", command);
+
+    command = new ControlIntake(intake, Intake.Position.RAISED);
+    command.setName("Raised");
+    SmartDashboard.putData("Intake/Position/Raised", command);
+
+    command = intake.runOnce(() -> { intake.stop(); });
+    command.setName("Stop");
+    SmartDashboard.putData("Intake/Position/Stop", command);
+
+    SmartDashboard.putNumber("FlySwatter/Climb/Adjust", 0.0);
+    command = new SequentialCommandGroup( 
+                  new CommandFlySwatter(flySwatter, FlySwatter.Position.CLIMB),
+                  new ClimbCommand(flySwatter, () -> { return SmartDashboard.getNumber("FlySwatter/ ", 0.0) ; } )
+                  );
+    command.setName("Climb");
+    SmartDashboard.putData("FlySwatter/Climb/Active", command);
+
+    command = new SequentialCommandGroup(
+                  new ControlIntake(intake, Intake.Position.LOWER),
+                  new IntakeNote(intake),
+                  new ControlIntake(intake, Intake.Position.RAISED)
+                  );
+    command.setName("Pick Up Note");
+    SmartDashboard.putData("Intake/PickUpNote", command);
+     
   }
 
   double getXSpeed() { 

@@ -21,7 +21,7 @@ public class Intake extends SubsystemBase {
   private TalonFX moterSpeed = new TalonFX(Constants.CanBus.MOTER_SPEED);
 
   private static final double POSITION_ERROR_DELTA = 0.1;
-  private Supplier<Double> intakePosition = moterIntake.getPosition().asSupplier();
+
 
   public enum Position { 
     RAISED(9),
@@ -39,6 +39,9 @@ public class Intake extends SubsystemBase {
   } 
 
   private Position activeTarget = Position.RAISED;
+
+  private Supplier<Double> intakePosition = moterIntake.getPosition().asSupplier();
+  private MotionMagicVoltage intakeSetPosition = new MotionMagicVoltage(activeTarget.getValue());
 
   public enum Speed { 
     OUT(5),
@@ -61,7 +64,8 @@ public class Intake extends SubsystemBase {
   private double distance = 0.0;
   private boolean hasNote = false;
 
-  public Intake() {}
+  public Intake() {
+  }
   
   @Override
   public void periodic() {
@@ -71,8 +75,9 @@ public class Intake extends SubsystemBase {
 
   public void setPosition(Position target) {
     activeTarget = target;
-    moterIntake.setControl( new MotionMagicVoltage(activeTarget.getValue()) );
+    moterIntake.setControl( intakeSetPosition.withPosition(activeTarget.getValue()) );
   }
+
   public void setSpeed(Speed target) {
     activeSpeed = target;
     moterSpeed.set( activeSpeed.getValue());
