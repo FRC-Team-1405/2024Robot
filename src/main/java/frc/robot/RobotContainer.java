@@ -68,6 +68,10 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
+    driver.start()
+          .and( driver.back() )
+          .onTrue( driveBase.runOnce( driveBase::resetGyro ) );
+
     driver.rightBumper()
       .onTrue( new OpenIntake(intake, flySwatter))
       .onFalse( new CloseIntake(intake, flySwatter));
