@@ -6,7 +6,7 @@ package frc.robot.subsystems;
 
 import java.util.function.Supplier;
 
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.Preferences;
@@ -40,8 +40,8 @@ public class Intake extends SubsystemBase {
 
   private Position activeTarget = Position.RAISED;
 
-  private Supplier<Double> intakePosition = moterIntake.getPosition().asSupplier();
-  private MotionMagicVoltage intakeSetPosition = new MotionMagicVoltage(activeTarget.getValue());
+  private Supplier<Double> intakePosition = moterIntake.getPosition().asSupplier();//  private MotionMagicVoltage intakeSetPosition = new MotionMagicVoltage(activeTarget.getValue());
+  private MotionMagicDutyCycle intakeSetPosition = new MotionMagicDutyCycle(activeTarget.getValue());
 
   public enum Speed { 
     OUT(5),

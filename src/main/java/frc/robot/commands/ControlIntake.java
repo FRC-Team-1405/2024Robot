@@ -23,17 +23,11 @@ public class ControlIntake extends Command {
   @Override
   public void initialize() {
     intake.setPosition(target);
-    if (target == Intake.Position.LOWER ){
-      intake.setSpeed(Intake.Speed.IN);
-    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(intake.hasNote()) {
-      intake.setSpeed(Intake.Speed.STOP);
-    }
   }
 
   // Called once the command ends or is interrupted.
@@ -41,7 +35,6 @@ public class ControlIntake extends Command {
   public void end(boolean interrupted) {
     if (interrupted) {
       intake.stop(); 
-      intake.setSpeed(Speed.STOP);
     }
   }
 
