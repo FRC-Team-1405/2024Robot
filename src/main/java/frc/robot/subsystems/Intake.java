@@ -24,8 +24,8 @@ public class Intake extends SubsystemBase {
 
 
   public enum Position { 
-    RAISED(9),
-    LOWER(2);
+    RAISED(2),
+    LOWER(34);
 
     private Position(double value){
       Preferences.initDouble("Intake/Position/"+this.name(), value);
@@ -45,7 +45,7 @@ public class Intake extends SubsystemBase {
 
   public enum Speed { 
     OUT(5),
-    IN(0.25),
+    IN(-0.25),
     STOP(0);
 
     private Speed(double value){

@@ -11,6 +11,7 @@ import frc.robot.commands.ControlIntake;
 import frc.robot.commands.IntakeNote;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.OutputNote;
+import frc.robot.commands.ShootNoteSpeaker;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.LEDManager;
 import frc.robot.commands.SwerveDriveCommand;
@@ -160,6 +161,10 @@ public class RobotContainer {
     command.setName("Pick Up Note");
     SmartDashboard.putData("Intake/PickUpNote", command);
      
+    command = new ShootNoteSpeaker(intake, shooter);
+    command.setName("Shoot Speaker");
+    SmartDashboard.putData("Shooter/Speaker", command);
+    
   }
 
   double getXSpeed() { 
