@@ -18,6 +18,7 @@ import frc.robot.commands.SwerveDriveCommand;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -96,69 +97,72 @@ public class RobotContainer {
                   new ClimbCommand(flySwatter, () -> { return operator.getRightTriggerAxis() - operator.getLeftTriggerAxis() ; } )
                   ) );
   }
-
+  private static final SendableChooser<String> autos = new SendableChooser<>();
   private void configureShuffleboard(){
     Command command;
+    autos.setDefaultOption("Shuffle1", "Shuffle1");
+    autos.addOption("Shuffle2", "Shuffle2");
+    SmartDashboard.putData("Auto/Autos", autos);
     
-    command = new IntakeNote(intake);
-    command.setName("Intake");
-    SmartDashboard.putData("Intake/Input", command);
+    // command = new IntakeNote(intake);
+    // command.setName("Intake");
+    // SmartDashboard.putData("Intake/Input", command);
 
-    command = intake.runOnce(() -> { intake.setSpeed(Intake.Speed.STOP); });
-    command.setName("Stop");
-    SmartDashboard.putData("Intake/Stop", command);
+    // command = intake.runOnce(() -> { intake.setSpeed(Intake.Speed.STOP); });
+    // command.setName("Stop");
+    // SmartDashboard.putData("Intake/Stop", command);
 
-    command = new OutputNote(intake);
-    command.setName("Output");
-    SmartDashboard.putData("Intake/Output", command);
+    // command = new OutputNote(intake);
+    // command.setName("Output");
+    // SmartDashboard.putData("Intake/Output", command);
 
-    command = new InstantCommand(Preferences::removeAll).ignoringDisable(true);
-    command.setName("Reset Prefs");
-    SmartDashboard.putData("Preferences/Reset", command);
+    // command = new InstantCommand(Preferences::removeAll).ignoringDisable(true);
+    // command.setName("Reset Prefs");
+    // SmartDashboard.putData("Preferences/Reset", command);
     
-    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW);
-    command.setName("Low");
-    SmartDashboard.putData("FlySwatter/Low", command);
+    // command = new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW);
+    // command.setName("Low");
+    // SmartDashboard.putData("FlySwatter/Low", command);
 
-    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM);
-    command.setName("Medium");
-    SmartDashboard.putData("Flyswatter/Medium", command);
+    // command = new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM);
+    // command.setName("Medium");
+    // SmartDashboard.putData("Flyswatter/Medium", command);
 
-    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH);
-    command.setName("High");
-    SmartDashboard.putData("Flyswatter/High", command);
+    // command = new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH);
+    // command.setName("High");
+    // SmartDashboard.putData("Flyswatter/High", command);
 
-    command = flySwatter.runOnce(() -> { flySwatter.stop(); });
-    command.setName("Stop");
-    SmartDashboard.putData("Flyswatter/Stop", command);
+    // command = flySwatter.runOnce(() -> { flySwatter.stop(); });
+    // command.setName("Stop");
+    // SmartDashboard.putData("Flyswatter/Stop", command);
 
-    command = new ControlIntake(intake, Intake.Position.LOWER);
-    command.setName("Lower");
-    SmartDashboard.putData("Intake/Position/Lower", command);
+    // command = new ControlIntake(intake, Intake.Position.LOWER);
+    // command.setName("Lower");
+    // SmartDashboard.putData("Intake/Position/Lower", command);
 
-    command = new ControlIntake(intake, Intake.Position.RAISED);
-    command.setName("Raised");
-    SmartDashboard.putData("Intake/Position/Raised", command);
+    // command = new ControlIntake(intake, Intake.Position.RAISED);
+    // command.setName("Raised");
+    // SmartDashboard.putData("Intake/Position/Raised", command);
 
-    command = intake.runOnce(() -> { intake.stop(); });
-    command.setName("Stop");
-    SmartDashboard.putData("Intake/Position/Stop", command);
+    // command = intake.runOnce(() -> { intake.stop(); });
+    // command.setName("Stop");
+    // SmartDashboard.putData("Intake/Position/Stop", command);
 
-    SmartDashboard.putNumber("FlySwatter/Climb/Adjust", 0.0);
-    command = new SequentialCommandGroup( 
-                  new CommandFlySwatter(flySwatter, FlySwatter.Position.CLIMB),
-                  new ClimbCommand(flySwatter, () -> { return SmartDashboard.getNumber("FlySwatter/ ", 0.0) ; } )
-                  );
-    command.setName("Climb");
-    SmartDashboard.putData("FlySwatter/Climb/Active", command);
+    // SmartDashboard.putNumber("FlySwatter/Climb/Adjust", 0.0);
+    // command = new SequentialCommandGroup( 
+    //               new CommandFlySwatter(flySwatter, FlySwatter.Position.CLIMB),
+    //               new ClimbCommand(flySwatter, () -> { return SmartDashboard.getNumber("FlySwatter/ ", 0.0) ; } )
+    //               );
+    // command.setName("Climb");
+    // SmartDashboard.putData("FlySwatter/Climb/Active", command);
 
-    command = new SequentialCommandGroup(
-                  new ControlIntake(intake, Intake.Position.LOWER),
-                  new IntakeNote(intake),
-                  new ControlIntake(intake, Intake.Position.RAISED)
-                  );
-    command.setName("Pick Up Note");
-    SmartDashboard.putData("Intake/PickUpNote", command);
+    // command = new SequentialCommandGroup(
+    //               new ControlIntake(intake, Intake.Position.LOWER),
+    //               new IntakeNote(intake),
+    //               new ControlIntake(intake, Intake.Position.RAISED)
+    //               );
+    // command.setName("Pick Up Note");
+    // SmartDashboard.putData("Intake/PickUpNote", command);
      
   }
 
@@ -202,6 +206,17 @@ public class RobotContainer {
 
 
   public Command getAutonomousCommand() {
-    return new PathPlannerAuto("New Auto");
+    String auto = autos.getSelected();
+    System.out.println(auto);
+    if(auto == "Shuffle1") {
+      System.out.println("###################### SHUFFLE 1 SELECTED");
+      return new PathPlannerAuto("1_Shuffle");
+    } else if(auto == "Shuffle2") {
+      System.out.println("###################### SHUFFLE 2 SELECTED");
+      return new PathPlannerAuto("2_Shuffle");
+    } else {
+      System.out.println("###################### SOMETHING WENT WRONG");
+      return new PathPlannerAuto("today_auto");
+    }
   }
 }
