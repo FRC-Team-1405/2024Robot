@@ -4,20 +4,18 @@
 
 package frc.robot.subsystems;
 
-import java.util.function.Supplier;
-
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.sensors.FusionTimeofFlight;
+import frc.robot.utils.TalonFXHelper;
 
 public class Intake extends SubsystemBase {
 
 // Motor names and Id
-  private TalonFX moterIntake = new TalonFX(Constants.CanBus.MOTER_INTAKE); 
+  private TalonFXHelper moterIntake = new TalonFXHelper(Constants.CanBus.MOTER_INTAKE, POSITION_ERROR_DELTA); 
   private TalonFX moterSpeed = new TalonFX(Constants.CanBus.MOTER_SPEED);
 
   private static final double POSITION_ERROR_DELTA = 0.1;
@@ -37,11 +35,6 @@ public class Intake extends SubsystemBase {
       return value;
     }
   } 
-
-  private Position activeTarget = Position.RAISED;
-
-  private Supplier<Double> intakePosition = moterIntake.getPosition().asSupplier();
-  private MotionMagicVoltage intakeSetPosition = new MotionMagicVoltage(activeTarget.getValue());
 
   public enum Speed { 
     OUT(5),
@@ -71,11 +64,11 @@ public class Intake extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     distance = lidar.Measure();
+    moterIntake.Execute();
   }
 
   public void setPosition(Position target) {
-    activeTarget = target;
-    moterIntake.setControl( intakeSetPosition.withPosition(activeTarget.getValue()) );
+    moterIntake.SetPosition(target.getValue());
   }
 
   public void setSpeed(Speed target) {
@@ -84,15 +77,16 @@ public class Intake extends SubsystemBase {
   } 
 
   public boolean isAtPosition(){
-    return Math.abs(activeTarget.getValue() - intakePosition.get())  < POSITION_ERROR_DELTA  ;
+    return moterIntake.IsAtPosition();
   }
+  
   public void stop() {
     stopIntake();
     stopSpeed();
   }
   // Stops moters
   public void stopIntake() {
-    moterIntake.set(0);   
+    moterIntake.Stop();   
   }
   public void stopSpeed() {
     moterSpeed.set(0);
