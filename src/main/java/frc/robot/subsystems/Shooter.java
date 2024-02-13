@@ -52,12 +52,8 @@ public void setWheelSpeed(ShooterSpeed speed)
  } 
 
 public boolean atSpeed(){
-    if(Math.abs(primary.getRotorVelocity().getValueAsDouble() - targetSpeed.getValue()) <= SPEED_ERROR_DELTA) {
-      return true; 
-    }
-    else{
-      return false; 
-    }
+    boolean atSpeed = Math.abs(primary.getRotorVelocity().getValueAsDouble() - targetSpeed.getValue()) <= SPEED_ERROR_DELTA;
+    return atSpeed;
   }
 
 public void stop(){
