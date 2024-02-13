@@ -7,17 +7,13 @@ package frc.robot;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.CloseIntake;
 import frc.robot.commands.CommandFlySwatter;
-import frc.robot.commands.ControlIntake;
-import frc.robot.commands.IntakeNote;
 import frc.robot.commands.OpenIntake;
-import frc.robot.commands.OutputNote;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.LEDManager;
 import frc.robot.commands.SwerveDriveCommand;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -208,9 +204,9 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     String auto = autos.getSelected();
     System.out.println(auto);
-    if(auto == "Shuffle1") {
+    if(auto == "blue_posB_top1") {
       System.out.println("###################### SHUFFLE 1 SELECTED");
-      return new PathPlannerAuto("1_Shuffle");
+      return new PathPlannerAuto("blue_posB_top1");
     } else if(auto == "Shuffle2") {
       System.out.println("###################### SHUFFLE 2 SELECTED");
       return new PathPlannerAuto("2_Shuffle");
