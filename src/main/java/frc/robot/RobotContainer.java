@@ -223,17 +223,18 @@ public class RobotContainer {
 
 
   public Command getAutonomousCommand() {
-    String auto = autos.getSelected();
-    System.out.println(auto);
-    if(auto == "Shuffle1") {
-      System.out.println("###################### SHUFFLE 1 SELECTED");
-      return new PathPlannerAuto("1_Shuffle");
-    } else if(auto == "Shuffle2") {
-      System.out.println("###################### SHUFFLE 2 SELECTED");
-      return new PathPlannerAuto("2_Shuffle");
-    } else {
-      System.out.println("###################### SOMETHING WENT WRONG");
-      return new PathPlannerAuto("today_auto");
-    }
+    // String auto = autos.getSelected();
+    // System.out.println(auto);
+    // if(auto == "Shuffle1") {
+    //   System.out.println("###################### SHUFFLE 1 SELECTED");
+    //   return new PathPlannerAuto("1_Shuffle");
+    // } else if(auto == "Shuffle2") {
+    //   System.out.println("###################### SHUFFLE 2 SELECTED");
+    //   return new PathPlannerAuto("2_Shuffle");
+    // } else {
+    //   System.out.println("###################### SOMETHING WENT WRONG");
+    //   return new PathPlannerAuto("today_auto");
+    // }
+    return new PathPlannerAuto("blue_pos2_allclosenotes");
   }
 }
