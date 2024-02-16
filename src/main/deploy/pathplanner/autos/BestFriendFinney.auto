@@ -1,12 +1,6 @@
 {
   "version": 1.0,
-  "startingPose": {
-    "position": {
-      "x": 0.74,
-      "y": 4.386646941232814
-    },
-    "rotation": 30.0
-  },
+  "startingPose": null,
   "command": {
     "type": "sequential",
     "data": {
@@ -14,18 +8,18 @@
         {
           "type": "named",
           "data": {
-            "name": null
+            "name": "ShootNoteSpeaker"
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": []
+            "pathName": "BestFriendFinney"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "start_position3",
   "choreoAuto": false
 }

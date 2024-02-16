@@ -9,6 +9,9 @@ import frc.robot.commands.CloseIntake;
 import frc.robot.commands.CommandFlySwatter;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.OutputNote;
+import frc.robot.commands.ShootNoteAmp;
+import frc.robot.commands.ShootNoteSpeaker;
 import frc.robot.commands.LEDManager;
 import frc.robot.commands.SwerveDriveCommand;
 
@@ -64,14 +67,26 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
+    driver.start()
+          .and( driver.back() )
+          .onTrue( driveBase.runOnce( driveBase::resetGyro ) );
+
     driver.rightBumper()
       .onTrue( new OpenIntake(intake, flySwatter))
       .onFalse( new CloseIntake(intake, flySwatter));
 
     driver.back().whileTrue( Commands.startEnd( () -> { SwerveDrive.useStopAngle(true);},
       () -> { SwerveDrive.useStopAngle(false);}));  
-    driver.a().onTrue(new ShooterCommand(shooter, ShooterSpeed.AMP));
-    driver.b().onTrue(new ShooterCommand(shooter, ShooterSpeed.SPEAKER));
+    driver.a().onTrue(new ShootNoteAmp(intake, shooter, flySwatter));
+    driver.b().onTrue(new ShootNoteSpeaker(intake, shooter));
+
+    driver.rightBumper()
+          .onTrue( new SequentialCommandGroup(
+                      new ControlIntake(intake, Intake.Position.LOWER),
+                      new IntakeNote(intake),
+                      new ControlIntake(intake, Intake.Position.RAISED)
+                  ));
+ 
 
     //if(operator.leftBumper().onTrue(Commands.startEnd(() -> {FlySwatter.climbingMode(true);}, () -> {FlySwatter.climbingMode(false);}, flySwatter)) && operator.rightBumper().onTrue(Commands.startEnd(() -> {FlySwatter.climbingMode(true);}, () -> {FlySwatter.climbingMode(false);}, flySwatter)))){
         //I Wrote this for the climbing i couldnt figure it out so i just commented it out
@@ -160,6 +175,10 @@ public class RobotContainer {
     // command.setName("Pick Up Note");
     // SmartDashboard.putData("Intake/PickUpNote", command);
      
+    command = new ShootNoteSpeaker(intake, shooter);
+    command.setName("Shoot Speaker");
+    SmartDashboard.putData("Shooter/Speaker", command);
+    
   }
 
   double getXSpeed() { 
@@ -202,17 +221,18 @@ public class RobotContainer {
 
 
   public Command getAutonomousCommand() {
-    String auto = autos.getSelected();
-    System.out.println(auto);
-    if(auto == "blue_posB_top1") {
-      System.out.println("###################### SHUFFLE 1 SELECTED");
-      return new PathPlannerAuto("blue_posB_top1");
-    } else if(auto == "Shuffle2") {
-      System.out.println("###################### SHUFFLE 2 SELECTED");
-      return new PathPlannerAuto("2_Shuffle");
-    } else {
-      System.out.println("###################### SOMETHING WENT WRONG");
-      return new PathPlannerAuto("today_auto");
-    }
+    // String auto = autos.getSelected();
+    // System.out.println(auto);
+    // if(auto == "Shuffle1") {
+    //   System.out.println("###################### SHUFFLE 1 SELECTED");
+    //   return new PathPlannerAuto("1_Shuffle");
+    // } else if(auto == "Shuffle2") {
+    //   System.out.println("###################### SHUFFLE 2 SELECTED");
+    //   return new PathPlannerAuto("2_Shuffle");
+    // } else {
+    //   System.out.println("###################### SOMETHING WENT WRONG");
+    //   return new PathPlannerAuto("today_auto");
+    // }
+    return new PathPlannerAuto("blue_pos2_allclosenotes");
   }
 }

@@ -23,7 +23,8 @@ public class Shooter extends SubsystemBase {
 
   public enum ShooterSpeed {
     AMP(25),
-    SPEAKER(50);
+    SPEAKER(50),
+    LOB(35);
 
     private ShooterSpeed(double value) {
       Preferences.initDouble("Shooter/Speed/"+this.name(), value);
@@ -52,12 +53,8 @@ public void setWheelSpeed(ShooterSpeed speed)
  } 
 
 public boolean atSpeed(){
-    if(Math.abs(primary.getRotorVelocity().getValueAsDouble() - targetSpeed.getValue()) <= SPEED_ERROR_DELTA) {
-      return true; 
-    }
-    else{
-      return false; 
-    }
+    boolean atSpeed = Math.abs(primary.getRotorVelocity().getValueAsDouble() - targetSpeed.getValue()) <= SPEED_ERROR_DELTA;
+    return atSpeed;
   }
 
 public void stop(){

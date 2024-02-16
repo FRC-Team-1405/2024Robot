@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.74,
-      "y": 4.386646941232814
+      "x": 1.37,
+      "y": 5.54
     },
-    "rotation": 30.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,18 +14,18 @@
         {
           "type": "named",
           "data": {
-            "name": null
+            "name": "ShootNoteSpeaker"
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": []
+            "pathName": "allclosenotes_mk2"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "start_position2",
   "choreoAuto": false
 }

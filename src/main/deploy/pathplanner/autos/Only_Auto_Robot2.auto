@@ -1,0 +1,25 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7044441642327478,
+      "y": 6.688334136763285
+    },
+    "rotation": 53.74616226255522
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Only_Auto_Robot2"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "start_position1",
+  "choreoAuto": false
+}
