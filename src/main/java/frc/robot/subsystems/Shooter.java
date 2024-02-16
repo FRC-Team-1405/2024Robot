@@ -23,7 +23,8 @@ public class Shooter extends SubsystemBase {
 
   public enum ShooterSpeed {
     AMP(25),
-    SPEAKER(50);
+    SPEAKER(50),
+    LOB(35);
 
     private ShooterSpeed(double value) {
       Preferences.initDouble("Shooter/Speed/"+this.name(), value);

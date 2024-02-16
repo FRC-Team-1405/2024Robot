@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.37,
-      "y": 5.54
+      "x": 0.6924444618120005,
+      "y": 4.385307915914978
     },
-    "rotation": 0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -20,12 +20,12 @@
         {
           "type": "path",
           "data": {
-            "pathName": "allclosenotes_mk2"
+            "pathName": "Pos3_Right2"
           }
         }
       ]
     }
   },
-  "folder": "start_position2",
+  "folder": "start_position3",
   "choreoAuto": false
 }
