@@ -18,7 +18,7 @@ public class Intake extends SubsystemBase {
   private TalonFXHelper moterIntake = new TalonFXHelper(Constants.CanBus.MOTER_INTAKE, POSITION_ERROR_DELTA); 
   private TalonFX moterSpeed = new TalonFX(Constants.CanBus.MOTER_SPEED);
 
-  private static final double POSITION_ERROR_DELTA = 0.1;
+  private static final double POSITION_ERROR_DELTA = 0.25;
 
 
   public enum Position { 

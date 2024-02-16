@@ -40,7 +40,7 @@ public class TalonFXHelper {
 
     public void Zeroise(){
         MotorState = State.ZEROISING;
-        Motor.set(-0.01);
+        Motor.set(-0.05);
     }
 
     public void SetPosition(double position) {
