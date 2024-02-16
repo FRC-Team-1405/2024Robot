@@ -34,38 +34,74 @@ public class TalonFXHelper {
     }
  
     public void Stop() {
+        // always stop motor
         Motor.set(0);
-        MotorState = State.STOPPED;
+
+        switch(MotorState) {
+            case INIT:
+            case ZEROISING:
+                MotorState = State.INIT;
+                break;
+            case STOPPED:
+            case RUNNING:
+                MotorState = State.STOPPED;
+        }
     }
 
     public void Zeroise(){
+        // always Zeroise when requested
         MotorState = State.ZEROISING;
         Motor.set(-0.05);
     }
 
     public void SetPosition(double position) {
         Target = position;
-        if(MotorState == State.INIT){
-            Zeroise();
-        }
-        else if(MotorState != State.ZEROISING) {
-            Motor.setControl(MagicSetPosition.withPosition(Target));
-            MotorState = State.RUNNING;
+        switch(MotorState) {
+            case INIT:
+                Zeroise();
+                break;
+            case ZEROISING:
+                break;
+            case STOPPED:
+            case RUNNING:
+                Motor.setControl(MagicSetPosition.withPosition(Target));
+                MotorState = State.RUNNING;
+                break;
         }
     }
  
     public void Execute() {
-        if(MotorState == State.ZEROISING && ReverseLimit.getValue() == ReverseLimitValue.Open){
-            Motor.setPosition(0);
-            MotorState = State.STOPPED;
-            if(Target != Double.MAX_VALUE){
-                SetPosition(Target);
-            }
+        switch (MotorState) {
+            case INIT:
+                break;
+            case ZEROISING:
+                boolean atLowerLimit = ReverseLimit.getValue() == ReverseLimitValue.Open;
+                if (atLowerLimit) {
+                    Motor.setPosition(0);
+                    MotorState = State.STOPPED;
+                    if(Target != Double.MAX_VALUE){
+                        SetPosition(Target);
+                    }
+                }
+                break;
+            case STOPPED:
+            case RUNNING:
+                break;
         }
     }
   
     public boolean IsAtPosition() {  
-        return Math.abs(Target - Motor.getPosition().getValue()) < Accuracy;
+        boolean atPosition = false;
+        switch (MotorState) {
+            case INIT:
+            case ZEROISING:
+            case STOPPED:
+                atPosition = true;
+                return false;
+            case RUNNING:
+                atPosition = Math.abs(Target - Motor.getPosition().getValue()) < Accuracy;
+        }
+        return atPosition;
     }
 
 }
