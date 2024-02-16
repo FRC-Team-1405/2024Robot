@@ -7,6 +7,8 @@ package frc.robot;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.CloseIntake;
 import frc.robot.commands.CommandFlySwatter;
+import frc.robot.commands.ControlIntake;
+import frc.robot.commands.IntakeNote;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.OutputNote;
