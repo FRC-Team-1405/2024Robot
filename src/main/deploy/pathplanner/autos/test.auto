@@ -12,9 +12,9 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Shuffle 2"
+            "name": "VibrateSomething"
           }
         }
       ]

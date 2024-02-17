@@ -16,7 +16,9 @@ import frc.robot.commands.ShootNoteAmp;
 import frc.robot.commands.ShootNoteSpeaker;
 import frc.robot.commands.LEDManager;
 import frc.robot.commands.SwerveDriveCommand;
+import frc.robot.commands.VibrateController;
 
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -44,12 +46,18 @@ public class RobotContainer {
   
   private final CommandXboxController driver = new CommandXboxController(0);
   private final CommandXboxController operator = new CommandXboxController(1);
+
+  private static final SendableChooser<String> autos = new SendableChooser<>();
+
+  // PathPlanner object for registering command names in path planner
+  // private NamedCommands namedCommands = new NamedCommands();
   
   public RobotContainer() {
     driveBase.enableDebugMode();
     driveBase.setHeadingAdjustment(180);
     configureBindings();
     configureShuffleboard();
+    configurePathPlanner();
 
     driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, driveBase));
   }
@@ -110,7 +118,7 @@ public class RobotContainer {
                   new ClimbCommand(flySwatter, () -> { return operator.getRightTriggerAxis() - operator.getLeftTriggerAxis() ; } )
                   ) );
   }
-  private static final SendableChooser<String> autos = new SendableChooser<>();
+  
   private void configureShuffleboard(){
     Command command;
     autos.setDefaultOption("Shuffle1", "Shuffle1");
@@ -183,6 +191,11 @@ public class RobotContainer {
     
   }
 
+  void configurePathPlanner() {
+    VibrateController vc = new VibrateController(driver);
+    NamedCommands.registerCommand("VibrateSomething", vc);
+  }
+
   double getXSpeed() { 
     int pov = driver.getHID().getPOV();
     double finalX;
@@ -235,6 +248,6 @@ public class RobotContainer {
     //   System.out.println("###################### SOMETHING WENT WRONG");
     //   return new PathPlannerAuto("today_auto");
     // }
-    return new PathPlannerAuto("blue_pos2_allclosenotes");
+    return new PathPlannerAuto("test");
   }
 }
