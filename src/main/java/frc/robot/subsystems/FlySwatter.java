@@ -17,10 +17,10 @@ import frc.robot.utils.TalonFXHelper;
 
 public class FlySwatter extends SubsystemBase {
   public enum Position {
-    HIGH(0.9),
-    MEDIUM(0.45),
-    LOW(0.0),
-    CLIMB(0.75);
+    HIGH(37),
+    MEDIUM(17),
+    LOW(1),
+    CLIMB(25);
 
     private Position(double value){
       Preferences.initDouble("FLySwatter/Position/"+this.name(), value);

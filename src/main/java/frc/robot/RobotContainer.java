@@ -82,11 +82,11 @@ public class RobotContainer {
     driver.rightBumper()
           .onTrue( new ConditionalCommand(new OpenIntake(intake, flySwatter), 
                                           new CloseIntake(intake, flySwatter), 
-                                          () -> { return intake.getPosition() == Intake.Position.LOWER; }) );
+                                          () -> { return intake.getPosition() == Intake.Position.RETRACTED; }) );
 
     
-    driver.back().whileTrue( Commands.startEnd( () -> { SwerveDrive.useStopAngle(true);},
-                                                () -> { SwerveDrive.useStopAngle(false);}));  
+//    driver.back().whileTrue( Commands.startEnd( () -> { SwerveDrive.useStopAngle(true);},
+//                                                () -> { SwerveDrive.useStopAngle(false);}));  
 
      driver.leftBumper()
            .onTrue( new ConditionalCommand(new ShootNoteAmp(intake, shooter, flySwatter), 
@@ -128,7 +128,19 @@ public class RobotContainer {
 
   private void configureShuffleboard(){
     Command command;
+
+    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW);
+    command.setName("Flyswatter");
+    SmartDashboard.putData("Flyswatter/Low", command);
     
+    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM);
+    command.setName("Flyswatter");
+    SmartDashboard.putData("Flyswatter/Medium", command);
+
+    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH);
+    command.setName("Flyswatter");
+    SmartDashboard.putData("Flyswatter/High", command);
+
     command = new IntakeNote(intake);
     command.setName("Intake");
     SmartDashboard.putData("Intake/Input", command);
@@ -161,11 +173,11 @@ public class RobotContainer {
     command.setName("Stop");
     SmartDashboard.putData("Flyswatter/Stop", command);
 
-    command = new ControlIntake(intake, Intake.Position.LOWER);
+    command = new ControlIntake(intake, Intake.Position.EXTENDED);
     command.setName("Lower");
     SmartDashboard.putData("Intake/Position/Lower", command);
 
-    command = new ControlIntake(intake, Intake.Position.RAISED);
+    command = new ControlIntake(intake, Intake.Position.RETRACTED);
     command.setName("Raised");
     SmartDashboard.putData("Intake/Position/Raised", command);
 
@@ -182,9 +194,9 @@ public class RobotContainer {
     SmartDashboard.putData("FlySwatter/Climb/Active", command);
 
     command = new SequentialCommandGroup(
-                  new ControlIntake(intake, Intake.Position.LOWER),
+                  new ControlIntake(intake, Intake.Position.EXTENDED),
                   new IntakeNote(intake),
-                  new ControlIntake(intake, Intake.Position.RAISED)
+                  new ControlIntake(intake, Intake.Position.RETRACTED)
                   );
     command.setName("Pick Up Note");
     SmartDashboard.putData("Intake/PickUpNote", command);
