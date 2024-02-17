@@ -124,13 +124,6 @@ public class RobotContainer {
                   new ClimbCommand(flySwatter, () -> { return operator.getRightTriggerAxis() - operator.getLeftTriggerAxis() ; } )
                   ) );
 
-    Trigger hasNote = new Trigger( intake::hasNote );
-    hasNote.onTrue( new InstantCommand( () -> { 
-                          driver.getHID().setRumble(RumbleType.kBothRumble, 1);
-                        } ).withTimeout(1) )
-           .onFalse( new InstantCommand( () -> { 
-                          driver.getHID().setRumble(RumbleType.kBothRumble, 1);
-                        } ).withTimeout(1) );
   }
 
   private void configureShuffleboard(){
