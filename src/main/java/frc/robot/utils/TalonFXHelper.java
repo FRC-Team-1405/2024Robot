@@ -5,6 +5,7 @@
 package frc.robot.utils;
 
 import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.ReverseLimitValue;
@@ -24,7 +25,7 @@ public class TalonFXHelper {
     private double Accuracy;
     private double Target = Double.MAX_VALUE;
 
-    private MotionMagicVoltage MagicSetPosition = new MotionMagicVoltage(0);
+    private MotionMagicDutyCycle MagicSetPosition = new MotionMagicDutyCycle(0.0);
 
     public TalonFXHelper(int motorID, double accuracy ){
         Motor = new TalonFX(motorID);
@@ -51,7 +52,7 @@ public class TalonFXHelper {
     public void Zeroise(){
         // always Zeroise when requested
         MotorState = State.ZEROISING;
-        Motor.set(-0.05);
+        Motor.set(-0.1);
     }
 
     public void SetPosition(double position) {
@@ -75,10 +76,12 @@ public class TalonFXHelper {
             case INIT:
                 break;
             case ZEROISING:
+                ReverseLimit.refresh();
                 boolean atLowerLimit = ReverseLimit.getValue() == ReverseLimitValue.Open;
                 if (atLowerLimit) {
                     Motor.setPosition(0);
                     MotorState = State.STOPPED;
+                    Stop();
                     if(Target != Double.MAX_VALUE){
                         SetPosition(Target);
                     }
