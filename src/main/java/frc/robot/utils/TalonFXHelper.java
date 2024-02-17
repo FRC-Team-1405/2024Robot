@@ -5,10 +5,13 @@
 package frc.robot.utils;
 
 import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.ReverseLimitValue;
+
+import frc.robot.Constants;
 
 /** Add your docs here. */
 public class TalonFXHelper {
@@ -21,6 +24,7 @@ public class TalonFXHelper {
 
     private State MotorState = State.INIT;
     private TalonFX Motor;
+    private TalonFX slaveMotor = null;
     private StatusSignal<ReverseLimitValue> ReverseLimit;
     private double Accuracy;
     private double Target = Double.MAX_VALUE;
@@ -32,6 +36,13 @@ public class TalonFXHelper {
         Accuracy = accuracy;
 
         ReverseLimit = Motor.getReverseLimit();  
+    }
+
+    public TalonFXHelper(int motorID, int slaveMotorID, double accuracy ){
+        this(motorID, accuracy);
+
+        slaveMotor = new TalonFX(slaveMotorID);
+        slaveMotor.setControl(new Follower(motorID, false));
     }
  
     public void Stop() {

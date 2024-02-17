@@ -15,11 +15,8 @@ import frc.robot.utils.TalonFXHelper;
 public class Intake extends SubsystemBase {
 
 // Motor names and Id
-  private TalonFXHelper moterIntake = new TalonFXHelper(Constants.CanBus.MOTER_INTAKE, POSITION_ERROR_DELTA); 
+  private TalonFXHelper moterIntake = new TalonFXHelper(Constants.CanBus.MOTER_INTAKE, Constants.POSITION_ERROR_DELTA); 
   private TalonFX moterSpeed = new TalonFX(Constants.CanBus.MOTER_SPEED);
-
-  private static final double POSITION_ERROR_DELTA = 0.25;
-
 
   public enum Position { 
     RAISED(2),
