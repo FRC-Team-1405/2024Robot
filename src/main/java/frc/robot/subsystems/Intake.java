@@ -19,8 +19,9 @@ public class Intake extends SubsystemBase {
   private TalonFX moterSpeed = new TalonFX(Constants.CanBus.MOTER_SPEED);
 
   public enum Position { 
-    RAISED(2),
-    LOWER(34);
+    RAISED(0),
+    LOWER(34),
+    EJECT(17);
 
     private Position(double value){
       Preferences.initDouble("Intake/Position/"+this.name(), value);

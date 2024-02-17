@@ -62,6 +62,10 @@ public class FlySwatter extends SubsystemBase {
     return primary.IsAtPosition();
   }
 
+  public Position getPosition(){
+    return targetPosition;
+  }
+
 
   public void stop() {
     primary.Stop();

@@ -13,6 +13,7 @@ import frc.robot.commands.OpenIntake;
 import frc.robot.commands.OutputNote;
 import frc.robot.commands.ShootNoteAmp;
 import frc.robot.commands.ShootNoteSpeaker;
+import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.LEDManager;
 import frc.robot.commands.SwerveDriveCommand;
 
@@ -74,18 +75,6 @@ public class RobotContainer {
   private Target currentTarget = Target.Speaker;
 
   private void configureBindings() {
-    driver.start()
-          .and( driver.back() )
-          .onTrue( driveBase.runOnce( driveBase::resetGyro ) );
-/*
-    Command deployIntake = new SequentialCommandGroup(
-                                  new ControlIntake(intake, Intake.Position.LOWER),
-                                  new IntakeNote(intake),
-                                  new ControlIntake(intake, Intake.Position.RAISED) );
-    Command retractIntake = new SequentialCommandGroup(
-                                  intake.run(intake::stop),
-                                  new ControlIntake(intake, Intake.Position.RAISED) );
-*/
     // control intake deploy/retract
     driver.rightBumper()
           .onTrue( new ConditionalCommand(new OpenIntake(intake, flySwatter), 
@@ -100,27 +89,25 @@ public class RobotContainer {
            .onTrue( new ConditionalCommand(new ShootNoteAmp(intake, shooter, flySwatter), 
                                            new ShootNoteSpeaker( intake, shooter), 
                                            () -> { return currentTarget == Target.Amp; }) );
-    operator.a().onTrue(new InstantCommand( () -> { currentTarget = Target.Speaker; } ));
-    operator.b().onTrue(new InstantCommand( () -> { currentTarget = Target.Amp; } ));
 
-    driver.a().onTrue(new ShootNoteAmp(intake, shooter, flySwatter));
-    driver.b().onTrue(new ShootNoteSpeaker(intake, shooter));
-/* 
-    driver.rightBumper()
-          .onTrue( new SequentialCommandGroup(
-                      new ControlIntake(intake, Intake.Position.LOWER),
-                      new IntakeNote(intake),
-                      new ControlIntake(intake, Intake.Position.RAISED)
-                  ));
-*/ 
+    operator.a().onTrue( new InstantCommand( () -> { currentTarget = Target.Speaker; } ));
 
-    //if(operator.leftBumper().onTrue(Commands.startEnd(() -> {FlySwatter.climbingMode(true);}, () -> {FlySwatter.climbingMode(false);}, flySwatter)) && operator.rightBumper().onTrue(Commands.startEnd(() -> {FlySwatter.climbingMode(true);}, () -> {FlySwatter.climbingMode(false);}, flySwatter)))){
-        //I Wrote this for the climbing i couldnt figure it out so i just commented it out
-  
+    operator.b().onTrue( new SequentialCommandGroup( 
+                              new InstantCommand( () -> { currentTarget = Target.Amp; } ),
+                              new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH)));
+
+    operator.x().onTrue( new SequentialCommandGroup(
+                              new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM),
+                              new ControlIntake(intake, Intake.Position.EJECT),
+                              new OutputNote(intake),
+                              new CloseIntake(intake, flySwatter)) );
+
 
     operator.y()
-      .onTrue(new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH))
-      .onFalse(new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
+      .onTrue(new ConditionalCommand(new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH), 
+                                     new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW), 
+                                     () -> { return flySwatter.getPosition() == FlySwatter.Position.LOW; }));
+
     operator.back().onTrue( new InstantCommand( driveBase::resetGyro ) {
         public boolean runsWhenDisabled() {
           return true;

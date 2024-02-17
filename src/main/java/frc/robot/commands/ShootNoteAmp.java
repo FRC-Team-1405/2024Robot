@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -20,7 +21,9 @@ public class ShootNoteAmp extends SequentialCommandGroup {
     this.addCommands( new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH),
                       new ShooterCommand(shooter, Shooter.ShooterSpeed.AMP),
                       new OutputNote(intake),
-                      shooter.runOnce( shooter::stop ));
+                      shooter.runOnce( shooter::stop ),
+                      new WaitCommand(0.25),
+                      new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands();
