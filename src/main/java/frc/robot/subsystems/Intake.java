@@ -36,6 +36,8 @@ public class Intake extends SubsystemBase {
     }
   } 
 
+  private Position activeTarget = Position.RAISED;
+
   public enum Speed { 
     OUT(5),
     IN(-0.25),
@@ -68,6 +70,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void setPosition(Position target) {
+    activeTarget = target;
     moterIntake.SetPosition(target.getValue());
   }
 
@@ -78,6 +81,10 @@ public class Intake extends SubsystemBase {
 
   public boolean isAtPosition(){
     return moterIntake.IsAtPosition();
+  }
+
+  public Position getPosition() {
+    return activeTarget;
   }
   
   public void stop() {

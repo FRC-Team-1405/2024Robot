@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
@@ -22,5 +23,9 @@ public class ShootNoteSpeaker extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands();
+  }
+
+  public ShootNoteSpeaker(Intake intake, FlySwatter flySwatter) {
+      //TODO Auto-generated constructor stub
   }
 }

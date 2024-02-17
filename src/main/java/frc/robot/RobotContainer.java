@@ -16,12 +16,15 @@ import frc.robot.commands.ShootNoteSpeaker;
 import frc.robot.commands.LEDManager;
 import frc.robot.commands.SwerveDriveCommand;
 
+import java.util.concurrent.locks.Condition;
+
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -67,27 +70,49 @@ public class RobotContainer {
     ledManager.schedule();
   }
 
+  private enum Target { Speaker, Amp };
+  private Target currentTarget = Target.Speaker;
+
   private void configureBindings() {
     driver.start()
           .and( driver.back() )
           .onTrue( driveBase.runOnce( driveBase::resetGyro ) );
-
+/*
+    Command deployIntake = new SequentialCommandGroup(
+                                  new ControlIntake(intake, Intake.Position.LOWER),
+                                  new IntakeNote(intake),
+                                  new ControlIntake(intake, Intake.Position.RAISED) );
+    Command retractIntake = new SequentialCommandGroup(
+                                  intake.run(intake::stop),
+                                  new ControlIntake(intake, Intake.Position.RAISED) );
+*/
+    // control intake deploy/retract
     driver.rightBumper()
-      .onTrue( new OpenIntake(intake, flySwatter))
-      .onFalse( new CloseIntake(intake, flySwatter));
+          .onTrue( new ConditionalCommand(new OpenIntake(intake, flySwatter), 
+                                          new CloseIntake(intake, flySwatter), 
+                                          () -> { return intake.getPosition() == Intake.Position.LOWER; }) );
 
+    
     driver.back().whileTrue( Commands.startEnd( () -> { SwerveDrive.useStopAngle(true);},
-      () -> { SwerveDrive.useStopAngle(false);}));  
+                                                () -> { SwerveDrive.useStopAngle(false);}));  
+
+     driver.leftBumper()
+           .onTrue( new ConditionalCommand(new ShootNoteAmp(intake, shooter, flySwatter), 
+                                           new ShootNoteSpeaker( intake, shooter), 
+                                           () -> { return currentTarget == Target.Amp; }) );
+    operator.a().onTrue(new InstantCommand( () -> { currentTarget = Target.Speaker; } ));
+    operator.b().onTrue(new InstantCommand( () -> { currentTarget = Target.Amp; } ));
+
     driver.a().onTrue(new ShootNoteAmp(intake, shooter, flySwatter));
     driver.b().onTrue(new ShootNoteSpeaker(intake, shooter));
-
+/* 
     driver.rightBumper()
           .onTrue( new SequentialCommandGroup(
                       new ControlIntake(intake, Intake.Position.LOWER),
                       new IntakeNote(intake),
                       new ControlIntake(intake, Intake.Position.RAISED)
                   ));
- 
+*/ 
 
     //if(operator.leftBumper().onTrue(Commands.startEnd(() -> {FlySwatter.climbingMode(true);}, () -> {FlySwatter.climbingMode(false);}, flySwatter)) && operator.rightBumper().onTrue(Commands.startEnd(() -> {FlySwatter.climbingMode(true);}, () -> {FlySwatter.climbingMode(false);}, flySwatter)))){
         //I Wrote this for the climbing i couldnt figure it out so i just commented it out
