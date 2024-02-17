@@ -7,11 +7,8 @@ package frc.robot.utils;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.ReverseLimitValue;
-
-import frc.robot.Constants;
 
 /** Add your docs here. */
 public class TalonFXHelper {
@@ -45,6 +42,11 @@ public class TalonFXHelper {
         slaveMotor.setControl(new Follower(motorID, false));
     }
  
+    public void manualZeroize(){
+        MotorState = State.STOPPED;
+        Motor.set(0);        
+    }
+
     public void Stop() {
         // always stop motor
         Motor.set(0);

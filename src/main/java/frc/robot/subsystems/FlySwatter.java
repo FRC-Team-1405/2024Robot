@@ -42,6 +42,8 @@ public class FlySwatter extends SubsystemBase {
   public FlySwatter() {
     Preferences.initDouble("FlySwatter/MaxPosition/", MAX_POSITION_CHANGE);
     MAX_POSITION_CHANGE = Preferences.getDouble("FlySwatter/MaxPosition/", MAX_POSITION_CHANGE);
+
+    primary.manualZeroize();
   }
 
   public void setPosition(Position target)  {

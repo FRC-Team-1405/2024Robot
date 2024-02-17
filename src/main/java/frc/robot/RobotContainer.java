@@ -22,6 +22,8 @@ import java.util.concurrent.locks.Condition;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.RuntimeType;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -29,6 +31,7 @@ import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -120,6 +123,14 @@ public class RobotContainer {
                   new CommandFlySwatter(flySwatter, FlySwatter.Position.CLIMB),
                   new ClimbCommand(flySwatter, () -> { return operator.getRightTriggerAxis() - operator.getLeftTriggerAxis() ; } )
                   ) );
+
+    Trigger hasNote = new Trigger( intake::hasNote );
+    hasNote.onTrue( new InstantCommand( () -> { 
+                          driver.getHID().setRumble(RumbleType.kBothRumble, 1);
+                        } ).withTimeout(1) )
+           .onFalse( new InstantCommand( () -> { 
+                          driver.getHID().setRumble(RumbleType.kBothRumble, 1);
+                        } ).withTimeout(1) );
   }
 
   private void configureShuffleboard(){
