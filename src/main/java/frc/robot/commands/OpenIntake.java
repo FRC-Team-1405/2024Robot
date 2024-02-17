@@ -14,11 +14,13 @@ public class OpenIntake extends SequentialCommandGroup {
   public OpenIntake(Intake intake, FlySwatter flySwatter) {
     addRequirements(intake, flySwatter);
 
-    this.addCommands( new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM),
+    this.addCommands( 
+      // new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM),
                       new ControlIntake(intake, Intake.Position.LOWER),
-                      new WaitUntilCommand( intake::hasNote ),
-                      new ControlIntake(intake, Intake.Position.RAISED),
-                      new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW)
+                      new IntakeNote(intake),
+                      new ControlIntake(intake, Intake.Position.RAISED)
+                     
+                      // new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW)
      );
   }
 }
