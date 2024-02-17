@@ -13,7 +13,9 @@ public class CloseIntake extends SequentialCommandGroup {
   public CloseIntake(Intake intake, FlySwatter flySwatter) {
     addRequirements(intake, flySwatter);
 
-    this.addCommands( new ControlIntake(intake, Intake.Position.RAISED),
+    this.addCommands( new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM),
+                      intake.run(intake::stop),
+                      new ControlIntake(intake, Intake.Position.RAISED),
                       new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW)
      );
   }

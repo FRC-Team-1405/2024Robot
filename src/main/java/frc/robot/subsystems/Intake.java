@@ -86,6 +86,11 @@ public class Intake extends SubsystemBase {
   public boolean isAtPosition(){
     return Math.abs(activeTarget.getValue() - intakePosition.get())  < POSITION_ERROR_DELTA  ;
   }
+
+  public Position getPosition() {
+    return activeTarget;
+  }
+  
   public void stop() {
     stopIntake();
     stopSpeed();

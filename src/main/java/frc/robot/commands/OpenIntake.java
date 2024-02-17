@@ -16,7 +16,7 @@ public class OpenIntake extends SequentialCommandGroup {
 
     this.addCommands( new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM),
                       new ControlIntake(intake, Intake.Position.LOWER),
-                      new WaitUntilCommand( intake::hasNote ),
+                      new IntakeNote(intake),
                       new ControlIntake(intake, Intake.Position.RAISED),
                       new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW)
      );
