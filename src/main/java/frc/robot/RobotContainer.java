@@ -13,22 +13,18 @@ import frc.robot.commands.OpenIntake;
 import frc.robot.commands.OutputNote;
 import frc.robot.commands.ShootNoteAmp;
 import frc.robot.commands.ShootNoteSpeaker;
-import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.LEDManager;
 import frc.robot.commands.SwerveDriveCommand;
-
-import java.util.concurrent.locks.Condition;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.Preferences;
-import edu.wpi.first.wpilibj.RuntimeType;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -36,7 +32,6 @@ import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrive;
-import frc.robot.subsystems.Shooter.ShooterSpeed;
 import frc.robot.tools.LEDs.BatteryLED;
 import frc.robot.tools.LEDs.IAddressableLEDHelper;
 import frc.robot.tools.LEDs.MultiFunctionLED;
@@ -95,9 +90,11 @@ public class RobotContainer {
 
     operator.a().onTrue( new InstantCommand( () -> { currentTarget = Target.Speaker; } ));
 
-    operator.b().onTrue( new SequentialCommandGroup( 
+    operator.b()
+            .and( () -> flySwatter.getCurrentCommand() == null)
+            .onTrue( new SequentialCommandGroup( 
                               new InstantCommand( () -> { currentTarget = Target.Amp; } ),
-                              new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH)));
+                              new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH)) );
 
     operator.x().onTrue( new SequentialCommandGroup(
                               new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM),
@@ -124,6 +121,13 @@ public class RobotContainer {
                   new ClimbCommand(flySwatter, () -> { return operator.getRightTriggerAxis() - operator.getLeftTriggerAxis() ; } )
                   ) );
 
+    Trigger haveNote = new Trigger( () -> intake.hasNote() );
+    haveNote.onTrue( new RunCommand(  () -> { driver.getHID().setRumble(RumbleType.kBothRumble, 1); } ) )
+            .onFalse( new RunCommand( () -> { driver.getHID().setRumble(RumbleType.kBothRumble, 0); } ) );
+
+    Trigger prepReady = new Trigger( () -> intake.hasNote() && intake.getCurrentCommand() == null);
+    prepReady.onTrue( new RunCommand(  () -> { operator.getHID().setRumble(RumbleType.kBothRumble, 1); } ) )
+             .onFalse( new RunCommand( () -> { operator.getHID().setRumble(RumbleType.kBothRumble, 0); } ) );
   }
 
   private void configureShuffleboard(){
@@ -208,7 +212,6 @@ public class RobotContainer {
   }
 
   double getXSpeed() { 
-    int pov = driver.getHID().getPOV();
     double finalX;
     if (Math.abs(driver.getLeftY()) <= 0.1)
       finalX = 0.0;
