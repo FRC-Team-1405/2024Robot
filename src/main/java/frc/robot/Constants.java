@@ -17,6 +17,9 @@ public final class Constants {
         }
     }
 
+    public static final Translation2d RED_SPEAKER_POS = new Translation2d(0, Units.inchesToMeters(218));
+    public static final Translation2d BLUE_SPEAKER_POS = new Translation2d(0, Units.inchesToMeters(103));
+
     public static final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
         new Translation2d(Units.inchesToMeters(-10), Units.inchesToMeters(-7)), // Front Left
         new Translation2d(Units.inchesToMeters(-10), Units.inchesToMeters(7)), // Front Right

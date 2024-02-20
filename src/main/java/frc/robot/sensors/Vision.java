@@ -4,10 +4,10 @@ import java.lang.annotation.Target;
 
 import frc.robot.Constants;
 
-public class Targets {
+public class Vision {
     private Limelight limelight = new Limelight();
 
-    public Targets() {
+    public Vision() {
 
     }
 
@@ -17,6 +17,10 @@ public class Targets {
 
     public void setSpeakerStart() {
         limelight.setPipeline(Constants.Limelight.Pipeline.SPEAKER);
+    }
+
+    public boolean hasTarget() {
+        return limelight.hasTarget();
     }
 
     public double getAngleToTarget() {

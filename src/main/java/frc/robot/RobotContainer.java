@@ -15,10 +15,16 @@ import frc.robot.commands.ShootNoteAmp;
 import frc.robot.commands.ShootNoteSpeaker;
 import frc.robot.commands.LEDManager;
 import frc.robot.commands.SwerveDriveCommand;
+import frc.robot.sensors.Vision;
+
+import java.util.Optional;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -40,6 +46,9 @@ public class RobotContainer {
   private FlySwatter flySwatter = new FlySwatter();
   private Intake intake = new Intake();
   private Shooter shooter = new Shooter();
+
+  private Vision vision;
+  private Optional<Alliance> alliance = DriverStation.getAlliance();
   
   private final CommandXboxController driver = new CommandXboxController(0);
   private final CommandXboxController operator = new CommandXboxController(1);
@@ -50,7 +59,13 @@ public class RobotContainer {
     configureBindings();
     configureShuffleboard();
 
+    vision.setSpeakerStart();
+
     driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, driveBase));
+  }
+
+  public void teleopInit() {
+    alliance = DriverStation.getAlliance();
   }
 
   private IAddressableLEDHelper[] leds;
@@ -207,12 +222,28 @@ public class RobotContainer {
   } 
   
   public double getRotationSpeed() { 
-    double finalRotation;
+    double finalRotation = 0.0;
 
+    if(driver.rightStick().getAsBoolean()) {
+      //Drive by camera
+      if(vision.hasTarget()) {
+        finalRotation = vision.getAngleToTarget() / 180 * 1;
+      }
+      //Drive by field oriented position
+      else if(alliance.isPresent()){
+        Pose2d botPos = driveBase.getPose();
+        double speakerYPos = alliance.get() == Alliance.Blue ? Constants.BLUE_SPEAKER_POS.getY() : Constants.RED_SPEAKER_POS.getY();
+        //0 is on top +right -left for atan2(x, y)
+        double theta = Math.atan2(botPos.getX(), speakerYPos - botPos.getY()) / Math.PI;
+
+        return (botPos.getRotation().getDegrees() / 180) - theta;
+      }
+    } else {
       finalRotation = driver.getRightX();
+    }
 
-      if (Math.abs(finalRotation) < 0.1)
-        finalRotation = 0.0;
+    if (Math.abs(finalRotation) < 0.1)
+      finalRotation = 0.0;
     
     return finalRotation;
   }
