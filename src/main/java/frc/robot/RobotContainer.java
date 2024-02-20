@@ -191,11 +191,17 @@ public class RobotContainer {
 
   void configurePathPlanner() {
     VibrateController vc = new VibrateController(driver);
-    NamedCommands.registerCommand("Pickup Note", new OpenIntake(intake, flySwatter));
-    // NamedCommands.registerCommand("Pickup Note", new WaitUntilCommand( intake::hasNote ));
+    NamedCommands.registerCommand("Pickup Note", 
+        new SequentialCommandGroup( new ControlIntake(intake, Intake.Position.LOWER),
+                                    new IntakeNote(intake),
+                                    new ControlIntake(intake, Intake.Position.RAISED))
+    );
     NamedCommands.registerCommand("Lower Intake", new ControlIntake(intake, Intake.Position.LOWER));
     NamedCommands.registerCommand("Raise Intake", new ControlIntake(intake, Intake.Position.RAISED));
     NamedCommands.registerCommand("Shoot Speaker", new ShootNoteSpeaker(intake, shooter));
+    NamedCommands.registerCommand("Shoot Amp", new ShootNoteAmp(intake, shooter, flySwatter));
+    NamedCommands.registerCommand("Raise Flyswatter", new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM));
+    NamedCommands.registerCommand("Lower Flyswatter", new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
     // NamedCommands.registerCommand("Pickup Note", vc);
     // NamedCommands.registerCommand("Shoot Speaker", vc);
   }

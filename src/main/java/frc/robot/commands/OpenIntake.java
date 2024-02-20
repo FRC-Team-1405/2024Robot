@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
 
@@ -15,12 +14,11 @@ public class OpenIntake extends SequentialCommandGroup {
     addRequirements(intake, flySwatter);
 
     this.addCommands( 
-      // new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM),
+                      new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM),
                       new ControlIntake(intake, Intake.Position.LOWER),
                       new IntakeNote(intake),
-                      new ControlIntake(intake, Intake.Position.RAISED)
-                     
-                      // new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW)
+                      new ControlIntake(intake, Intake.Position.RAISED),
+                      new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW)
      );
   }
 }
