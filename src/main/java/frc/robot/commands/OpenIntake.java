@@ -13,11 +13,10 @@ public class OpenIntake extends SequentialCommandGroup {
   public OpenIntake(Intake intake, FlySwatter flySwatter) {
     addRequirements(intake, flySwatter);
 
-    this.addCommands( 
-                      new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM),
-                      new ControlIntake(intake, Intake.Position.LOWER),
+    this.addCommands( new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM),
+                      new ControlIntake(intake, Intake.Position.EXTENDED),
                       new IntakeNote(intake),
-                      new ControlIntake(intake, Intake.Position.RAISED),
+                      new ControlIntake(intake, Intake.Position.RETRACTED),
                       new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW)
      );
   }

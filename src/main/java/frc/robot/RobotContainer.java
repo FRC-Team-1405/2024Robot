@@ -22,25 +22,28 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrive;
-import frc.robot.subsystems.Shooter.ShooterSpeed;
 import frc.robot.tools.LEDs.BatteryLED;
 import frc.robot.tools.LEDs.IAddressableLEDHelper;
 import frc.robot.tools.LEDs.MultiFunctionLED;
 import frc.robot.tools.LEDs.ShootLED;
 
 public class RobotContainer {
-  private SwerveDrive driveBase = new SwerveDrive(4, 2*Math.PI, "geared upright",  Constants.kinematics, Constants.config);
+  private SwerveDrive driveBase = new SwerveDrive(6, 2*Math.PI, "geared upright",  Constants.kinematics, Constants.config);
   private FlySwatter flySwatter = new FlySwatter();
   private Intake intake = new Intake();
   private Shooter shooter = new Shooter();
@@ -51,11 +54,11 @@ public class RobotContainer {
   private static final SendableChooser<String> autos = new SendableChooser<>();
   
   public RobotContainer() {
-    driveBase.enableDebugMode();
+//    driveBase.enableDebugMode();
     driveBase.setHeadingAdjustment(180);
     configureBindings();
-    configureShuffleboard();
     configurePathPlanner();
+//    configureShuffleboard();
 
     driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, driveBase));
   }
@@ -74,35 +77,45 @@ public class RobotContainer {
     ledManager.schedule();
   }
 
+  private enum Target { Speaker, Amp };
+  private Target currentTarget = Target.Speaker;
+
   private void configureBindings() {
-    driver.start()
-          .and( driver.back() )
-          .onTrue( driveBase.runOnce( driveBase::resetGyro ) );
-
+    // control intake deploy/retract
     driver.rightBumper()
-      .onTrue( new OpenIntake(intake, flySwatter))
-      .onFalse( new CloseIntake(intake, flySwatter));
+          .onTrue( new ConditionalCommand(new OpenIntake(intake, flySwatter), 
+                                          new CloseIntake(intake, flySwatter), 
+                                          () -> { return intake.getPosition() == Intake.Position.RETRACTED; }) );
 
-    driver.back().whileTrue( Commands.startEnd( () -> { SwerveDrive.useStopAngle(true);},
-      () -> { SwerveDrive.useStopAngle(false);}));  
-    driver.a().onTrue(new ShootNoteAmp(intake, shooter, flySwatter));
-    driver.b().onTrue(new ShootNoteSpeaker(intake, shooter));
+    
+//    driver.back().whileTrue( Commands.startEnd( () -> { SwerveDrive.useStopAngle(true);},
+//                                                () -> { SwerveDrive.useStopAngle(false);}));  
 
-    driver.rightBumper()
-          .onTrue( new SequentialCommandGroup(
-                      new ControlIntake(intake, Intake.Position.LOWER),
-                      new IntakeNote(intake),
-                      new ControlIntake(intake, Intake.Position.RAISED)
-                  ));
- 
+     driver.leftBumper()
+           .onTrue( new ConditionalCommand(new ShootNoteAmp(intake, shooter, flySwatter), 
+                                           new ShootNoteSpeaker( intake, shooter), 
+                                           () -> { return currentTarget == Target.Amp; }) );
 
-    //if(operator.leftBumper().onTrue(Commands.startEnd(() -> {FlySwatter.climbingMode(true);}, () -> {FlySwatter.climbingMode(false);}, flySwatter)) && operator.rightBumper().onTrue(Commands.startEnd(() -> {FlySwatter.climbingMode(true);}, () -> {FlySwatter.climbingMode(false);}, flySwatter)))){
-        //I Wrote this for the climbing i couldnt figure it out so i just commented it out
-  
+    operator.a().onTrue( new InstantCommand( () -> { currentTarget = Target.Speaker; } ));
+
+    operator.b()
+            .and( () -> flySwatter.getCurrentCommand() == null)
+            .onTrue( new SequentialCommandGroup( 
+                              new InstantCommand( () -> { currentTarget = Target.Amp; } ),
+                              new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH)) );
+
+    operator.x().onTrue( new SequentialCommandGroup(
+                              new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM),
+                              new ControlIntake(intake, Intake.Position.EJECT),
+                              new OutputNote(intake),
+                              new CloseIntake(intake, flySwatter)) );
+
 
     operator.y()
-      .onTrue(new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH))
-      .onFalse(new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
+      .onTrue(new ConditionalCommand(new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH), 
+                                     new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW), 
+                                     () -> { return flySwatter.getPosition() == FlySwatter.Position.LOW; }));
+
     operator.back().onTrue( new InstantCommand( driveBase::resetGyro ) {
         public boolean runsWhenDisabled() {
           return true;
@@ -115,6 +128,14 @@ public class RobotContainer {
                   new CommandFlySwatter(flySwatter, FlySwatter.Position.CLIMB),
                   new ClimbCommand(flySwatter, () -> { return operator.getRightTriggerAxis() - operator.getLeftTriggerAxis() ; } )
                   ) );
+
+    Trigger haveNote = new Trigger( () -> intake.hasNote() );
+    haveNote.onTrue( new RunCommand(  () -> { driver.getHID().setRumble(RumbleType.kBothRumble, 1); } ) )
+            .onFalse( new RunCommand( () -> { driver.getHID().setRumble(RumbleType.kBothRumble, 0); } ) );
+
+    Trigger prepReady = new Trigger( () -> intake.hasNote() && intake.getCurrentCommand() == null);
+    prepReady.onTrue( new RunCommand(  () -> { operator.getHID().setRumble(RumbleType.kBothRumble, 1); } ) )
+             .onFalse( new RunCommand( () -> { operator.getHID().setRumble(RumbleType.kBothRumble, 0); } ) );
   }
   
   private void configureShuffleboard(){
@@ -122,7 +143,19 @@ public class RobotContainer {
     autos.setDefaultOption("Shuffle1", "Shuffle1");
     autos.addOption("Shuffle2", "Shuffle2");
     SmartDashboard.putData("Auto/Autos", autos);
+
+    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW);
+    command.setName("Flyswatter");
+    SmartDashboard.putData("Flyswatter/Low", command);
     
+    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM);
+    command.setName("Flyswatter");
+    SmartDashboard.putData("Flyswatter/Medium", command);
+
+    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH);
+    command.setName("Flyswatter");
+    SmartDashboard.putData("Flyswatter/High", command);
+
     command = new IntakeNote(intake);
     command.setName("Intake");
     SmartDashboard.putData("Intake/Input", command);
@@ -155,11 +188,11 @@ public class RobotContainer {
     command.setName("Stop");
     SmartDashboard.putData("Flyswatter/Stop", command);
 
-    command = new ControlIntake(intake, Intake.Position.LOWER);
+    command = new ControlIntake(intake, Intake.Position.EXTENDED);
     command.setName("Lower");
     SmartDashboard.putData("Intake/Position/Lower", command);
 
-    command = new ControlIntake(intake, Intake.Position.RAISED);
+    command = new ControlIntake(intake, Intake.Position.RETRACTED);
     command.setName("Raised");
     SmartDashboard.putData("Intake/Position/Raised", command);
 
@@ -176,9 +209,9 @@ public class RobotContainer {
     SmartDashboard.putData("FlySwatter/Climb/Active", command);
 
     command = new SequentialCommandGroup(
-                  new ControlIntake(intake, Intake.Position.LOWER),
+                  new ControlIntake(intake, Intake.Position.EXTENDED),
                   new IntakeNote(intake),
-                  new ControlIntake(intake, Intake.Position.RAISED)
+                  new ControlIntake(intake, Intake.Position.RETRACTED)
                   );
     command.setName("Pick Up Note");
     SmartDashboard.putData("Intake/PickUpNote", command);
@@ -192,9 +225,9 @@ public class RobotContainer {
   void configurePathPlanner() {
     VibrateController vc = new VibrateController(driver);
     NamedCommands.registerCommand("Pickup Note", 
-        new SequentialCommandGroup( new ControlIntake(intake, Intake.Position.LOWER),
+        new SequentialCommandGroup( new ControlIntake(intake, Intake.Position.EXTENDED),
                                     new IntakeNote(intake),
-                                    new ControlIntake(intake, Intake.Position.RAISED))
+                                    new ControlIntake(intake, Intake.Position.RETRACTED))
     );
     NamedCommands.registerCommand("Lower Intake", new ControlIntake(intake, Intake.Position.LOWER));
     NamedCommands.registerCommand("Raise Intake", new ControlIntake(intake, Intake.Position.RAISED));
@@ -207,7 +240,6 @@ public class RobotContainer {
   }
 
   double getXSpeed() { 
-    int pov = driver.getHID().getPOV();
     double finalX;
     if (Math.abs(driver.getLeftY()) <= 0.1)
       finalX = 0.0;
@@ -238,7 +270,7 @@ public class RobotContainer {
 
       finalRotation = driver.getRightX();
 
-      if (Math.abs(finalRotation) < 0.1)
+      if (Math.abs(finalRotation) < 0.15)
         finalRotation = 0.0;
     
     return finalRotation;
