@@ -47,7 +47,7 @@ public class RobotContainer {
   private final CommandXboxController operator = new CommandXboxController(1);
   
   public RobotContainer() {
-    driveBase.enableDebugMode();
+//    driveBase.enableDebugMode();
     driveBase.setHeadingAdjustment(180);
     configureBindings();
 //    configureShuffleboard();
