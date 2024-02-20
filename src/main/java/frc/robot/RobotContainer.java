@@ -229,8 +229,8 @@ public class RobotContainer {
                                     new IntakeNote(intake),
                                     new ControlIntake(intake, Intake.Position.RETRACTED))
     );
-    NamedCommands.registerCommand("Lower Intake", new ControlIntake(intake, Intake.Position.LOWER));
-    NamedCommands.registerCommand("Raise Intake", new ControlIntake(intake, Intake.Position.RAISED));
+    NamedCommands.registerCommand("Lower Intake", new ControlIntake(intake, Intake.Position.EXTENDED));
+    NamedCommands.registerCommand("Raise Intake", new ControlIntake(intake, Intake.Position.RETRACTED));
     NamedCommands.registerCommand("Shoot Speaker", new ShootNoteSpeaker(intake, shooter));
     NamedCommands.registerCommand("Shoot Amp", new ShootNoteAmp(intake, shooter, flySwatter));
     NamedCommands.registerCommand("Raise Flyswatter", new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM));
