@@ -47,7 +47,7 @@ public class RobotContainer {
   private Intake intake = new Intake();
   private Shooter shooter = new Shooter();
 
-  private Vision vision;
+  private Vision vision = new Vision();
   private Optional<Alliance> alliance = DriverStation.getAlliance();
   
   private final CommandXboxController driver = new CommandXboxController(0);
@@ -223,11 +223,11 @@ public class RobotContainer {
   
   public double getRotationSpeed() { 
     double finalRotation = 0.0;
-
+ 
     if(driver.rightStick().getAsBoolean()) {
       //Drive by camera
       if(vision.hasTarget()) {
-        finalRotation = vision.getAngleToTarget() / 180 * 1;
+        finalRotation = vision.getAngleToTarget() / 40 * 1;
       }
       //Drive by field oriented position
       else if(alliance.isPresent()){
@@ -235,7 +235,7 @@ public class RobotContainer {
         double speakerYPos = alliance.get() == Alliance.Blue ? Constants.BLUE_SPEAKER_POS.getY() : Constants.RED_SPEAKER_POS.getY();
         //0 is on top +right -left for atan2(x, y)
         double theta = Math.atan2(botPos.getX(), speakerYPos - botPos.getY()) / Math.PI;
-
+        
         return (botPos.getRotation().getDegrees() / 180) - theta;
       }
     } else {
