@@ -25,9 +25,9 @@ public class BatteryLED extends AddressableLEDHelper {
 
         segmentLength = numLEDs / 3;
 
-        greenOffset = 0;
+        redOffset = 0;
         yellowOffset = segmentLength;
-        redOffset = segmentLength * 2;
+        greenOffset = segmentLength * 2;
 
         // SmartDashboard.putNumber("LedVoltageTest", 0);
     }

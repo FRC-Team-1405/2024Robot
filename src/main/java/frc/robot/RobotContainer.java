@@ -50,7 +50,8 @@ public class RobotContainer {
 //    driveBase.enableDebugMode();
     driveBase.setHeadingAdjustment(180);
     configureBindings();
-//    configureShuffleboard();
+    configureShuffleboard();
+    configureLEDs();
 
     driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, driveBase));
   }
@@ -58,14 +59,14 @@ public class RobotContainer {
   private IAddressableLEDHelper[] leds;
   private MultiFunctionLED multifucntion;
   private LEDManager ledManager;
-  public void ConfigureLEDs() {
+  public void configureLEDs() {
     multifucntion = new MultiFunctionLED(
-      new ShootLED(15),
-      new BatteryLED(15));
+      new BatteryLED(15),
+      new ShootLED(15));
 
     leds = new IAddressableLEDHelper[]{multifucntion};
 
-    ledManager = new LEDManager(1, leds);
+    ledManager = new LEDManager(0, leds);
     ledManager.schedule();
   }
 
