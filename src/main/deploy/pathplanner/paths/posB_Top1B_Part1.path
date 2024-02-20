@@ -32,38 +32,6 @@
     },
     {
       "anchor": {
-        "x": 1.4165367822652515,
-        "y": 5.175838157680935
-      },
-      "prevControl": {
-        "x": 1.5776892523761963,
-        "y": 5.839407152255414
-      },
-      "nextControl": {
-        "x": 1.327737553278319,
-        "y": 4.810194273617095
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 2.8,
-        "y": 4.218402894080615
-      },
-      "prevControl": {
-        "x": 2.7547996624713247,
-        "y": 4.148706122706326
-      },
-      "nextControl": {
-        "x": 2.8452003375286745,
-        "y": 4.288099665454905
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
         "x": 1.3,
         "y": 5.55
       },
@@ -76,54 +44,9 @@
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1.95,
-      "rotationDegrees": -7.0,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 2.55,
-      "rotationDegrees": -22.68893683390359,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
-    {
-      "name": "Shoot first note",
-      "waypointRelativePos": 1.9,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Shoot Speaker"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Lower Intake for second note",
-      "waypointRelativePos": 2.05,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Pickup Note"
-              }
-            }
-          ]
-        }
-      }
-    },
     {
       "name": "Pickup 1st  note",
       "waypointRelativePos": 0.0,

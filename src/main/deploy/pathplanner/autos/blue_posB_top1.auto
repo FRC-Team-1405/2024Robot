@@ -44,6 +44,24 @@
         {
           "type": "named",
           "data": {
+            "name": "Lower Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "posB_Top1B"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Speaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Lower Flyswatter"
           }
         }

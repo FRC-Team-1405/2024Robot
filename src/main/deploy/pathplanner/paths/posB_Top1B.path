@@ -16,16 +16,32 @@
     },
     {
       "anchor": {
-        "x": 2.8,
-        "y": 5.55
+        "x": 1.646404809397296,
+        "y": 4.328361263357597
       },
       "prevControl": {
-        "x": 2.827468877097481,
-        "y": 5.557529287855652
+        "x": 1.3071301589261843,
+        "y": 4.67369748777396
       },
       "nextControl": {
-        "x": 2.794590649130022,
-        "y": 5.548517283408865
+        "x": 1.9856794598684075,
+        "y": 3.9830250389412347
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.4634437894468206,
+        "y": 4.1046482092964185
+      },
+      "prevControl": {
+        "x": 2.3041286947355895,
+        "y": 4.0366571794220665
+      },
+      "nextControl": {
+        "x": 2.622758884158052,
+        "y": 4.1726392391707705
       },
       "isLocked": false,
       "linkedName": null
@@ -49,7 +65,7 @@
   "eventMarkers": [
     {
       "name": "Lower Intake",
-      "waypointRelativePos": 0.0,
+      "waypointRelativePos": 0.7,
       "command": {
         "type": "sequential",
         "data": {
