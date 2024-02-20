@@ -38,7 +38,7 @@ import frc.robot.tools.LEDs.MultiFunctionLED;
 import frc.robot.tools.LEDs.ShootLED;
 
 public class RobotContainer {
-  private SwerveDrive driveBase = new SwerveDrive(4, 2*Math.PI, "geared upright",  Constants.kinematics, Constants.config);
+  private SwerveDrive driveBase = new SwerveDrive(6, 2*Math.PI, "geared upright",  Constants.kinematics, Constants.config);
   private FlySwatter flySwatter = new FlySwatter();
   private Intake intake = new Intake();
   private Shooter shooter = new Shooter();
@@ -50,7 +50,7 @@ public class RobotContainer {
     driveBase.enableDebugMode();
     driveBase.setHeadingAdjustment(180);
     configureBindings();
-    configureShuffleboard();
+//    configureShuffleboard();
 
     driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, driveBase));
   }
@@ -242,7 +242,7 @@ public class RobotContainer {
 
       finalRotation = driver.getRightX();
 
-      if (Math.abs(finalRotation) < 0.1)
+      if (Math.abs(finalRotation) < 0.15)
         finalRotation = 0.0;
     
     return finalRotation;

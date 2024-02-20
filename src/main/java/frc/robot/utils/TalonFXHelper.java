@@ -39,7 +39,7 @@ public class TalonFXHelper {
         this(motorID, accuracy);
 
         slaveMotor = new TalonFX(slaveMotorID);
-        slaveMotor.setControl(new Follower(motorID, false));
+        slaveMotor.setControl(new Follower(motorID, true));
     }
  
     public void manualZeroize(){
