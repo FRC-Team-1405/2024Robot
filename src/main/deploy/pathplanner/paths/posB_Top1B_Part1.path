@@ -91,23 +91,6 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Lower Intake",
-      "waypointRelativePos": 0.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Pickup Note"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "Shoot first note",
       "waypointRelativePos": 1.9,
       "command": {
@@ -128,7 +111,24 @@
       "name": "Lower Intake for second note",
       "waypointRelativePos": 2.05,
       "command": {
-        "type": "sequential",
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pickup Note"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Pickup 1st  note",
+      "waypointRelativePos": 0.0,
+      "command": {
+        "type": "parallel",
         "data": {
           "commands": [
             {
