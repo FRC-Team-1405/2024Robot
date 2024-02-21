@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.ShooterSpeed;
+import frc.robot.tools.LEDs.MultiFunctionLED;
 
 public class ShooterCommand extends Command {
   private Shooter shooter;
@@ -25,6 +26,7 @@ public class ShooterCommand extends Command {
   @Override
   public void initialize() {
     shooter.setWheelSpeed(speed);
+    MultiFunctionLED.setMode(1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -39,6 +41,8 @@ public class ShooterCommand extends Command {
     if (interrupted) {
       shooter.stop();
     }
+
+    MultiFunctionLED.setMode(0);
   }
 
   // Returns true when the command should end.

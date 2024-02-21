@@ -44,7 +44,7 @@ public class BatteryLED extends AddressableLEDHelper {
         // double voltage = SmartDashboard.getNumber("LedVoltageTest", 0);
 
         int numberOfLeds = (numLEDs - 1) - (int)MathTools.map(voltage, Constants.BatteryMonitor.MINVOLTAGE,
-                Constants.BatteryMonitor.MAXVOLTAGE, 1, numLEDs);
+                Constants.BatteryMonitor.MAXVOLTAGE, numLEDs, 1);
 
         for (int i = offset; i < segmentLength + offset; i++) {
             // Green
