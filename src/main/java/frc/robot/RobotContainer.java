@@ -38,7 +38,7 @@ import frc.robot.tools.LEDs.MultiFunctionLED;
 import frc.robot.tools.LEDs.ShootLED;
 
 public class RobotContainer {
-  private SwerveDrive driveBase = new SwerveDrive(6, 2*Math.PI, "geared upright",  Constants.kinematics, Constants.config);
+  private SwerveDrive driveBase = new SwerveDrive(8, 2*Math.PI, "geared upright",  Constants.kinematics, Constants.config);
   private FlySwatter flySwatter = new FlySwatter();
   private Intake intake = new Intake();
   private Shooter shooter = new Shooter();
@@ -213,8 +213,11 @@ public class RobotContainer {
   }
 
   double getXSpeed() { 
+    double speedMultiplication = 0.75;
+    speedMultiplication += driver.getLeftTriggerAxis() * 0.25;
+
     double finalX;
-    if (Math.abs(driver.getLeftY()) <= 0.1)
+    if (Math.abs(driver.getLeftY() * speedMultiplication) <= 0.1)
       finalX = 0.0;
     else
       finalX = driver.getLeftY();
@@ -223,6 +226,9 @@ public class RobotContainer {
   }
 
   public double getYSpeed() { 
+    double speedMultiplication = 0.75;
+    speedMultiplication += driver.getLeftTriggerAxis() * 0.25;
+    
     int pov = driver.getHID().getPOV();
 
     double finalY;
@@ -233,7 +239,7 @@ public class RobotContainer {
     else if (Math.abs(driver.getLeftX()) <= 0.1)
       finalY = 0.0;
     else
-      finalY = driver.getLeftX();
+      finalY = driver.getLeftX() * speedMultiplication;
     
     return -finalY; 
   } 
