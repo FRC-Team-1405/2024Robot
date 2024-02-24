@@ -20,7 +20,7 @@ public class FlySwatter extends SubsystemBase {
     HIGH(37),
     MEDIUM(17),
     LOW(1),
-    CLIMB(25);
+    CLIMB(30);
 
     private Position(double value){
       Preferences.initDouble("FLySwatter/Position/"+this.name(), value);
@@ -32,7 +32,7 @@ public class FlySwatter extends SubsystemBase {
       return value;
     }
   }
-  private double MAX_POSITION_CHANGE = 100;
+  private double MAX_POSITION_CHANGE = 1;
 
   private boolean climbActive = false;
   private Position targetPosition = Position.LOW;
@@ -45,7 +45,7 @@ public class FlySwatter extends SubsystemBase {
 
     primary.manualZeroize();
   }
-
+  
   public void setPosition(Position target)  {
     targetPosition = target;
     primary.SetPosition(targetPosition.getValue());
@@ -55,7 +55,7 @@ public class FlySwatter extends SubsystemBase {
 
   public void adjustPosition(double amount) {
     if (climbActive){
-      double target = targetPosition.getValue() + (MAX_POSITION_CHANGE * amount);
+      double target = primary.GetPosition() + (MAX_POSITION_CHANGE * amount);
       primary.SetPosition(target);
     }
   }

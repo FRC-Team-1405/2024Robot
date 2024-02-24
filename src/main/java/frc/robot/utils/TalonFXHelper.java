@@ -83,6 +83,10 @@ public class TalonFXHelper {
                 break;
         }
     }
+
+    public double GetPosition() {
+        return Motor.getPosition().getValueAsDouble();
+    }
  
     public void Execute() {
         switch (MotorState) {
