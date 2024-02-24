@@ -1,7 +1,5 @@
 package frc.robot.sensors;
 
-import java.lang.annotation.Target;
-
 import frc.robot.Constants;
 
 public class Vision {
