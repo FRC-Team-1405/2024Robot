@@ -1,0 +1,20 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/FlySwatter/Low": "Command",
+      "/SmartDashboard/Flyswatter/High": "Command",
+      "/SmartDashboard/Flyswatter/Medium": "Command",
+      "/SmartDashboard/Flyswatter/Stop": "Command",
+      "/SmartDashboard/Intake/Input": "Command",
+      "/SmartDashboard/Intake/Output": "Command",
+      "/SmartDashboard/Intake/Position/Lower": "Command",
+      "/SmartDashboard/Intake/Position/Raised": "Command",
+      "/SmartDashboard/Intake/Stop": "Command",
+      "/SmartDashboard/Preferences/Reset": "Command"
+    }
+  },
+  "NetworkTables Info": {
+    "visible": true
+  }
+}

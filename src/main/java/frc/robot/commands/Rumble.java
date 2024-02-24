@@ -4,50 +4,42 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Shooter.ShooterSpeed;
-import frc.robot.tools.LEDs.MultiFunctionLED;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
-public class ShooterCommand extends Command {
-  private Shooter shooter;
-  private ShooterSpeed speed; 
-
-  /** Creates a new ShooterCommand. */
-  public ShooterCommand(Shooter subsystem, ShooterSpeed speed) {
-    this.speed = speed;
-    this.shooter = subsystem;
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.addRequirements(shooter);
-    
+public class Rumble extends Command {
+  private CommandXboxController controller;
+  private int ticks;
+  private int ticksReset;
+  /** Creates a new Rumble. */
+  public Rumble(CommandXboxController controller, int ticks) {
+    this.controller = controller;
+    this.ticksReset = ticks;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    shooter.setWheelSpeed(speed);
-    MultiFunctionLED.setMode(1);
+    ticks = ticksReset;
+    controller.getHID().setRumble(RumbleType.kBothRumble, 1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   
+    ticks -= 1;
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if (interrupted) {
-      shooter.stop();
-    }
-
-    MultiFunctionLED.setMode(0);
+    controller.getHID().setRumble(RumbleType.kBothRumble, 0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return shooter.atSpeed();
+    return ticks <= 0;
   }
 }

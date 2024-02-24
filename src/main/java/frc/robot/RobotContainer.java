@@ -11,6 +11,7 @@ import frc.robot.commands.ControlIntake;
 import frc.robot.commands.IntakeNote;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.OutputNote;
+import frc.robot.commands.Rumble;
 import frc.robot.commands.ShootNoteAmp;
 import frc.robot.commands.ShootNoteSpeaker;
 import frc.robot.commands.LEDManager;
@@ -19,18 +20,21 @@ import frc.robot.sensors.Vision;
 
 import java.util.Optional;
 
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -42,7 +46,7 @@ import frc.robot.tools.LEDs.MultiFunctionLED;
 import frc.robot.tools.LEDs.ShootLED;
 
 public class RobotContainer {
-  private SwerveDrive driveBase = new SwerveDrive(4, 2*Math.PI, "geared upright",  Constants.kinematics, Constants.config);
+  private SwerveDrive driveBase = new SwerveDrive(10, 2*Math.PI, "geared upright",  Constants.kinematics, Constants.config);
   private FlySwatter flySwatter = new FlySwatter();
   private Intake intake = new Intake();
   private Shooter shooter = new Shooter();
@@ -52,12 +56,17 @@ public class RobotContainer {
   
   private final CommandXboxController driver = new CommandXboxController(0);
   private final CommandXboxController operator = new CommandXboxController(1);
+
+  private static final SendableChooser<String> autos = new SendableChooser<>();
   
   public RobotContainer() {
-    driveBase.enableDebugMode();
+//    driveBase.enableDebugMode();
     driveBase.setHeadingAdjustment(180);
     configureBindings();
     configureShuffleboard();
+    configureLEDs();
+    configurePathPlanner();
+   configureShuffleboard();
 
     vision.setSpeakerStart();
 
@@ -71,46 +80,63 @@ public class RobotContainer {
   private IAddressableLEDHelper[] leds;
   private MultiFunctionLED multifucntion;
   private LEDManager ledManager;
-  public void ConfigureLEDs() {
+  public void configureLEDs() {
     multifucntion = new MultiFunctionLED(
-      new ShootLED(15),
-      new BatteryLED(15));
+      new BatteryLED(15),
+      new ShootLED(15));
 
     leds = new IAddressableLEDHelper[]{multifucntion};
 
-    ledManager = new LEDManager(1, leds);
+    ledManager = new LEDManager(0, leds);
     ledManager.schedule();
   }
 
+  private enum Target { Speaker, Amp };
+  private Target currentTarget = Target.Speaker;
+
   private void configureBindings() {
-    driver.start()
-          .and( driver.back() )
-          .onTrue( driveBase.runOnce( driveBase::resetGyro ) );
-
+    // control intake deploy/retract
     driver.rightBumper()
-      .onTrue( new OpenIntake(intake, flySwatter))
-      .onFalse( new CloseIntake(intake, flySwatter));
+          .onTrue( new ConditionalCommand(new OpenIntake(intake, flySwatter), 
+                                          new CloseIntake(intake, flySwatter), 
+                                          () -> { return intake.getPosition() == Intake.Position.RETRACTED; }) );
 
-    driver.back().whileTrue( Commands.startEnd( () -> { SwerveDrive.useStopAngle(true);},
-      () -> { SwerveDrive.useStopAngle(false);}));  
-    driver.a().onTrue(new ShootNoteAmp(intake, shooter, flySwatter));
-    driver.b().onTrue(new ShootNoteSpeaker(intake, shooter));
+    
+//    driver.back().whileTrue( Commands.startEnd( () -> { SwerveDrive.useStopAngle(true);},
+//                                                () -> { SwerveDrive.useStopAngle(false);}));  
 
-    driver.rightBumper()
-          .onTrue( new SequentialCommandGroup(
-                      new ControlIntake(intake, Intake.Position.LOWER),
-                      new IntakeNote(intake),
-                      new ControlIntake(intake, Intake.Position.RAISED)
-                  ));
- 
+     driver.leftBumper()
+           .onTrue( new ConditionalCommand(new ShootNoteAmp(intake, shooter, flySwatter), 
+                                           new ShootNoteSpeaker( intake, shooter), 
+                                           () -> { return currentTarget == Target.Amp; }) );
 
-    //if(operator.leftBumper().onTrue(Commands.startEnd(() -> {FlySwatter.climbingMode(true);}, () -> {FlySwatter.climbingMode(false);}, flySwatter)) && operator.rightBumper().onTrue(Commands.startEnd(() -> {FlySwatter.climbingMode(true);}, () -> {FlySwatter.climbingMode(false);}, flySwatter)))){
-        //I Wrote this for the climbing i couldnt figure it out so i just commented it out
-  
+    operator.a().onTrue( new InstantCommand( () -> {
+       currentTarget = Target.Speaker; 
+       shooter.setWheelSpeed(Shooter.ShooterSpeed.SPEAKER);
+      } ));
+
+    operator.b()
+            .and( () -> flySwatter.getCurrentCommand() == null)
+            .onTrue( new SequentialCommandGroup( 
+                              new InstantCommand( () -> { 
+                                currentTarget = Target.Amp; 
+                                shooter.setWheelSpeed(Shooter.ShooterSpeed.SPEAKER);
+                              } ),
+                              new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH)) );
+
+    operator.x().onTrue( new SequentialCommandGroup(
+                              new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM),
+                              new ControlIntake(intake, Intake.Position.EJECT),
+                              new OutputNote(intake),
+                              new CloseIntake(intake, flySwatter),
+                              shooter.runOnce( shooter::stop )));
+
 
     operator.y()
-      .onTrue(new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH))
-      .onFalse(new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
+      .onTrue(new ConditionalCommand(new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH), 
+                                     new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW), 
+                                     () -> { return flySwatter.getPosition() == FlySwatter.Position.LOW; }));
+
     operator.back().onTrue( new InstantCommand( driveBase::resetGyro ) {
         public boolean runsWhenDisabled() {
           return true;
@@ -121,13 +147,38 @@ public class RobotContainer {
       .and(operator.rightBumper())
       .onTrue( new SequentialCommandGroup( 
                   new CommandFlySwatter(flySwatter, FlySwatter.Position.CLIMB),
-                  new ClimbCommand(flySwatter, () -> { return operator.getRightTriggerAxis() - operator.getLeftTriggerAxis() ; } )
+                  new ClimbCommand(flySwatter, () -> { return -operator.getLeftY(); } )
                   ) );
-  }
 
+    Trigger haveNote = new Trigger( () -> intake.hasNote() );
+    Command rumbleDriver = new Rumble(driver, 25);
+    haveNote.onTrue( rumbleDriver )
+            .onFalse( rumbleDriver );
+
+    Trigger prepReady = new Trigger( () -> intake.hasNote() && intake.getCurrentCommand() == null);
+    Command rumbleOperator = new Rumble(operator, 25);
+    prepReady.onTrue( rumbleOperator )
+             .onFalse( rumbleOperator );
+  }
+  
   private void configureShuffleboard(){
     Command command;
+    autos.setDefaultOption("Shuffle1", "Shuffle1");
+    autos.addOption("Shuffle2", "Shuffle2");
+    SmartDashboard.putData("Auto/Autos", autos);
+
+    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW);
+    command.setName("Flyswatter");
+    SmartDashboard.putData("Flyswatter/Low", command);
     
+    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM);
+    command.setName("Flyswatter");
+    SmartDashboard.putData("Flyswatter/Medium", command);
+
+    command = new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH);
+    command.setName("Flyswatter");
+    SmartDashboard.putData("Flyswatter/High", command);
+
     command = new IntakeNote(intake);
     command.setName("Intake");
     SmartDashboard.putData("Intake/Input", command);
@@ -140,9 +191,9 @@ public class RobotContainer {
     command.setName("Output");
     SmartDashboard.putData("Intake/Output", command);
 
-    command = new InstantCommand(Preferences::removeAll).ignoringDisable(true);
-    command.setName("Reset Prefs");
-    SmartDashboard.putData("Preferences/Reset", command);
+    // command = new InstantCommand(Preferences::removeAll).ignoringDisable(true);
+    // command.setName("Reset Prefs");
+    // SmartDashboard.putData("Preferences/Reset", command);
     
     command = new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW);
     command.setName("Low");
@@ -160,11 +211,11 @@ public class RobotContainer {
     command.setName("Stop");
     SmartDashboard.putData("Flyswatter/Stop", command);
 
-    command = new ControlIntake(intake, Intake.Position.LOWER);
+    command = new ControlIntake(intake, Intake.Position.EXTENDED);
     command.setName("Lower");
     SmartDashboard.putData("Intake/Position/Lower", command);
 
-    command = new ControlIntake(intake, Intake.Position.RAISED);
+    command = new ControlIntake(intake, Intake.Position.RETRACTED);
     command.setName("Raised");
     SmartDashboard.putData("Intake/Position/Raised", command);
 
@@ -181,9 +232,9 @@ public class RobotContainer {
     SmartDashboard.putData("FlySwatter/Climb/Active", command);
 
     command = new SequentialCommandGroup(
-                  new ControlIntake(intake, Intake.Position.LOWER),
+                  new ControlIntake(intake, Intake.Position.EXTENDED),
                   new IntakeNote(intake),
-                  new ControlIntake(intake, Intake.Position.RAISED)
+                  new ControlIntake(intake, Intake.Position.RETRACTED)
                   );
     command.setName("Pick Up Note");
     SmartDashboard.putData("Intake/PickUpNote", command);
@@ -192,20 +243,44 @@ public class RobotContainer {
     command.setName("Shoot Speaker");
     SmartDashboard.putData("Shooter/Speaker", command);
     
+    command = new Rumble(driver, 25).ignoringDisable(true);
+    command.setName("Rumble Driver");
+    SmartDashboard.putData("Rumble Driver", command);
+  }
+
+
+
+  void configurePathPlanner() {
+    NamedCommands.registerCommand("Pickup Note", 
+        new SequentialCommandGroup( new ControlIntake(intake, Intake.Position.EXTENDED),
+                                    new IntakeNote(intake),
+                                    new ControlIntake(intake, Intake.Position.RETRACTED))
+    );
+    NamedCommands.registerCommand("Lower Intake", new ControlIntake(intake, Intake.Position.EXTENDED));
+    NamedCommands.registerCommand("Raise Intake", new ControlIntake(intake, Intake.Position.RETRACTED));
+    NamedCommands.registerCommand("Shoot Speaker", new ShootNoteSpeaker(intake, shooter));
+    NamedCommands.registerCommand("Shoot Amp", new ShootNoteAmp(intake, shooter, flySwatter));
+    NamedCommands.registerCommand("Raise Flyswatter", new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM));
+    NamedCommands.registerCommand("Lower Flyswatter", new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
   }
 
   double getXSpeed() { 
-    int pov = driver.getHID().getPOV();
+    double speedMultiplication = 0.6;
+    speedMultiplication += (driver.getLeftTriggerAxis() - driver.getRightTriggerAxis()) * 0.4;
+
     double finalX;
     if (Math.abs(driver.getLeftY()) <= 0.1)
       finalX = 0.0;
     else
       finalX = driver.getLeftY();
     
-    return -finalX;
+    return -finalX * speedMultiplication;
   }
 
   public double getYSpeed() { 
+    double speedMultiplication = 0.6;
+    speedMultiplication += (driver.getLeftTriggerAxis() - driver.getRightTriggerAxis()) * 0.4;
+    
     int pov = driver.getHID().getPOV();
 
     double finalY;
@@ -218,7 +293,7 @@ public class RobotContainer {
     else
       finalY = driver.getLeftX();
     
-    return -finalY; 
+    return -finalY * speedMultiplication; 
   } 
   
   public double getRotationSpeed() { 
@@ -242,14 +317,26 @@ public class RobotContainer {
       finalRotation = driver.getRightX();
     }
 
-    if (Math.abs(finalRotation) < 0.1)
-      finalRotation = 0.0;
+      if (Math.abs(finalRotation) < 0.15)
+        finalRotation = 0.0;
     
     return finalRotation;
   }
 
 
   public Command getAutonomousCommand() {
-    return new PathPlannerAuto("New Auto");
+    // String auto = autos.getSelected();
+    // System.out.println(auto);
+    // if(auto == "Shuffle1") {
+    //   System.out.println("###################### SHUFFLE 1 SELECTED");
+    //   return new PathPlannerAuto("1_Shuffle");
+    // } else if(auto == "Shuffle2") {
+    //   System.out.println("###################### SHUFFLE 2 SELECTED");
+    //   return new PathPlannerAuto("2_Shuffle");
+    // } else {
+    //   System.out.println("###################### SOMETHING WENT WRONG");
+    //   return new PathPlannerAuto("today_auto");
+    // }
+    return new PathPlannerAuto("6PieceAuto");
   }
 }
