@@ -32,7 +32,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "posB_Top1B_Part1"
+            "pathName": "Center_B"
           }
         },
         {
@@ -50,7 +50,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "posB_Top1B"
+            "pathName": "Center_C"
           }
         },
         {
@@ -68,6 +68,6 @@
       ]
     }
   },
-  "folder": "start_position2",
+  "folder": "Center_Position",
   "choreoAuto": false
 }

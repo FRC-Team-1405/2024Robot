@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3122346472613169,
-        "y": 5.55472336015897
+        "x": 0.7,
+        "y": 4.5
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3122346472613167,
-        "y": 5.5430292057165325
+        "x": 0.710287338870417,
+        "y": 4.479425322259166
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.4582617826204305,
-        "y": 4.4671669970120575
+        "x": 7.786751613603477,
+        "y": 1.121319936875463
       },
       "prevControl": {
-        "x": 2.4348734737355504,
-        "y": 4.478861151454498
+        "x": 7.06480320506148,
+        "y": -1.0445252887506131
       },
       "nextControl": {
-        "x": 2.685402940146901,
-        "y": 4.353596418248818
+        "x": 7.80732629134431,
+        "y": 1.1830439700979645
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.3122346472613169,
-        "y": 5.55472336015897
+        "x": 0.7,
+        "y": 4.495567086372268
       },
       "prevControl": {
-        "x": 1.4057878828008366,
-        "y": 5.437781815734572
+        "x": 1.4806128860326586,
+        "y": 2.540972700993022
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,16 +46,16 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1,
-      "rotationDegrees": -38.9275435927924,
+      "waypointRelativePos": 0.95,
+      "rotationDegrees": 0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake",
-      "waypointRelativePos": 1.0,
+      "name": "Intake Note",
+      "waypointRelativePos": 0.5,
       "command": {
         "type": "sequential",
         "data": {
@@ -63,24 +63,7 @@
             {
               "type": "named",
               "data": {
-                "name": "OpenIntake"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Shoot",
-      "waypointRelativePos": 2.0,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "ShootNoteSpeaker"
+                "name": "Pickup Note"
               }
             }
           ]
@@ -96,13 +79,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -58.392497753751094,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "start_position2",
+  "folder": "Feeder_Side",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -60.01836063115061,
     "velocity": 0
   },
   "useDefaultConstraints": true

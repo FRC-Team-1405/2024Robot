@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.4259262722800992,
-        "y": 1.540461798263264
+        "x": 0.63483273885979,
+        "y": 4.415901154077189
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.1711329931017325,
-        "y": 0.9847255799073746
+        "x": 2.3800394596814236,
+        "y": 3.8601649357212997
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.8217676625420935,
-        "y": 2.437439554218933
+        "x": 7.63802399642714,
+        "y": 2.295490467758186
       },
       "prevControl": {
-        "x": 6.651796676519361,
-        "y": 1.5794608311355969
+        "x": 7.21111396720221,
+        "y": -0.7255483579246923
       },
       "nextControl": {
-        "x": 8.465224806640991,
-        "y": 2.909308126558124
+        "x": 7.749672509881539,
+        "y": 3.08557378950138
       },
       "isLocked": false,
       "linkedName": null
@@ -131,7 +131,7 @@
             {
               "type": "named",
               "data": {
-                "name": "OpenIntake"
+                "name": null
               }
             }
           ]
@@ -148,13 +148,13 @@
             {
               "type": "named",
               "data": {
-                "name": "LobNote"
+                "name": null
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "ShootNoteSpeaker"
+                "name": null
               }
             }
           ]
@@ -171,13 +171,13 @@
             {
               "type": "named",
               "data": {
-                "name": "LobNote"
+                "name": null
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "OpenIntake"
+                "name": null
               }
             }
           ]
@@ -194,13 +194,13 @@
             {
               "type": "named",
               "data": {
-                "name": "LobNote"
+                "name": null
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "OpenIntake"
+                "name": null
               }
             }
           ]
@@ -217,7 +217,7 @@
             {
               "type": "named",
               "data": {
-                "name": "ShootNoteAmp"
+                "name": null
               }
             }
           ]
@@ -237,9 +237,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "far_right",
+  "folder": null,
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -55.78429786756254,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -10,19 +10,16 @@ import frc.robot.commands.CommandFlySwatter;
 import frc.robot.commands.ControlIntake;
 import frc.robot.commands.IntakeNote;
 import frc.robot.commands.OpenIntake;
-import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.OutputNote;
 import frc.robot.commands.ShootNoteAmp;
 import frc.robot.commands.ShootNoteSpeaker;
 import frc.robot.commands.LEDManager;
 import frc.robot.commands.SwerveDriveCommand;
-import frc.robot.commands.VibrateController;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,7 +27,6 @@ import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.FlySwatter;
@@ -58,7 +54,7 @@ public class RobotContainer {
     driveBase.setHeadingAdjustment(180);
     configureBindings();
     configurePathPlanner();
-//    configureShuffleboard();
+   configureShuffleboard();
 
     driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, driveBase));
   }
@@ -223,7 +219,6 @@ public class RobotContainer {
   }
 
   void configurePathPlanner() {
-    VibrateController vc = new VibrateController(driver);
     NamedCommands.registerCommand("Pickup Note", 
         new SequentialCommandGroup( new ControlIntake(intake, Intake.Position.EXTENDED),
                                     new IntakeNote(intake),
@@ -235,8 +230,6 @@ public class RobotContainer {
     NamedCommands.registerCommand("Shoot Amp", new ShootNoteAmp(intake, shooter, flySwatter));
     NamedCommands.registerCommand("Raise Flyswatter", new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM));
     NamedCommands.registerCommand("Lower Flyswatter", new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
-    // NamedCommands.registerCommand("Pickup Note", vc);
-    // NamedCommands.registerCommand("Shoot Speaker", vc);
   }
 
   double getXSpeed() { 
@@ -290,6 +283,6 @@ public class RobotContainer {
     //   System.out.println("###################### SOMETHING WENT WRONG");
     //   return new PathPlannerAuto("today_auto");
     // }
-    return new PathPlannerAuto("blue_posB_top1");
+    return new PathPlannerAuto("6PieceAuto");
   }
 }
