@@ -10,15 +10,12 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Preferences;
 
 public final class Constants {
-    public final class Limelight {
-        public static class Pipeline {
-            public static final byte AMP = 1;
-            public static final byte SPEAKER = 2;
-        }
+
+    public static class VisionTargets {
+        public static final Translation2d RED_SPEAKER_POS = new Translation2d(0, Units.inchesToMeters(218));
+        public static final Translation2d BLUE_SPEAKER_POS = new Translation2d(0, Units.inchesToMeters(103));
     }
 
-    public static final Translation2d RED_SPEAKER_POS = new Translation2d(0, Units.inchesToMeters(218));
-    public static final Translation2d BLUE_SPEAKER_POS = new Translation2d(0, Units.inchesToMeters(103));
     public static final double POSITION_ERROR_DELTA = 0.25;
 
     public static final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(

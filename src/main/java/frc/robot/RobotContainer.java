@@ -16,6 +16,7 @@ import frc.robot.commands.ShootNoteAmp;
 import frc.robot.commands.ShootNoteSpeaker;
 import frc.robot.commands.LEDManager;
 import frc.robot.commands.SwerveDriveCommand;
+import frc.robot.commands.SwerveDriveToNote;
 import frc.robot.sensors.Vision;
 
 import java.util.Optional;
@@ -51,7 +52,7 @@ public class RobotContainer {
   private Intake intake = new Intake();
   private Shooter shooter = new Shooter();
 
-  private Vision vision = new Vision();
+  private Vision vision = new Vision( driveBase::getPose );
   private Optional<Alliance> alliance = DriverStation.getAlliance();
   
   private final CommandXboxController driver = new CommandXboxController(0);
@@ -159,6 +160,8 @@ public class RobotContainer {
     Command rumbleOperator = new Rumble(operator, 25);
     prepReady.onTrue( rumbleOperator )
              .onFalse( rumbleOperator );
+
+    driver.rightStick().whileTrue( new SwerveDriveToNote(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, vision, driveBase) );
   }
   
   private void configureShuffleboard(){
@@ -297,30 +300,20 @@ public class RobotContainer {
   } 
   
   public double getRotationSpeed() { 
-    double finalRotation = 0.0;
- 
-    if(driver.rightStick().getAsBoolean()) {
-      //Drive by camera
-      if(vision.hasTarget()) {
-        finalRotation = vision.getAngleToTarget() / 40 * 1;
-      }
-      //Drive by field oriented position
-      else if(alliance.isPresent()){
-        Pose2d botPos = driveBase.getPose();
-        double speakerYPos = alliance.get() == Alliance.Blue ? Constants.BLUE_SPEAKER_POS.getY() : Constants.RED_SPEAKER_POS.getY();
-        //0 is on top +right -left for atan2(x, y)
-        double theta = Math.atan2(botPos.getX(), speakerYPos - botPos.getY()) / Math.PI;
-        
-        return (botPos.getRotation().getDegrees() / 180) - theta;
-      }
-    } else {
-      finalRotation = driver.getRightX();
-    }
+    double finalRotation =  driver.getRightX();
 
-      if (Math.abs(finalRotation) < 0.15)
+    if (Math.abs(finalRotation) < 0.15)
         finalRotation = 0.0;
     
     return finalRotation;
+  }
+
+  public double getVisionRotationSpeed() {
+    if (vision.hasTarget()){
+      return vision.getVisionAngleToTarget();
+    } else {
+      return vision.getPoseAngleToTarget();
+    }
   }
 
 
