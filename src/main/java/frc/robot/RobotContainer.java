@@ -122,7 +122,7 @@ public class RobotContainer {
             .onTrue( new SequentialCommandGroup( 
                               new InstantCommand( () -> { 
                                 currentTarget = Target.Amp; 
-                                shooter.setWheelSpeed(Shooter.ShooterSpeed.SPEAKER);
+                                shooter.setWheelSpeed(Shooter.ShooterSpeed.AMP);
                               } ),
                               new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH)) );
 
