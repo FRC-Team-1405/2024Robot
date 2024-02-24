@@ -15,6 +15,7 @@ import frc.robot.commands.Rumble;
 import frc.robot.commands.ShootNoteAmp;
 import frc.robot.commands.ShootNoteSpeaker;
 import frc.robot.commands.LEDManager;
+import frc.robot.commands.LobNote;
 import frc.robot.commands.SwerveDriveCommand;
 
 import com.pathplanner.lib.auto.NamedCommands;
@@ -243,6 +244,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Lower Intake", new ControlIntake(intake, Intake.Position.EXTENDED));
     NamedCommands.registerCommand("Raise Intake", new ControlIntake(intake, Intake.Position.RETRACTED));
     NamedCommands.registerCommand("Shoot Speaker", new ShootNoteSpeaker(intake, shooter));
+     NamedCommands.registerCommand("Lob Note", new LobNote(intake, shooter));
     NamedCommands.registerCommand("Shoot Amp", new ShootNoteAmp(intake, shooter, flySwatter));
     NamedCommands.registerCommand("Raise Flyswatter", new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM));
     NamedCommands.registerCommand("Lower Flyswatter", new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
