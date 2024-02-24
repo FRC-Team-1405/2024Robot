@@ -1,0 +1,92 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.71,
+        "y": 6.73
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.7100000000000009,
+        "y": 6.73
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.6870215631947256,
+        "y": 5.891511755207099
+      },
+      "prevControl": {
+        "x": 2.1618092749398294,
+        "y": 6.587988920066853
+      },
+      "nextControl": {
+        "x": 3.212233851449622,
+        "y": 5.195034590347345
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.71,
+        "y": 6.73
+      },
+      "prevControl": {
+        "x": 1.5092360908226683,
+        "y": 6.661494049358058
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.95,
+      "rotationDegrees": -49.111111507982,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Pickup Note",
+      "waypointRelativePos": 0.85,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pickup Note"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 61.260204708311946,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Amp_Side",
+  "previewStartingState": {
+    "rotation": 60.25511870305773,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

@@ -246,6 +246,13 @@ public class RobotContainer {
     NamedCommands.registerCommand("Shoot Amp", new ShootNoteAmp(intake, shooter, flySwatter));
     NamedCommands.registerCommand("Raise Flyswatter", new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM));
     NamedCommands.registerCommand("Lower Flyswatter", new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
+    NamedCommands.registerCommand("Eject Note", 
+        new SequentialCommandGroup( new ControlIntake(intake, Intake.Position.EXTENDED),
+                                    new IntakeNote(intake),
+                                    new ControlIntake(intake, Intake.Position.EJECT),
+                                    new OutputNote(intake),
+                                    new ControlIntake(intake, Intake.Position.RETRACTED))
+    );
   }
 
   double getXSpeed() { 

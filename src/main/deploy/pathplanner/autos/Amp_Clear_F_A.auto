@@ -1,0 +1,61 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7134190306340287,
+      "y": 6.72909113315261
+    },
+    "rotation": 58.39410661911078
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Speaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Raise Flyswatter"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Amp_Clear_Center_Auto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Speaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Amp_A"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Speaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Lower Flyswatter"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Amp_Side",
+  "choreoAuto": false
+}
