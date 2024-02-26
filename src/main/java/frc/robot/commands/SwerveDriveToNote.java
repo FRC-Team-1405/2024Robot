@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.sensors.Vision;
 import frc.robot.subsystems.SwerveDrive;
+import frc.robot.tools.MathTools;
 
 public class SwerveDriveToNote extends Command {
   private SwerveDrive driveBase;
@@ -42,16 +43,13 @@ public class SwerveDriveToNote extends Command {
 
   @Override
   public void execute() {
-    double rotationSpeed = getRotationSpeed.getAsDouble();
-
-    double angle = vision.getVisionAngleToTarget();
-    if (angle > 0) {
-      rotationSpeed = ROTATION_SPEED;
-    } else if (angle < 0) {
-      rotationSpeed = -ROTATION_SPEED;
+    if (!vision.hasTarget()){
+      driveBase.drive(getXSpeed.getAsDouble(), getYSpeed.getAsDouble(), getRotationSpeed.getAsDouble(), true);
+    } else {
+      double angle = vision.getVisionAngleToTarget();
+      double rotationSpeed = MathTools.map(angle, -25.0, 25.0, -ROTATION_SPEED, ROTATION_SPEED  );
+      driveBase.drive(getXSpeed.getAsDouble(), getYSpeed.getAsDouble(), rotationSpeed, true);
     }
-
-    driveBase.drive(getXSpeed.getAsDouble(), getYSpeed.getAsDouble(), rotationSpeed, true);
   }
 
   @Override

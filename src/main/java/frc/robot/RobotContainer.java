@@ -68,11 +68,11 @@ public class RobotContainer {
     configureShuffleboard();
     configureLEDs();
     configurePathPlanner();
-   configureShuffleboard();
+    configureShuffleboard();
 
     vision.setSpeakerStart();
 
-    driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, driveBase));
+    driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, this::getSlideValue, driveBase));
   }
 
   public void teleopInit() {
@@ -318,7 +318,16 @@ public class RobotContainer {
     }
   }
 
+  public double getSlideValue() {
+    int pov = driver.getHID().getPOV();
+    if (pov == 45 || pov == 90 || pov == 135) {
+      return 0.4 ;
+    } else if (pov == 225 || pov == 270 || pov == 315) {
+      return -0.4 ;
+    }
 
+    return 0.0;
+  }
   public Command getAutonomousCommand() {
     // String auto = autos.getSelected();
     // System.out.println(auto);
