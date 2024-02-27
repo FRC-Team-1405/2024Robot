@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import frc.robot.commands.ClearIntake;
+import frc.robot.commands.ClearShooter;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.CloseIntake;
 import frc.robot.commands.CommandFlySwatter;
@@ -34,6 +36,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -126,12 +129,9 @@ public class RobotContainer {
                               } ),
                               new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH)) );
 
-    operator.x().onTrue( new SequentialCommandGroup(
-                              new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM),
-                              new ControlIntake(intake, Intake.Position.EJECT),
-                              new OutputNote(intake),
-                              new CloseIntake(intake, flySwatter),
-                              shooter.runOnce( shooter::stop )));
+    operator.x().onTrue( new ParallelCommandGroup( 
+                            new ClearShooter(shooter),
+                            new ClearIntake(flySwatter, intake)));
 
 
     operator.y()
