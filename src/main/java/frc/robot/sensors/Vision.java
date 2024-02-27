@@ -23,7 +23,7 @@ public class Vision {
 
     public Vision(Supplier<Pose2d> botPose) {
         this.botPose = botPose;
-        activeTarget = limelight.getPipeline();
+        setNoteTarget();
     }
 
     public void setAlliance(Alliance alliance){
