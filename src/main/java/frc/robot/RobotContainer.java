@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import frc.robot.commands.ClearIntake;
+import frc.robot.commands.ClearShooter;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.CloseIntake;
 import frc.robot.commands.CommandFlySwatter;
@@ -17,15 +19,24 @@ import frc.robot.commands.ShootNoteSpeaker;
 import frc.robot.commands.LEDManager;
 import frc.robot.commands.LobNote;
 import frc.robot.commands.SwerveDriveCommand;
+import frc.robot.commands.SwerveDriveToNote;
+import frc.robot.sensors.Vision;
+
+import java.util.Optional;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -44,6 +55,9 @@ public class RobotContainer {
   private FlySwatter flySwatter = new FlySwatter();
   private Intake intake = new Intake();
   private Shooter shooter = new Shooter();
+
+  private Vision vision = new Vision( driveBase::getPose );
+  private Optional<Alliance> alliance = DriverStation.getAlliance();
   
   private final CommandXboxController driver = new CommandXboxController(0);
   private final CommandXboxController operator = new CommandXboxController(1);
@@ -57,9 +71,15 @@ public class RobotContainer {
     configureShuffleboard();
     configureLEDs();
     configurePathPlanner();
-   configureShuffleboard();
+    configureShuffleboard();
 
-    driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, driveBase));
+    vision.setSpeakerStart();
+
+    driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, this::getSlideValue, driveBase));
+  }
+
+  public void teleopInit() {
+    alliance = DriverStation.getAlliance();
   }
 
   private IAddressableLEDHelper[] leds;
@@ -109,12 +129,9 @@ public class RobotContainer {
                               } ),
                               new CommandFlySwatter(flySwatter, FlySwatter.Position.HIGH)) );
 
-    operator.x().onTrue( new SequentialCommandGroup(
-                              new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM),
-                              new ControlIntake(intake, Intake.Position.EJECT),
-                              new OutputNote(intake),
-                              new CloseIntake(intake, flySwatter),
-                              shooter.runOnce( shooter::stop )));
+    operator.x().onTrue( new ParallelCommandGroup( 
+                            new ClearShooter(shooter),
+                            new ClearIntake(flySwatter, intake)));
 
 
     operator.y()
@@ -144,6 +161,8 @@ public class RobotContainer {
     Command rumbleOperator = new Rumble(operator, 25);
     prepReady.onTrue( rumbleOperator )
              .onFalse( rumbleOperator );
+
+    driver.rightStick().whileTrue( new SwerveDriveToNote(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, vision, driveBase) );
   }
   
   private void configureShuffleboard(){
@@ -290,17 +309,32 @@ public class RobotContainer {
   } 
   
   public double getRotationSpeed() { 
-    double finalRotation;
+    double finalRotation =  driver.getRightX();
 
-      finalRotation = driver.getRightX();
-
-      if (Math.abs(finalRotation) < 0.15)
+    if (Math.abs(finalRotation) < 0.15)
         finalRotation = 0.0;
     
     return finalRotation;
   }
 
+  public double getVisionRotationSpeed() {
+    if (vision.hasTarget()){
+      return vision.getVisionAngleToTarget();
+    } else {
+      return vision.getPoseAngleToTarget();
+    }
+  }
 
+  public double getSlideValue() {
+    int pov = driver.getHID().getPOV();
+    if (pov == 45 || pov == 90 || pov == 135) {
+      return 0.4 ;
+    } else if (pov == 225 || pov == 270 || pov == 315) {
+      return -0.4 ;
+    }
+
+    return 0.0;
+  }
   public Command getAutonomousCommand() {
     // String auto = autos.getSelected();
     // System.out.println(auto);
@@ -314,6 +348,7 @@ public class RobotContainer {
     //   System.out.println("###################### SOMETHING WENT WRONG");
     //   return new PathPlannerAuto("today_auto");
     // }
-    return new PathPlannerAuto("Test");
+    return new PathPlannerAuto("Feeder_H_G");
   }
 }
+  

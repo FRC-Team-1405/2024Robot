@@ -47,15 +47,15 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.95,
-      "rotationDegrees": -49.111111507982,
+      "rotationDegrees": 5.957249285222294,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Pickup Note",
-      "waypointRelativePos": 0.85,
+      "name": "Intake Note",
+      "waypointRelativePos": 0.15,
       "command": {
         "type": "sequential",
         "data": {
