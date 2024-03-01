@@ -1,5 +1,5 @@
 package frc.robot;
-
+    
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
@@ -10,6 +10,12 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Preferences;
 
 public final class Constants {
+
+    public static class VisionTargets {
+        public static final Translation2d RED_SPEAKER_POS = new Translation2d(0, Units.inchesToMeters(218));
+        public static final Translation2d BLUE_SPEAKER_POS = new Translation2d(0, Units.inchesToMeters(103));
+    }
+
     public static final double POSITION_ERROR_DELTA = 0.25;
 
     public static final SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
