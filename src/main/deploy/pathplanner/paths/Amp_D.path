@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 7.85,
-        "y": 7.35
+        "x": 7.900643668585917,
+        "y": 7.265810929726125
       },
       "prevControl": {
-        "x": 7.849810454508126,
-        "y": 7.354323021803938
+        "x": 6.5875453077920385,
+        "y": 5.660912933200273
       },
       "nextControl": {
-        "x": 7.850189545491873,
-        "y": 7.345676978196061
+        "x": 7.90338379943294,
+        "y": 7.269159978539152
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 6.6456209102894395
       },
       "prevControl": {
-        "x": 0.7409353966577612,
-        "y": 6.622564794001769
+        "x": 6.480552108023648,
+        "y": 5.835992714639456
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,55 +46,21 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.4,
-      "rotationDegrees": 9.157312155239435,
-      "rotateFast": false
+      "waypointRelativePos": 0.85,
+      "rotationDegrees": 31.854308445580426,
+      "rotateFast": true
     },
     {
-      "waypointRelativePos": 1.25,
-      "rotationDegrees": 14.03360207777595,
-      "rotateFast": true
+      "waypointRelativePos": 0.3,
+      "rotationDegrees": 0,
+      "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake Note",
-      "waypointRelativePos": 0.2,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Pickup Note"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "Lob Note",
-      "waypointRelativePos": 0.5,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Lob Note"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "Intake Note2",
-      "waypointRelativePos": 0.7,
+      "waypointRelativePos": 0.45,
       "command": {
         "type": "sequential",
         "data": {
@@ -127,5 +93,5 @@
     "rotation": 59.036243467926454,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.95,
-      "rotationDegrees": -4.4728268569711975,
+      "rotationDegrees": 5.957249285222294,
       "rotateFast": false
     }
   ],
@@ -55,7 +55,7 @@
   "eventMarkers": [
     {
       "name": "Intake Note",
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.15,
       "command": {
         "type": "sequential",
         "data": {
