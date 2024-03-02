@@ -148,18 +148,18 @@ public class RobotContainer {
                   new ClimbCommand(flySwatter, () -> { return -operator.getLeftY(); } )
                   ) );
 
-    Trigger haveNote = new Trigger( () -> intake.hasNote() );
-    Command rumbleDriver = new Rumble(driver, 25);
-    haveNote.onTrue( rumbleDriver )
-            .onFalse( rumbleDriver );
+    Trigger driverRumbleTrigger = new Trigger( () -> intake.hasNote() || shooter.atSpeed() );
+    Command rumbleDriver = new Rumble(driver, 15, 5, 2);
+    driverRumbleTrigger.onTrue( rumbleDriver )
+                       .onFalse( rumbleDriver );
 
     Trigger prepReady = new Trigger( () -> intake.hasNote() && intake.getCurrentCommand() == null);
-    Command rumbleOperator = new Rumble(operator, 25);
+    Command rumbleOperator = new Rumble(operator, 15, 5, 2);
     prepReady.onTrue( rumbleOperator )
              .onFalse( rumbleOperator );
 
     driver.rightStick().whileTrue( new SwerveDriveToNote(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, vision, driveBase) );
-  }
+  } 
   
   private void configureShuffleboard(){
     Command command;
@@ -243,7 +243,7 @@ public class RobotContainer {
     command.setName("Shoot Speaker");
     SmartDashboard.putData("Shooter/Speaker", command);
     
-    command = new Rumble(driver, 25).ignoringDisable(true);
+    command = new Rumble(driver, 15, 5, 2).ignoringDisable(true);
     command.setName("Rumble Driver");
     SmartDashboard.putData("Rumble Driver", command);
   }
@@ -259,7 +259,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Lower Intake", new ControlIntake(intake, Intake.Position.EXTENDED));
     NamedCommands.registerCommand("Raise Intake", new ControlIntake(intake, Intake.Position.RETRACTED));
     NamedCommands.registerCommand("Shoot Speaker", new ShootNoteSpeaker(intake, shooter));
-     NamedCommands.registerCommand("Lob Note", new LobNote(intake, shooter));
+    NamedCommands.registerCommand("Lob Note", new LobNote(intake, shooter));
     NamedCommands.registerCommand("Shoot Amp", new ShootNoteAmp(intake, shooter, flySwatter));
     NamedCommands.registerCommand("Raise Flyswatter", new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM));
     NamedCommands.registerCommand("Lower Flyswatter", new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));

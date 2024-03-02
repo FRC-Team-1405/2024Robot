@@ -10,25 +10,43 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class Rumble extends Command {
   private CommandXboxController controller;
-  private int ticks;
+  private int ticksOn; 
+  private int ticksOff;
+  private int repeat;
   private int ticksReset;
+  private int tickCount;
+  private int rumbleCount;
   /** Creates a new Rumble. */
-  public Rumble(CommandXboxController controller, int ticks) {
+  public Rumble(CommandXboxController controller, int ticksOn, int ticksOff, int repeat) {
     this.controller = controller;
-    this.ticksReset = ticks;
-  }
+    this.ticksOn = ticksOn;
+    this.ticksOff = ticksOff;
+    this.repeat = repeat;
+
+    this.ticksReset = ticksOn + ticksOff;
+    }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    ticks = ticksReset;
-    controller.getHID().setRumble(RumbleType.kBothRumble, 1);
+    tickCount = 0;
+    rumbleCount = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    ticks -= 1;
+    if (tickCount == 0) {
+      controller.getHID().setRumble(RumbleType.kBothRumble, 1);
+      rumbleCount++;
+    }
+    else if (tickCount > ticksOn + ticksOff) { 
+      tickCount = -1;
+    }
+    else if (tickCount == ticksOn) {
+      controller.getHID().setRumble(RumbleType.kBothRumble, 0);
+    } 
+    tickCount++;
   }
 
   // Called once the command ends or is interrupted.
@@ -40,6 +58,6 @@ public class Rumble extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ticks <= 0;
+    return rumbleCount >= repeat && tickCount >= (ticksOn + ticksOff);
   }
 }
