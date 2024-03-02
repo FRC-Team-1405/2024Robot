@@ -27,9 +27,7 @@ import java.util.Optional;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -44,7 +42,6 @@ import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrive;
-import frc.robot.subsystems.Shooter.ShooterSpeed;
 import frc.robot.tools.LEDs.BatteryLED;
 import frc.robot.tools.LEDs.IAddressableLEDHelper;
 import frc.robot.tools.LEDs.MultiFunctionLED;
@@ -77,8 +74,17 @@ public class RobotContainer {
     driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, this::getSlideValue, driveBase));
   }
 
+  public void disabledInit() {
+    driveBase.brakeMode(false);
+  }
+  
+  public void autonomousInit() {
+    driveBase.brakeMode(true);
+  }
+
   public void teleopInit() {
     alliance = DriverStation.getAlliance();
+    driveBase.brakeMode(false);
   }
 
   private IAddressableLEDHelper[] leds;
@@ -151,18 +157,18 @@ public class RobotContainer {
                   new ClimbCommand(flySwatter, () -> { return -operator.getLeftY(); } )
                   ) );
 
-    Trigger haveNote = new Trigger( () -> intake.hasNote() );
-    Command rumbleDriver = new Rumble(driver, 25);
-    haveNote.onTrue( rumbleDriver )
-            .onFalse( rumbleDriver );
+    Trigger driverRumbleTrigger = new Trigger( () -> intake.hasNote() || shooter.atSpeed() );
+    Command rumbleDriver = new Rumble(driver, 15, 5, 2);
+    driverRumbleTrigger.onTrue( rumbleDriver )
+                       .onFalse( rumbleDriver );
 
     Trigger prepReady = new Trigger( () -> intake.hasNote() && intake.getCurrentCommand() == null);
-    Command rumbleOperator = new Rumble(operator, 25);
+    Command rumbleOperator = new Rumble(operator, 15, 5, 2);
     prepReady.onTrue( rumbleOperator )
              .onFalse( rumbleOperator );
 
     driver.rightStick().whileTrue( new SwerveDriveToNote(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, vision, driveBase) );
-  }
+  } 
   
   private void configureShuffleboard(){
     Command command;
@@ -246,7 +252,7 @@ public class RobotContainer {
     command.setName("Shoot Speaker");
     SmartDashboard.putData("Shooter/Speaker", command);
     
-    command = new Rumble(driver, 25).ignoringDisable(true);
+    command = new Rumble(driver, 15, 5, 2).ignoringDisable(true);
     command.setName("Rumble Driver");
     SmartDashboard.putData("Rumble Driver", command);
   }
