@@ -74,8 +74,17 @@ public class RobotContainer {
     driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, this::getSlideValue, driveBase));
   }
 
+  public void disabledInit() {
+    driveBase.brakeMode(false);
+  }
+  
+  public void autonomousInit() {
+    driveBase.brakeMode(true);
+  }
+
   public void teleopInit() {
     alliance = DriverStation.getAlliance();
+    driveBase.brakeMode(false);
   }
 
   private IAddressableLEDHelper[] leds;

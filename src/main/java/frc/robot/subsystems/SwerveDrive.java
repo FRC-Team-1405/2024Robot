@@ -320,12 +320,12 @@ public class SwerveDrive extends SubsystemBase
     } 
  
   //Put all swerve modules in brakemode
-  public void brakeMode()
+  public void brakeMode(boolean bOn)
     { 
-      frontLeft.brakeMode();
-      backLeft.brakeMode(); 
-      frontRight.brakeMode(); 
-      backRight.brakeMode();
+      frontLeft.brakeMode(bOn);
+      backLeft.brakeMode(bOn); 
+      frontRight.brakeMode(bOn); 
+      backRight.brakeMode(bOn);
     }
   
   //Enable the "parking brake" feature of the robot (commanding the modules to an 45 degree angle)
