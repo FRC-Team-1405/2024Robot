@@ -344,7 +344,7 @@ public class RobotContainer {
     //   System.out.println("###################### SOMETHING WENT WRONG");
     //   return new PathPlannerAuto("today_auto");
     // }
-    return new PathPlannerAuto("Feeder_H_G");
+    return new PathPlannerAuto("Center_B_D");
   }
 }
   

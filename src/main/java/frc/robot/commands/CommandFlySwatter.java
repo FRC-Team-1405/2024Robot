@@ -20,7 +20,8 @@ public class CommandFlySwatter extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    flySwatter.setPosition(target);
+  //  HACK: temporarily removing flyswatter
+   // flySwatter.setPosition(target);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -39,6 +40,8 @@ public class CommandFlySwatter extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return flySwatter.isAtPosition();
+    ////  HACK: temporarily removing flyswatter
+    return true;
+   // return flySwatter.isAtPosition();
   }
 }
