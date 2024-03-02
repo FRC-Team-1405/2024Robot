@@ -26,6 +26,7 @@ import java.util.Optional;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -72,7 +73,7 @@ public class RobotContainer {
 
     vision.setSpeakerStart();
 
-    driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, this::getSlideValue, driveBase));
+    driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, this::getSlideValue, this::toggleDriveMode, driveBase));
   }
 
   public void disabledInit() {
@@ -155,7 +156,7 @@ public class RobotContainer {
       .and(operator.rightBumper())
       .onTrue( new SequentialCommandGroup( 
                   new CommandFlySwatter(flySwatter, FlySwatter.Position.CLIMB),
-                  new ClimbCommand(flySwatter, () -> { return -operator.getLeftY(); } )
+                  new ClimbCommand(flySwatter, this::getClimbAdjust )
                   ) );
 
     Trigger driverRumbleTrigger = new Trigger( () -> intake.hasNote() || shooter.atSpeed() );
@@ -284,8 +285,16 @@ public class RobotContainer {
                                     new ControlIntake(intake, Intake.Position.RETRACTED))
     );
 
-    selectedAuto = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("Selected Auto", selectedAuto);
+    // selectedAuto = AutoBuilder.buildAutoChooser();
+    // SmartDashboard.putData("Selected Auto", selectedAuto);
+  }
+
+  double getClimbAdjust() {
+    double adjust = -operator.getLeftY();
+    if (Math.abs(adjust) <= 0.25)
+      return 0.0;
+    
+    return adjust;
   }
 
   double getXSpeed() { 
@@ -349,8 +358,12 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return selectedAuto.getSelected();
-//    return new PathPlannerAuto("Center_B_A");
+//    return selectedAuto.getSelected();
+    return new PathPlannerAuto("Center_B_A");
+  }
+
+  public boolean toggleDriveMode() {
+    return driver.getHID().getBButton();
   }
 }
   

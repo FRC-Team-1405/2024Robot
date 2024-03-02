@@ -19,7 +19,7 @@ public class Shooter extends SubsystemBase {
   private TalonFX secondary;
 
   private static final double SPEED_ERROR_DELTA = 3;
-  private ShooterSpeed targetSpeed; 
+  private ShooterSpeed targetSpeed = ShooterSpeed.SPEAKER; 
 
   public enum ShooterSpeed {
     REVERSE(-5),
