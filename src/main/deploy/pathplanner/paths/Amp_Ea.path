@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7399244873677722,
-        "y": 6.6456209102894395
+        "x": 0.71,
+        "y": 6.73
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.7399244873677722,
-        "y": 6.6456209102894395
+        "x": 0.6997126611295826,
+        "y": 6.719712661129583
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.900643668585917,
-        "y": 7.265810929726125
+        "x": 4.686601638920953,
+        "y": 6.73
       },
       "prevControl": {
-        "x": 6.5875453077920385,
-        "y": 5.660912933200273
+        "x": 4.234782975438409,
+        "y": 5.64912289264372
       },
       "nextControl": {
-        "x": 7.90338379943294,
-        "y": 7.269159978539152
+        "x": 5.05665296028101,
+        "y": 7.615266665883273
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.7399244873677722,
-        "y": 6.6456209102894395
+        "x": 7.93,
+        "y": 5.99
       },
       "prevControl": {
-        "x": 6.480552108023648,
-        "y": 5.835992714639456
+        "x": 8.339004092029537,
+        "y": 6.0435600596705354
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,21 +46,21 @@
   ],
   "rotationTargets": [
     {
+<<<<<<< HEAD:src/main/deploy/pathplanner/paths/Amp_B.path
       "waypointRelativePos": 0.85,
-      "rotationDegrees": 31.854308445580426,
-      "rotateFast": true
-    },
-    {
-      "waypointRelativePos": 0.3,
-      "rotationDegrees": 0,
+      "rotationDegrees": -55.13653420187642,
+=======
+      "waypointRelativePos": 0.45,
+      "rotationDegrees": -3.362748424478598,
+>>>>>>> b73bc1146dd7ced9fa820d6db4a1cd8f296f44fc:src/main/deploy/pathplanner/paths/Amp_Ea.path
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake Note2",
-      "waypointRelativePos": 0.45,
+      "name": "Pickup Note",
+      "waypointRelativePos": 1.35,
       "command": {
         "type": "sequential",
         "data": {
@@ -77,20 +77,20 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 57.20046872738079,
+    "rotation": -29.716611089851394,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Amp_Side",
   "previewStartingState": {
-    "rotation": 59.036243467926454,
+    "rotation": 60.25511870305774,
     "velocity": 0
   },
   "useDefaultConstraints": false

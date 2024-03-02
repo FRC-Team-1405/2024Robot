@@ -3,41 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.71,
-        "y": 6.73
+        "x": 0.7621099939708783,
+        "y": 4.352972122314352
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7100000000000009,
-        "y": 6.73
+        "x": 1.7554056460426093,
+        "y": 4.177684654301693
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.6870215631947256,
-        "y": 5.891511755207099
+        "x": 2.4176027474237634,
+        "y": 4.167946461634323
       },
       "prevControl": {
-        "x": 2.1618092749398294,
-        "y": 6.587988920066853
-      },
-      "nextControl": {
-        "x": 3.212233851449622,
-        "y": 5.195034590347345
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 0.71,
-        "y": 6.73
-      },
-      "prevControl": {
-        "x": 1.5092360908226683,
-        "y": 6.661494049358058
+        "x": 2.398126362089023,
+        "y": 4.197161039636432
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,16 +30,16 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.85,
-      "rotationDegrees": -55.13653420187642,
+      "waypointRelativePos": 0.3,
+      "rotationDegrees": -5.977716302271989,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake Note",
-      "waypointRelativePos": 0.15,
+      "name": "Pickup Note",
+      "waypointRelativePos": 0.1,
       "command": {
         "type": "sequential",
         "data": {
@@ -72,20 +56,20 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 61.260204708311946,
+    "rotation": -1.7899106082461818,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Amp_Side",
+  "folder": "Feeder_Side",
   "previewStartingState": {
-    "rotation": 60.25511870305773,
+    "rotation": -59.82647997035568,
     "velocity": 0
   },
   "useDefaultConstraints": true
