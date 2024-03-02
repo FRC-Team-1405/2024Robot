@@ -1,0 +1,118 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.97,
+        "y": 7.42
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.988781278721028,
+        "y": 7.42
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.231235314600955,
+        "y": 6.96452841527237
+      },
+      "prevControl": {
+        "x": 7.8026380451173845,
+        "y": 7.221659644004762
+      },
+      "nextControl": {
+        "x": 6.613994982375929,
+        "y": 6.686770265771109
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.196470347827914,
+        "y": 6.96452841527237
+      },
+      "prevControl": {
+        "x": 5.204629557128786,
+        "y": 7.026252448494872
+      },
+      "nextControl": {
+        "x": 3.3994505114616227,
+        "y": 6.915731282433618
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.2727379790599187,
+        "y": 6.100391950157335
+      },
+      "prevControl": {
+        "x": 2.4651061926683875,
+        "y": 6.3436170654119595
+      },
+      "nextControl": {
+        "x": 2.0803697654514495,
+        "y": 5.857166834902711
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.3,
+        "y": 5.55
+      },
+      "prevControl": {
+        "x": 1.2851041110931682,
+        "y": 5.55
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Set Speaker Speed",
+      "waypointRelativePos": 1.75,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Set Speaker Speed"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Center_Position",
+  "previewStartingState": {
+    "rotation": 1.8932140972920506,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

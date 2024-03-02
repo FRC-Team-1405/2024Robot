@@ -1,0 +1,96 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.3,
+        "y": 5.55
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.3057281252407118,
+        "y": 5.54487565115481
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.9002656501553608,
+        "y": 6.264989372084008
+      },
+      "prevControl": {
+        "x": 1.098349505235382,
+        "y": 6.169649893516813
+      },
+      "nextControl": {
+        "x": 4.844572696664191,
+        "y": 6.367862760788179
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.667559806297557,
+        "y": 7.417171325570721
+      },
+      "prevControl": {
+        "x": 4.896280869642653,
+        "y": 7.300310880623008
+      },
+      "nextControl": {
+        "x": 6.346524171745086,
+        "y": 7.520044714274893
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.971923713270985,
+        "y": 7.417171325570721
+      },
+      "prevControl": {
+        "x": 7.957027824364151,
+        "y": 7.417171325570721
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 0.9,
+      "maxWaypointRelativePos": 1.2,
+      "constraints": {
+        "maxVelocity": 3.0,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0
+      }
+    }
+  ],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 1.0416266760099662,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Center_Position",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

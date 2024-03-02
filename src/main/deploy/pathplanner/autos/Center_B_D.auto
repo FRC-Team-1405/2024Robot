@@ -32,7 +32,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center_B"
+            "pathName": "Center_Ba"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center_Bb"
           }
         },
         {
@@ -50,7 +56,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center_D"
+            "pathName": "Center_Da"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center_Db"
           }
         },
         {

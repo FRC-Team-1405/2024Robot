@@ -265,6 +265,7 @@ public class RobotContainer {
                                     new IntakeNote(intake),
                                     new ControlIntake(intake, Intake.Position.RETRACTED))
     );
+    NamedCommands.registerCommand("Set Speaker Speed", new InstantCommand( () -> { shooter.setWheelSpeed(Shooter.ShooterSpeed.SPEAKER); } ));
     NamedCommands.registerCommand("Lower Intake", new ControlIntake(intake, Intake.Position.EXTENDED));
     NamedCommands.registerCommand("Raise Intake", new ControlIntake(intake, Intake.Position.RETRACTED));
     NamedCommands.registerCommand("Shoot Speaker", new ShootNoteSpeaker(intake, shooter));
@@ -353,7 +354,7 @@ public class RobotContainer {
     //   System.out.println("###################### SOMETHING WENT WRONG");
     //   return new PathPlannerAuto("today_auto");
     // }
-    return new PathPlannerAuto("Center_B_D");
+    return new PathPlannerAuto("Center_B_A");
   }
 }
   

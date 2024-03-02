@@ -14,12 +14,6 @@
         {
           "type": "named",
           "data": {
-            "name": "Raise Flyswatter"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "Shoot Speaker"
           }
         },
@@ -27,6 +21,37 @@
           "type": "named",
           "data": {
             "name": "Lower Intake"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center_Da"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Pickup Note"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center_Db"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Speaker"
           }
         },
         {
@@ -58,49 +83,6 @@
           "type": "named",
           "data": {
             "name": "Shoot Speaker"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Lower Intake"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Center_Aa"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Pickup Note"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center_Ab"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot Speaker"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Lower Flyswatter"
           }
         }
       ]
