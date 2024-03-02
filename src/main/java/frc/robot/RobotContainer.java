@@ -262,10 +262,10 @@ public class RobotContainer {
     NamedCommands.registerCommand("Lower Intake", new ControlIntake(intake, Intake.Position.EXTENDED));
     NamedCommands.registerCommand("Raise Intake", new ControlIntake(intake, Intake.Position.RETRACTED));
     NamedCommands.registerCommand("Shoot Speaker", new ShootNoteSpeaker(intake, shooter));
-     NamedCommands.registerCommand("Lob Note", new LobNote(intake, shooter));
+    NamedCommands.registerCommand("Lob Note", new LobNote(intake, shooter));
     NamedCommands.registerCommand("Shoot Amp", new ShootNoteAmp(intake, shooter, flySwatter));
-   // NamedCommands.registerCommand("Raise Flyswatter", new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM));
-   // NamedCommands.registerCommand("Lower Flyswatter", new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
+    NamedCommands.registerCommand("Raise Flyswatter", new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM));
+    NamedCommands.registerCommand("Lower Flyswatter", new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW));
     NamedCommands.registerCommand("Eject Note", 
         new SequentialCommandGroup( new ControlIntake(intake, Intake.Position.EXTENDED),
                                     new IntakeNote(intake),
