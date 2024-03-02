@@ -1,0 +1,70 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.7621099939708783,
+        "y": 4.352972122314352
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.5539374447669423,
+        "y": 4.080302727627994
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.446817325425873,
+        "y": 6.982284142504229
+      },
+      "prevControl": {
+        "x": 1.3074487833435935,
+        "y": 6.982284142504229
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Pickup Note",
+      "waypointRelativePos": 0.6,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pickup Note"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Feeder_Side",
+  "previewStartingState": {
+    "rotation": -59.82647997035568,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7399244873677722,
-      "y": 6.6456209102894395
+      "x": 0.71,
+      "y": 6.73
     },
     "rotation": 60.06848815949227
   },
@@ -32,7 +32,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Amp_D"
+            "pathName": "Amp_Da"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Amp_Db"
           }
         },
         {
@@ -44,7 +50,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Amp_E"
+            "pathName": "Amp_Ea"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Amp_Eb"
           }
         },
         {

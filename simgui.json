@@ -2,19 +2,35 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Auto/Autos": "String Chooser",
+      "/SmartDashboard/FlySwatter/Climb/Active": "Command",
       "/SmartDashboard/FlySwatter/Low": "Command",
       "/SmartDashboard/Flyswatter/High": "Command",
+      "/SmartDashboard/Flyswatter/Low": "Command",
       "/SmartDashboard/Flyswatter/Medium": "Command",
       "/SmartDashboard/Flyswatter/Stop": "Command",
       "/SmartDashboard/Intake/Input": "Command",
       "/SmartDashboard/Intake/Output": "Command",
+      "/SmartDashboard/Intake/PickUpNote": "Command",
       "/SmartDashboard/Intake/Position/Lower": "Command",
       "/SmartDashboard/Intake/Position/Raised": "Command",
+      "/SmartDashboard/Intake/Position/Stop": "Command",
       "/SmartDashboard/Intake/Stop": "Command",
-      "/SmartDashboard/Preferences/Reset": "Command"
+      "/SmartDashboard/Preferences/Reset": "Command",
+      "/SmartDashboard/Rumble Driver": "Command",
+      "/SmartDashboard/Shooter/Speaker": "Command"
     }
   },
   "NetworkTables Info": {
+    "shuffleboard@1": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
+    },
     "visible": true
   }
 }
