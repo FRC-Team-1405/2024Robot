@@ -66,10 +66,9 @@ public class RobotContainer {
   
   public RobotContainer() {
 //    driveBase.enableDebugMode();
-    driveBase.setHeadingAdjustment(180);
-    configureBindings();
+   configureBindings();
     configureShuffleboard();
-    configureLEDs();
+    configureLEDs();           
     configurePathPlanner();
     configureShuffleboard();
 
