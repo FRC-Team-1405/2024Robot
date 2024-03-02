@@ -24,8 +24,8 @@ import frc.robot.sensors.Vision;
 
 import java.util.Optional;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -60,6 +60,7 @@ public class RobotContainer {
   private final CommandXboxController operator = new CommandXboxController(1);
 
   private static final SendableChooser<String> autos = new SendableChooser<>();
+  private SendableChooser<Command> selectedAuto;
   
   public RobotContainer() {
 //    driveBase.enableDebugMode();
@@ -172,9 +173,6 @@ public class RobotContainer {
   
   private void configureShuffleboard(){
     Command command;
-    autos.setDefaultOption("Shuffle1", "Shuffle1");
-    autos.addOption("Shuffle2", "Shuffle2");
-    SmartDashboard.putData("Auto/Autos", autos);
 
     command = new CommandFlySwatter(flySwatter, FlySwatter.Position.LOW);
     command.setName("Flyswatter");
@@ -285,6 +283,9 @@ public class RobotContainer {
                                     new OutputNote(intake),
                                     new ControlIntake(intake, Intake.Position.RETRACTED))
     );
+
+    selectedAuto = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Selected Auto", selectedAuto);
   }
 
   double getXSpeed() { 
@@ -346,20 +347,10 @@ public class RobotContainer {
 
     return 0.0;
   }
+
   public Command getAutonomousCommand() {
-    // String auto = autos.getSelected();
-    // System.out.println(auto);
-    // if(auto == "Shuffle1") {
-    //   System.out.println("###################### SHUFFLE 1 SELECTED");
-    //   return new PathPlannerAuto("1_Shuffle");
-    // } else if(auto == "Shuffle2") {
-    //   System.out.println("###################### SHUFFLE 2 SELECTED");
-    //   return new PathPlannerAuto("2_Shuffle");
-    // } else {
-    //   System.out.println("###################### SOMETHING WENT WRONG");
-    //   return new PathPlannerAuto("today_auto");
-    // }
-    return new PathPlannerAuto("Center_B_A");
+    return selectedAuto.getSelected();
+//    return new PathPlannerAuto("Center_B_A");
   }
 }
   
