@@ -3,45 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3,
-        "y": 5.55
+        "x": 2.25,
+        "y": 4.18
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3405279195573316,
-        "y": 5.55
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 1.646404809397296,
-        "y": 4.328361263357597
-      },
-      "prevControl": {
-        "x": 1.3071301589261843,
-        "y": 4.67369748777396
-      },
-      "nextControl": {
-        "x": 1.9856794598684075,
-        "y": 3.9830250389412347
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 2.55,
+        "x": 2.290527919557332,
         "y": 4.18
-      },
-      "prevControl": {
-        "x": 2.3906849052887686,
-        "y": 4.112008970125648
-      },
-      "nextControl": {
-        "x": 2.709315094711231,
-        "y": 4.247991029874352
       },
       "isLocked": false,
       "linkedName": null
@@ -64,16 +32,16 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Lower Intake",
-      "waypointRelativePos": 0.7,
+      "name": "Set SPeaker Speed",
+      "waypointRelativePos": 0,
       "command": {
-        "type": "sequential",
+        "type": "parallel",
         "data": {
           "commands": [
             {
               "type": "named",
               "data": {
-                "name": "Pickup Note"
+                "name": "Set Speaker Speed"
               }
             }
           ]
@@ -82,8 +50,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -95,5 +63,5 @@
   "reversed": false,
   "folder": "Center_Position",
   "previewStartingState": null,
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }
