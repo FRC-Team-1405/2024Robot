@@ -47,6 +47,7 @@ import frc.robot.tools.LEDs.BatteryLED;
 import frc.robot.tools.LEDs.IAddressableLEDHelper;
 import frc.robot.tools.LEDs.MultiFunctionLED;
 import frc.robot.tools.LEDs.ShootLED;
+import frc.robot.utils.ToggleFilter;
 
 public class RobotContainer {
   private SwerveDrive driveBase = new SwerveDrive(10, 2*Math.PI, "geared upright",  Constants.kinematics, Constants.config);
@@ -64,7 +65,7 @@ public class RobotContainer {
   private SendableChooser<Command> selectedAuto;
   
   public RobotContainer() {
-//    driveBase.enableDebugMode();
+//    driveBase.enableDebugMode();`
    configureBindings();
     configureShuffleboard();
     configureLEDs();           
@@ -73,7 +74,8 @@ public class RobotContainer {
 
     vision.setSpeakerStart();
 
-    driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, this::getSlideValue, this::toggleDriveMode, driveBase));
+    ToggleFilter toggleDriveMode = new ToggleFilter( driver.getHID()::getBButton );
+    driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, this::getSlideValue, toggleDriveMode, driveBase));
   }
 
   public void disabledInit() {
@@ -362,8 +364,5 @@ public class RobotContainer {
     return new PathPlannerAuto("Center_B_A");
   }
 
-  public boolean toggleDriveMode() {
-    return driver.getHID().getBButton();
-  }
 }
   
