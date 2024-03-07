@@ -263,12 +263,7 @@ public class RobotContainer {
   void configurePathPlanner() {
     NamedCommands.registerCommand("Pickup Note Short", 
         new SequentialCommandGroup( new ControlIntake(intake, Intake.Position.EXTENDED),
-                                    new IntakeNote(intake).withTimeout(3.0),
-                                    new ControlIntake(intake, Intake.Position.RETRACTED))
-    );
-    NamedCommands.registerCommand("Pickup Note Long", 
-        new SequentialCommandGroup( new ControlIntake(intake, Intake.Position.EXTENDED),
-                                    new IntakeNote(intake).withTimeout(5.0),
+                                    new IntakeNote(intake).withTimeout(2),
                                     new ControlIntake(intake, Intake.Position.RETRACTED))
     );
     NamedCommands.registerCommand("Set Speaker Speed", new InstantCommand( () -> { shooter.setWheelSpeed(Shooter.ShooterSpeed.SPEAKER); } ));
