@@ -34,46 +34,15 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "Center_Da"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
-                  "name": "Pickup Note"
+                  "name": "Pickup Note Short"
                 }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center_Db"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot Speaker"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
+              },
               {
                 "type": "path",
                 "data": {
                   "pathName": "Center_Ba"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Pickup Note"
                 }
               }
             ]
@@ -89,6 +58,49 @@
           "type": "named",
           "data": {
             "name": "Shoot Speaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Lower Intake"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Pickup Note Short"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center_Ca"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center_Cb"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Speaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Lower Flyswatter"
           }
         }
       ]

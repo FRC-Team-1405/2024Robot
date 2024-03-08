@@ -36,6 +36,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -43,6 +44,7 @@ import frc.robot.subsystems.FlySwatter;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDrive;
+import frc.robot.subsystems.Intake.Speed;
 import frc.robot.tools.LEDs.BatteryLED;
 import frc.robot.tools.LEDs.IAddressableLEDHelper;
 import frc.robot.tools.LEDs.MultiFunctionLED;
@@ -262,15 +264,17 @@ public class RobotContainer {
 
   void configurePathPlanner() {
     NamedCommands.registerCommand("Pickup Note Short", 
-        new SequentialCommandGroup( new ControlIntake(intake, Intake.Position.EXTENDED),
-                                    new IntakeNote(intake).withTimeout(3.0),
-                                    new ControlIntake(intake, Intake.Position.RETRACTED))
-    );
+        new SequentialCommandGroup( new ParallelCommandGroup(new ControlIntake(intake, Intake.Position.EXTENDED),
+                                    new InstantCommand(() -> intake.setSpeed(Intake.Speed.IN))),
+                                    new IntakeNote(intake).withTimeout(3),
+                                    new ControlIntake(intake, Intake.Position.RETRACTED)));
+
     NamedCommands.registerCommand("Pickup Note Long", 
         new SequentialCommandGroup( new ControlIntake(intake, Intake.Position.EXTENDED),
                                     new IntakeNote(intake).withTimeout(5.0),
                                     new ControlIntake(intake, Intake.Position.RETRACTED))
     );
+    NamedCommands.registerCommand("Raise Intake", new ControlIntake(intake, Intake.Position.RETRACTED));
     NamedCommands.registerCommand("Set Speaker Speed", new InstantCommand( () -> { shooter.setWheelSpeed(Shooter.ShooterSpeed.SPEAKER); } ));
     NamedCommands.registerCommand("Lower Intake", new ControlIntake(intake, Intake.Position.EXTENDED));
     NamedCommands.registerCommand("Raise Intake", new ControlIntake(intake, Intake.Position.RETRACTED));
@@ -361,7 +365,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
 //    return selectedAuto.getSelected();
-    return new PathPlannerAuto("Center_B_A");
+    return new PathPlannerAuto("Center_B_A_C_Test");
   }
 
 }

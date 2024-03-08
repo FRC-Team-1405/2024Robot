@@ -3,57 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3,
-        "y": 5.55
+        "x": 3.16,
+        "y": 7.25
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3405279195573316,
-        "y": 5.55
+        "x": 3.16,
+        "y": 7.25
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.8,
-        "y": 5.55
+        "x": 1.91,
+        "y": 5.4
       },
       "prevControl": {
-        "x": 2.827468877097481,
-        "y": 5.557529287855652
-      },
-      "nextControl": {
-        "x": 2.794590649130022,
-        "y": 5.548517283408865
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 1.3,
-        "y": 5.55
-      },
-      "prevControl": {
-        "x": 1.325841614226085,
-        "y": 5.553517472813489
-      },
-      "nextControl": {
-        "x": 1.2573386284213324,
-        "y": 5.544193078907484
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 1.3,
-        "y": 5.55
-      },
-      "prevControl": {
-        "x": 1.2962452465189287,
-        "y": 5.553919733431884
+        "x": 1.8769239363740322,
+        "y": 5.4
       },
       "nextControl": null,
       "isLocked": false,
@@ -64,7 +32,7 @@
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Pickup 1st  note",
+      "name": "Set Speaker Speed",
       "waypointRelativePos": 0.0,
       "command": {
         "type": "parallel",
@@ -73,7 +41,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Pickup Note"
+                "name": "Set Speaker Speed"
               }
             }
           ]
@@ -82,14 +50,14 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 3.5,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,

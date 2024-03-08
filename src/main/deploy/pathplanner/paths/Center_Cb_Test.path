@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7621099939708783,
-        "y": 4.352972122314352
+        "x": 2.7941500432763897,
+        "y": 4.425627808601589
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3104826280826942,
-        "y": 5.054121994364985
+        "x": 2.834677962833722,
+        "y": 4.425627808601589
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.5247228667648325,
-        "y": 5.287838618381864
+        "x": 1.481051682482512,
+        "y": 6.13751900489583
       },
       "prevControl": {
-        "x": 2.5052464814300923,
-        "y": 5.317053196383974
+        "x": 1.4652526622148405,
+        "y": 6.13751900489583
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,24 +30,24 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.3,
-      "rotationDegrees": -5.977716302271989,
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -30.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Pickup Note",
-      "waypointRelativePos": 0.1,
+      "name": "Set SPeaker Speed",
+      "waypointRelativePos": 0,
       "command": {
-        "type": "sequential",
+        "type": "parallel",
         "data": {
           "commands": [
             {
               "type": "named",
               "data": {
-                "name": "Pickup Note"
+                "name": "Set Speaker Speed"
               }
             }
           ]
@@ -63,14 +63,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 43.66778014613046,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Feeder_Side",
-  "previewStartingState": {
-    "rotation": -59.82647997035568,
-    "velocity": 0
-  },
+  "folder": "Center_Position",
+  "previewStartingState": null,
   "useDefaultConstraints": true
 }

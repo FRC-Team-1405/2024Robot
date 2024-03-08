@@ -3,57 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3,
-        "y": 5.55
+        "x": 8.05,
+        "y": 5.86
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3057281252407118,
-        "y": 5.54487565115481
+        "x": 8.046245246518929,
+        "y": 5.850273345475601
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.9002656501553608,
-        "y": 6.264989372084008
+        "x": 4.681121021009815,
+        "y": 6.575218458493788
       },
       "prevControl": {
-        "x": 1.098349505235382,
-        "y": 6.169649893516813
+        "x": 6.365623912823655,
+        "y": 6.643227702426968
       },
       "nextControl": {
-        "x": 4.844572696664191,
-        "y": 6.367862760788179
+        "x": 2.9966181291959755,
+        "y": 6.507209214560609
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.667559806297557,
-        "y": 7.417171325570721
+        "x": 1.3,
+        "y": 5.553919733431884
       },
       "prevControl": {
-        "x": 4.896280869642653,
-        "y": 7.300310880623008
-      },
-      "nextControl": {
-        "x": 6.346524171745086,
-        "y": 7.520044714274893
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 7.971923713270985,
-        "y": 7.417171325570721
-      },
-      "prevControl": {
-        "x": 7.957027824364151,
-        "y": 7.417171325570721
+        "x": 1.3097266545243995,
+        "y": 5.583099697005082
       },
       "nextControl": null,
       "isLocked": false,
@@ -65,7 +49,7 @@
     {
       "name": "New Constraints Zone",
       "minWaypointRelativePos": 0.9,
-      "maxWaypointRelativePos": 1.2,
+      "maxWaypointRelativePos": 1.1,
       "constraints": {
         "maxVelocity": 3.0,
         "maxAcceleration": 3.0,
@@ -74,23 +58,41 @@
       }
     }
   ],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Set Speaker Speed",
+      "waypointRelativePos": 0.4,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Set Speaker Speed"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 7.0,
+    "maxVelocity": 6.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 1.0416266760099662,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Center_Position",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -43.246984754649084,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

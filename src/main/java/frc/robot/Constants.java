@@ -28,7 +28,7 @@ public final class Constants {
         new PIDConstants(2.5, .75, 0.0), // Translation PID constants
         //new PIDConstants(0.0, 0.0, 0.0), // Translation PID constants
         new PIDConstants(10, 0.0, 0.0), // Rotation PID constants.
-        4.0, // Max module speed, in m/s
+        10, // Max module speed, in m/s
         Units.inchesToMeters(16), // Drive base radius in meters. Distance from robot center to furthest module.
         new ReplanningConfig() // Default path replanning config. See the API for the options here
     );

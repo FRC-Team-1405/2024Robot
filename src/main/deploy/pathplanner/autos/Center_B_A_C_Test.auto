@@ -2,7 +2,7 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3,
+      "x": 1.6,
       "y": 5.55
     },
     "rotation": 0
@@ -12,21 +12,22 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Raise Flyswatter"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot Speaker"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Lower Intake"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shoot Speaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Raise Flyswatter"
+                }
+              }
+            ]
           }
         },
         {
@@ -42,28 +43,29 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center_Ba"
+                  "pathName": "Center_Ba_Test"
                 }
               }
             ]
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Center_Bb"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot Speaker"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Lower Intake"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center_Bb_Test"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shoot Speaker"
+                }
+              }
+            ]
           }
         },
         {
@@ -79,7 +81,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center_Aa"
+                  "pathName": "Center_Aa_Test"
                 }
               }
             ]
@@ -88,19 +90,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center_Ab"
+            "pathName": "Center_Ab_Test"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Shoot Speaker"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Lower Intake"
           }
         },
         {
@@ -116,7 +112,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center_Ca"
+                  "pathName": "Center_Ca_Test"
                 }
               }
             ]
@@ -125,19 +121,26 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center_Cb"
+            "pathName": "Center_Cb_Test"
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "Shoot Speaker"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Lower Flyswatter"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shoot Speaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Lower Flyswatter"
+                }
+              }
+            ]
           }
         }
       ]
