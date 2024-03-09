@@ -20,12 +20,6 @@
                 "data": {
                   "name": "Shoot Speaker"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Raise Flyswatter"
-                }
               }
             ]
           }
@@ -94,12 +88,6 @@
                 "type": "named",
                 "data": {
                   "name": "Shoot Speaker"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Lower Flyswatter"
                 }
               }
             ]
