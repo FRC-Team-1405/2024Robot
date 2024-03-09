@@ -64,7 +64,7 @@ public final class Constants {
             Preferences.initDouble("Intake/Lidar distance in tolerance", 100.0);
             DISTANCE_IN_TOLERANCE = Preferences.getDouble("Intake/Lidar distance in tolerance", 40.0);
 
-            Preferences.initDouble("Intake/Lidar distance out tolerance", 150.0);
+            Preferences.initDouble("Intake/Lidar distance out tolerance", 175.0);
             DISTANCE_OUT_TOLERANCE = Preferences.getDouble("Intake/Lidar distance out tolerance", 40.0);
         }
         public final static double DISTANCE_IN_TOLERANCE;  

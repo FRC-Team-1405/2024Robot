@@ -23,8 +23,8 @@ public class Shooter extends SubsystemBase {
 
   public enum ShooterSpeed {
     REVERSE(-5),
-    AMP(25),
-    SPEAKER(50),
+    AMP(17),
+    SPEAKER(60),
     LOB(35);
 
     private ShooterSpeed(double value) {

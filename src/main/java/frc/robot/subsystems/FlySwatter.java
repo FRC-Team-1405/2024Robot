@@ -11,10 +11,10 @@ import frc.robot.utils.TalonFXHelper;
 
 public class FlySwatter extends SubsystemBase {
   public enum Position {
-    HIGH(37),
-    MEDIUM(17),
+    HIGH(102),
+    MEDIUM(27),
     LOW(1),
-    CLIMB(30);
+    CLIMB(50);
 
     private Position(double value){
       Preferences.initDouble("FLySwatter/Position/"+this.name(), value);
@@ -26,7 +26,7 @@ public class FlySwatter extends SubsystemBase {
       return value;
     }
   }
-  private double MAX_POSITION_CHANGE = 1;
+  private double MAX_POSITION_CHANGE = 10;
 
   private boolean climbActive = false;
   private Position targetPosition = Position.LOW;

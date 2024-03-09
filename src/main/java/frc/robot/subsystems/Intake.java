@@ -19,8 +19,8 @@ public class Intake extends SubsystemBase {
   private TalonFX moterSpeed = new TalonFX(Constants.CanBus.MOTER_SPEED);
 
   public enum Position { 
-    RETRACTED(0),
-    EXTENDED(34),
+    RETRACTED(1.5),
+    EXTENDED(32),
     EJECT(17);
 
     private Position(double value){
@@ -38,7 +38,7 @@ public class Intake extends SubsystemBase {
 
   public enum Speed { 
     OUT(5),
-    IN(-0.25),
+    IN(-0.4),
     STOP(0);
 
     private Speed(double value){
