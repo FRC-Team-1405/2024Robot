@@ -16,7 +16,7 @@ public class SwerveDriveToNote extends Command {
   private SwerveDrive driveBase;
   private DoubleSupplier getXSpeed, getYSpeed, getRotationSpeed; 
   private Vision vision;
-  private static double ROTATION_SPEED = 0.5; 
+  private static double ROTATION_SPEED = 0.4; 
 
   static {
       Preferences.initDouble("SwerveDriveToNote/Rotation Speed", ROTATION_SPEED);
