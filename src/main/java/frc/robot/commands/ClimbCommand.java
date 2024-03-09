@@ -17,6 +17,8 @@ public class ClimbCommand extends Command {
     this.subSystem = subSystem;
     this.positionChange = positionChange;
 
+    subSystem.getMotor().EnableForwardSoftwareLimit(false);
+
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -34,6 +36,7 @@ public class ClimbCommand extends Command {
   @Override
   public void end(boolean interrupted) {
     subSystem.stop();
+    subSystem.getMotor().EnableForwardSoftwareLimit(true);
   }
 
   // Returns true when the command should end.

@@ -62,6 +62,9 @@ public class FlySwatter extends SubsystemBase {
     return targetPosition;
   }
 
+  public TalonFXHelper getMotor() {
+    return primary;
+  }
 
   public void stop() {
     primary.Stop();

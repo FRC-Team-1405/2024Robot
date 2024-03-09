@@ -5,6 +5,7 @@
 package frc.robot.utils;
 
 import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -21,6 +22,7 @@ public class TalonFXHelper {
 
     private State MotorState = State.INIT;
     private TalonFX Motor;
+    private SoftwareLimitSwitchConfigs MotorSoftLimitSwitch = new SoftwareLimitSwitchConfigs();
     private TalonFX slaveMotor = null;
     private StatusSignal<ReverseLimitValue> ReverseLimit;
     private double Accuracy;
@@ -32,6 +34,7 @@ public class TalonFXHelper {
         Motor = new TalonFX(motorID);
         Accuracy = accuracy;
 
+        Motor.getConfigurator().refresh(MotorSoftLimitSwitch);
         ReverseLimit = Motor.getReverseLimit();  
     }
 
@@ -124,4 +127,8 @@ public class TalonFXHelper {
         return atPosition;
     }
 
+    public void EnableForwardSoftwareLimit(boolean enable) {
+        MotorSoftLimitSwitch.withForwardSoftLimitEnable(enable);
+        Motor.getConfigurator().apply(MotorSoftLimitSwitch);
+    }
 }
