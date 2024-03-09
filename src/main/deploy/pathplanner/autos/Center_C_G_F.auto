@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4713250279581123,
-      "y": 1.4687248331842628
+      "x": 1.6,
+      "y": 5.55
     },
-    "rotation": -90.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -18,13 +18,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Lob Note"
+                  "name": "Raise Flyswatter"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Raise Flyswatter"
+                  "name": "Shoot Speaker"
                 }
               }
             ]
@@ -35,9 +35,71 @@
           "data": {
             "commands": [
               {
+                "type": "named",
+                "data": {
+                  "name": "Pickup Note Short"
+                }
+              },
+              {
                 "type": "path",
                 "data": {
-                  "pathName": "Feeder_ClearCenter_Auto_Fa"
+                  "pathName": "Center_Ca"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center_Cb"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Speaker"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Pickup Note Long"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center_Ga"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center_Gb"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Speaker"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "F_Note_Park"
                 }
               },
               {
@@ -48,35 +110,10 @@
               }
             ]
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Feeder_ClearCenter_Auto_Fb"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Shoot Speaker"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Lower Flyswatter"
-                }
-              }
-            ]
-          }
         }
       ]
     }
   },
-  "folder": "Feeder_Side",
+  "folder": "Center_Position",
   "choreoAuto": false
 }

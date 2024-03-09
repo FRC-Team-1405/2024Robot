@@ -182,5 +182,13 @@
     "properties": {
       "persistent": true
     }
+  },
+  {
+    "name": "/Preferences/Shooter/Speed/REVERSE",
+    "type": "double",
+    "value": -5.0,
+    "properties": {
+      "persistent": true
+    }
   }
 ]

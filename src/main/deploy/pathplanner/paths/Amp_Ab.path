@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.3901624437463056,
-        "y": 7.010442282358835
+        "x": 2.628796916361605,
+        "y": 6.99346460304295
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7554056460426093,
-        "y": 7.313382693194805
+        "x": 1.9940401186579089,
+        "y": 7.29640501387892
       },
       "isLocked": false,
       "linkedName": null
@@ -30,7 +30,25 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Set Speaker Speed",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Set Speaker Speed"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 7.0,

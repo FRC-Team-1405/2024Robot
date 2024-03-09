@@ -34,7 +34,7 @@
   {
     "name": "/Preferences/FLySwatter/Position/HIGH",
     "type": "double",
-    "value": 102.0,
+    "value": 0.9,
     "properties": {
       "persistent": true
     }
@@ -42,7 +42,7 @@
   {
     "name": "/Preferences/FLySwatter/Position/MEDIUM",
     "type": "double",
-    "value": 27.0,
+    "value": 0.45,
     "properties": {
       "persistent": true
     }
@@ -50,7 +50,7 @@
   {
     "name": "/Preferences/FLySwatter/Position/LOW",
     "type": "double",
-    "value": 1.0,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
@@ -58,7 +58,7 @@
   {
     "name": "/Preferences/Intake/Position/RAISED",
     "type": "double",
-    "value": 1.5,
+    "value": 9.0,
     "properties": {
       "persistent": true
     }
@@ -66,7 +66,7 @@
   {
     "name": "/Preferences/Intake/Position/LOWER",
     "type": "double",
-    "value": 32.0,
+    "value": 2.0,
     "properties": {
       "persistent": true
     }
@@ -82,7 +82,7 @@
   {
     "name": "/Preferences/Intake/Speed/IN",
     "type": "double",
-    "value": -0.4,
+    "value": 0.25,
     "properties": {
       "persistent": true
     }
@@ -98,7 +98,7 @@
   {
     "name": "/Preferences/Shooter/Speed/AMP",
     "type": "double",
-    "value": 17.0,
+    "value": 25.0,
     "properties": {
       "persistent": true
     }
@@ -114,7 +114,7 @@
   {
     "name": "/Preferences/FLySwatter/Position/CLIMB",
     "type": "double",
-    "value": 50.0,
+    "value": 0.75,
     "properties": {
       "persistent": true
     }
@@ -122,7 +122,7 @@
   {
     "name": "/Preferences/FlySwatter/MaxPosition/",
     "type": "double",
-    "value": 10.0,
+    "value": 100.0,
     "properties": {
       "persistent": true
     }
@@ -130,7 +130,7 @@
   {
     "name": "/Preferences/Intake/Position/RETRACTED",
     "type": "double",
-    "value": 1.5,
+    "value": 0.0,
     "properties": {
       "persistent": true
     }
@@ -138,7 +138,7 @@
   {
     "name": "/Preferences/Intake/Position/EXTENDED",
     "type": "double",
-    "value": 32.0,
+    "value": 34.0,
     "properties": {
       "persistent": true
     }
@@ -147,6 +147,38 @@
     "name": "/Preferences/Intake/Position/EJECT",
     "type": "double",
     "value": 17.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Shooter/Speed/LOB",
+    "type": "double",
+    "value": 35.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Intake/Lidar distance in tolerance",
+    "type": "double",
+    "value": 100.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/Intake/Lidar distance out tolerance",
+    "type": "double",
+    "value": 150.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/SwerveDriveToNote/Rotation Speed",
+    "type": "double",
+    "value": 0.5,
     "properties": {
       "persistent": true
     }

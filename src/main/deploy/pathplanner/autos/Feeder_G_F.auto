@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4713250279581123,
-      "y": 1.4687248331842628
+      "x": 0.7621099939708783,
+      "y": 4.352972122314352
     },
-    "rotation": -90.0
+    "rotation": -59.2336572463957
   },
   "command": {
     "type": "sequential",
@@ -18,7 +18,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Lob Note"
+                  "name": "Shoot Speaker"
                 }
               },
               {
@@ -37,7 +37,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Feeder_ClearCenter_Auto_Fa"
+                  "pathName": "Feeder_Ga"
                 }
               },
               {
@@ -52,7 +52,38 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Feeder_ClearCenter_Auto_Fb"
+            "pathName": "Feeder_Gb"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Speaker"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Pickup Note Long"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Feeder_Fa"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Feeder_Fb"
           }
         },
         {

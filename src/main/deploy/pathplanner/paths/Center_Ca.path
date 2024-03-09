@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3,
+        "x": 1.6,
         "y": 5.55
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3405279195573316,
+        "x": 1.6405279195573317,
         "y": 5.55
       },
       "isLocked": false,
@@ -16,28 +16,12 @@
     },
     {
       "anchor": {
-        "x": 1.646404809397296,
-        "y": 4.328361263357597
+        "x": 2.7455167706543944,
+        "y": 4.3089079543088
       },
       "prevControl": {
-        "x": 1.3071301589261843,
-        "y": 4.67369748777396
-      },
-      "nextControl": {
-        "x": 1.9856794598684075,
-        "y": 3.9830250389412347
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 2.55,
-        "y": 4.18
-      },
-      "prevControl": {
-        "x": 2.5342009797323284,
-        "y": 4.18
+        "x": 2.723767309944181,
+        "y": 4.3089079543088
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,34 +30,16 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "Lower Intake",
-      "waypointRelativePos": 0.7,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Pickup Note"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -42.500792459837605,
     "rotateFast": false
   },
   "reversed": false,

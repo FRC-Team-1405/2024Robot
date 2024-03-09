@@ -1,0 +1,105 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.4713250279581123,
+        "y": 1.4687248331842628
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.4810516824825113,
+        "y": 1.478451487708662
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.104707265167793,
+        "y": 0.6524589087137841
+      },
+      "prevControl": {
+        "x": 7.081362175772342,
+        "y": 1.9431640221232986
+      },
+      "nextControl": {
+        "x": 8.367523085757073,
+        "y": 0.3209795993051693
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.367638467186781,
+        "y": 2.083973230817162
+      },
+      "prevControl": {
+        "x": 8.28970984956188,
+        "y": 1.6632579236722453
+      },
+      "nextControl": {
+        "x": 8.46635784803108,
+        "y": 2.616932186062307
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.260529885988683,
+        "y": 3.9198417733328355
+      },
+      "prevControl": {
+        "x": 8.238613183415614,
+        "y": 3.8567339003539494
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.8,
+      "rotationDegrees": 161.8593338889899,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0.85,
+      "rotationDegrees": 0,
+      "rotateFast": true
+    },
+    {
+      "waypointRelativePos": 1.6500000000000001,
+      "rotationDegrees": 19.505331803604776,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 2,
+      "rotationDegrees": 122.28934146501831,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 7.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 89.99180545464036,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Feeder_Side",
+  "previewStartingState": {
+    "rotation": -1.468800714385848,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

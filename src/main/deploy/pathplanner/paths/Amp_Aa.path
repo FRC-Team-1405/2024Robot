@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 2.3901624437463056,
-        "y": 7.010442282358835
+        "x": 2.63,
+        "y": 6.99
       },
       "prevControl": {
-        "x": 1.573181310420278,
-        "y": 7.010442282358835
+        "x": 2.6385235708860044,
+        "y": 7.00319125756735
       },
       "nextControl": null,
       "isLocked": false,
@@ -36,25 +36,7 @@
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "Pickup Note",
-      "waypointRelativePos": 0.2,
-      "command": {
-        "type": "sequential",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Pickup Note"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
     "maxAcceleration": 7.0,

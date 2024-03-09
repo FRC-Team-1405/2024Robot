@@ -3,9 +3,9 @@
   "startingPose": {
     "position": {
       "x": 1.4713250279581123,
-      "y": 1.4687248331842628
+      "y": 7.3533508204457165
     },
-    "rotation": -90.0
+    "rotation": 90.0
   },
   "command": {
     "type": "sequential",
@@ -31,19 +31,37 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "Amp_Clear_Center_Auto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Speaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Lower Flyswatter"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Feeder_ClearCenter_Auto_Fa"
+                  "pathName": "Amp_Aa"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Pickup Note Long"
+                  "name": "Pickup Note Short"
                 }
               }
             ]
@@ -52,31 +70,12 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Feeder_ClearCenter_Auto_Fb"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Shoot Speaker"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Lower Flyswatter"
-                }
-              }
-            ]
+            "pathName": "Amp_Ab"
           }
         }
       ]
     }
   },
-  "folder": "Feeder_Side",
+  "folder": "Amp_Side",
   "choreoAuto": false
 }

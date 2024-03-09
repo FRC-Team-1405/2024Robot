@@ -23,6 +23,7 @@ import frc.robot.commands.SwerveDriveToNote;
 import frc.robot.sensors.Vision;
 
 import java.util.Optional;
+import java.util.function.BooleanSupplier;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -113,7 +114,7 @@ public class RobotContainer {
   private void configureBindings() {
     // control intake deploy/retract
     driver.rightBumper()
-          .onTrue( new ConditionalCommand(new OpenIntake(intake, flySwatter), 
+          .toggleOnTrue( new ConditionalCommand(new OpenIntake(intake, flySwatter), 
                                           new CloseIntake(intake, flySwatter), 
                                           () -> { return intake.getPosition() == Intake.Position.RETRACTED; }) );
 
