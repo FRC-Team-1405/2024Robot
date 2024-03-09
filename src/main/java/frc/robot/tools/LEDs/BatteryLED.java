@@ -7,6 +7,7 @@ package frc.robot.tools.LEDs;
 import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.tools.MathTools;
 import frc.robot.Constants;
@@ -29,7 +30,7 @@ public class BatteryLED extends AddressableLEDHelper {
         yellowOffset = segmentLength;
         greenOffset = segmentLength * 2;
 
-        // SmartDashboard.putNumber("LedVoltageTest", 0);
+        //SmartDashboard.putNumber("LedVoltageTest", 0);
     }
 
     @Override
@@ -41,16 +42,16 @@ public class BatteryLED extends AddressableLEDHelper {
     @Override
     public AddressableLEDBuffer writeData(AddressableLEDBuffer buffer) {
         double voltage = filter.calculate(RobotController.getBatteryVoltage());
-        // double voltage = SmartDashboard.getNumber("LedVoltageTest", 0);
-
+        //double voltage = SmartDashboard.getNumber("LedVoltageTest", 0);
+    
         int numberOfLeds = (numLEDs - 1) - (int)MathTools.map(voltage, Constants.BatteryMonitor.MINVOLTAGE,
-                Constants.BatteryMonitor.MAXVOLTAGE, numLEDs, 1);
+                Constants.BatteryMonitor.MAXVOLTAGE, 1, numLEDs);
 
         for (int i = offset; i < segmentLength + offset; i++) {
-            // Green
+            // Red
             buffer.setLED(i + greenOffset,
             (i + greenOffset > numberOfLeds
-                    ? super.setPercentBrightness(Color.kGreen, Constants.BatteryMonitor.BRIGHTNESS)
+                    ? super.setPercentBrightness(Color.kRed, Constants.BatteryMonitor.BRIGHTNESS)
                     : super.setPercentBrightness(Color.kBlack, Constants.BatteryMonitor.BRIGHTNESS)));
 
             // Yellow
@@ -59,10 +60,10 @@ public class BatteryLED extends AddressableLEDHelper {
                             ? super.setPercentBrightness(Color.kYellow, Constants.BatteryMonitor.BRIGHTNESS)
                             : super.setPercentBrightness(Color.kBlack, Constants.BatteryMonitor.BRIGHTNESS)));
         
-            // Red
+            // Green
             buffer.setLED(i + redOffset,
             (i + redOffset > numberOfLeds
-                    ? super.setPercentBrightness(Color.kRed, Constants.BatteryMonitor.BRIGHTNESS)
+                    ? super.setPercentBrightness(Color.kGreen, Constants.BatteryMonitor.BRIGHTNESS)
                     : super.setPercentBrightness(Color.kBlack, Constants.BatteryMonitor.BRIGHTNESS)));
         }
        

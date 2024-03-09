@@ -98,8 +98,8 @@ public class RobotContainer {
   private LEDManager ledManager;
   public void configureLEDs() {
     multifucntion = new MultiFunctionLED(
-      new BatteryLED(15),
-      new ShootLED(15));
+      new BatteryLED(17),
+      new ShootLED(17));
 
     leds = new IAddressableLEDHelper[]{multifucntion};
 

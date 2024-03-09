@@ -57,6 +57,7 @@ public final class Constants {
         public final static int MOTER_SPEED = 10;
 
         public final static int LIDAR = 17;
+        public final static int FlyswatterEncoder = 18;
     }
 
     public final class Intake {
