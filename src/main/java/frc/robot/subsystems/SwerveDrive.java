@@ -217,9 +217,9 @@ public class SwerveDrive extends SubsystemBase
                                               ySpeed * maxVelocity, 
                                               rotationSpeed * maxAngularSpeed, 
                                               gyro.getRotation2d()) 
-        : new ChassisSpeeds(xSpeed, 
-                            ySpeed, 
-                            rotationSpeed)); 
+        : new ChassisSpeeds(xSpeed * maxVelocity, 
+                            ySpeed * maxVelocity, 
+                            rotationSpeed * maxAngularSpeed)); 
       //This function should limit our speed to the value we set (maxVelocity)
       SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, maxVelocity); 
       setModuleStates(swerveModuleStates);

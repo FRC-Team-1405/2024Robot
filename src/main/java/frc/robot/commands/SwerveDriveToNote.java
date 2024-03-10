@@ -44,11 +44,11 @@ public class SwerveDriveToNote extends Command {
   @Override
   public void execute() {
     if (!vision.hasTarget()){
-      driveBase.drive(getXSpeed.getAsDouble(), getYSpeed.getAsDouble(), getRotationSpeed.getAsDouble(), true);
+      driveBase.drive(getXSpeed.getAsDouble(), getYSpeed.getAsDouble(), getRotationSpeed.getAsDouble(), false);
     } else {
       double angle = vision.getVisionAngleToTarget();
       double rotationSpeed = MathTools.map(angle, -25.0, 25.0, -ROTATION_SPEED, ROTATION_SPEED  );
-      driveBase.drive(getXSpeed.getAsDouble(), getYSpeed.getAsDouble(), rotationSpeed, true);
+      driveBase.drive(getXSpeed.getAsDouble(), getYSpeed.getAsDouble(), rotationSpeed, false);
     }
   }
 
