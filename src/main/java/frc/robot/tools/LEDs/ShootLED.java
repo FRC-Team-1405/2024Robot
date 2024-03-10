@@ -21,6 +21,8 @@ public class ShootLED extends AddressableLEDHelper {
             Optional<Alliance> alliance = DriverStation.getAlliance() ;
             if (alliance.isPresent()) {
                 shootColor = alliance.get() == Alliance.Red ? Color.kRed : Color.kBlue;
+            } else {
+                return Color.kGreen;
             }
         }
         return shootColor;
