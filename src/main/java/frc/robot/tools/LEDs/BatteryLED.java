@@ -44,26 +44,26 @@ public class BatteryLED extends AddressableLEDHelper {
         double voltage = filter.calculate(RobotController.getBatteryVoltage());
         //double voltage = SmartDashboard.getNumber("LedVoltageTest", 0);
     
-        int numberOfLeds = (numLEDs - 1) - (int)MathTools.map(voltage, Constants.BatteryMonitor.MINVOLTAGE,
+        int numberOfLeds = (int)MathTools.map(voltage, Constants.BatteryMonitor.MINVOLTAGE,
                 Constants.BatteryMonitor.MAXVOLTAGE, 1, numLEDs);
 
         for (int i = offset; i < segmentLength + offset; i++) {
-            // Red
+            // Green
             buffer.setLED(i + greenOffset,
-            (i + greenOffset > numberOfLeds
-                    ? super.setPercentBrightness(Color.kRed, Constants.BatteryMonitor.BRIGHTNESS)
+            (i + greenOffset < numberOfLeds
+                    ? super.setPercentBrightness(Color.kGreen, Constants.BatteryMonitor.BRIGHTNESS)
                     : super.setPercentBrightness(Color.kBlack, Constants.BatteryMonitor.BRIGHTNESS)));
 
             // Yellow
             buffer.setLED(i + yellowOffset,
-                    (i + yellowOffset > numberOfLeds
+                    (i + yellowOffset < numberOfLeds
                             ? super.setPercentBrightness(Color.kYellow, Constants.BatteryMonitor.BRIGHTNESS)
                             : super.setPercentBrightness(Color.kBlack, Constants.BatteryMonitor.BRIGHTNESS)));
         
             // Green
             buffer.setLED(i + redOffset,
-            (i + redOffset > numberOfLeds
-                    ? super.setPercentBrightness(Color.kGreen, Constants.BatteryMonitor.BRIGHTNESS)
+            (i + redOffset < numberOfLeds
+                    ? super.setPercentBrightness(Color.kRed, Constants.BatteryMonitor.BRIGHTNESS)
                     : super.setPercentBrightness(Color.kBlack, Constants.BatteryMonitor.BRIGHTNESS)));
         }
        
