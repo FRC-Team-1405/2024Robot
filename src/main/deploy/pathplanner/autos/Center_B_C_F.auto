@@ -24,7 +24,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Raise Flyswatter"
+                  "name": "Lower Flyswatter"
                 }
               }
             ]
@@ -87,6 +87,49 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Shoot Speaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center_Fa1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Lower Intake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center_Fa2"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Pickup Note Short"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center_Fb"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -103,62 +146,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center_Fa1"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Raise Flyswatter"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Pickup Note Short"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center_Fa2"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Lower Flyswatter"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Center_Fb"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot Speaker"
           }
         }
       ]
