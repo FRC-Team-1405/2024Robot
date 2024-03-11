@@ -13,6 +13,7 @@ import frc.robot.commands.ControlIntake;
 import frc.robot.commands.IntakeNote;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.OutputNote;
+import frc.robot.commands.RobotDriveCommand;
 import frc.robot.commands.Rumble;
 import frc.robot.commands.ShootNoteAmp;
 import frc.robot.commands.ShootNoteSpeaker;
@@ -77,8 +78,7 @@ public class RobotContainer {
 
     vision.setSpeakerStart();
 
-    ToggleFilter toggleDriveMode = new ToggleFilter( driver.getHID()::getBButton );
-    driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, this::getSlideValue, toggleDriveMode, driveBase));
+    driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, this::getSlideValue, driveBase));
   }
 
   public void disabledInit() {
@@ -117,7 +117,12 @@ public class RobotContainer {
           .toggleOnTrue( new ConditionalCommand(new OpenIntake(intake, flySwatter), 
                                           new CloseIntake(intake, flySwatter), 
                                           () -> { return intake.getPosition() == Intake.Position.RETRACTED; }) );
-
+                                          
+    driver.b().toggleOnTrue( new RobotDriveCommand( this::getXSpeed, 
+                                                    this::getYSpeed, 
+                                                    this::getRotationSpeed, 
+                                                    this::getSlideValue, 
+                                                    driveBase) );
     
 //    driver.back().whileTrue( Commands.startEnd( () -> { SwerveDrive.useStopAngle(true);},
 //                                                () -> { SwerveDrive.useStopAngle(false);}));  
