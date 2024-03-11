@@ -38,6 +38,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -66,8 +67,10 @@ public class RobotContainer {
   private final CommandXboxController operator = new CommandXboxController(1);
 
   private static final SendableChooser<String> autos = new SendableChooser<>();
-  private SendableChooser<Command> selectedAuto;
+  private SendableChooser<String> selectedAuto = new SendableChooser<String>();
   
+  private static final String NO_SELECTED_AUTO = "None";
+
   public RobotContainer() {
 //    driveBase.enableDebugMode();`
    configureBindings();
@@ -99,8 +102,8 @@ public class RobotContainer {
   private LEDManager ledManager;
   public void configureLEDs() {
     multifucntion = new MultiFunctionLED(
-      new BatteryLED(17),
-      new ShootLED(17));
+      new BatteryLED(18),
+      new ShootLED(18));
 
     leds = new IAddressableLEDHelper[]{multifucntion};
 
@@ -280,7 +283,7 @@ public class RobotContainer {
                                     new IntakeNote(intake).withTimeout(5.0),
                                     new ControlIntake(intake, Intake.Position.RETRACTED))
     );
-    NamedCommands.registerCommand("Raise Intake", new ControlIntake(intake, Intake.Position.RETRACTED));
+    
     NamedCommands.registerCommand("Set Speaker Speed", new InstantCommand( () -> { shooter.setWheelSpeed(Shooter.ShooterSpeed.SPEAKER); } ));
     NamedCommands.registerCommand("Lower Intake", new ControlIntake(intake, Intake.Position.EXTENDED));
     NamedCommands.registerCommand("Raise Intake", new ControlIntake(intake, Intake.Position.RETRACTED));
@@ -297,8 +300,12 @@ public class RobotContainer {
                                     new ControlIntake(intake, Intake.Position.RETRACTED))
     );
 
-    // selectedAuto = AutoBuilder.buildAutoChooser();
-    // SmartDashboard.putData("Selected Auto", selectedAuto);
+    var autoNames = AutoBuilder.getAllAutoNames();
+    selectedAuto.addOption(NO_SELECTED_AUTO, NO_SELECTED_AUTO);
+    autoNames.forEach((name) -> {
+      selectedAuto.addOption(name, name);
+    });
+    SmartDashboard.putData("Selected Auto", selectedAuto);
   }
 
   double getClimbAdjust() {
@@ -370,8 +377,11 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-//    return selectedAuto.getSelected();
-    return new PathPlannerAuto("Center_B_A_C_Test");
+    String autoName = selectedAuto.getSelected();
+    if (autoName == NO_SELECTED_AUTO)
+      return new PrintCommand("No Auto Selected");
+    else 
+      return new PathPlannerAuto(autoName);
   }
 
 }
