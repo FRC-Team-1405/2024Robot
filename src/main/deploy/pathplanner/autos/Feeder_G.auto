@@ -1,0 +1,88 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.6737393569573865,
+      "y": 4.435354463125988
+    },
+    "rotation": -56.853004167743975
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Raise Flyswatter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shoot Speaker"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Feeder_Ga"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Pickup Note Long"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Speaker"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Feeder_Gb"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Lower Flyswatter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shoot Speaker"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Feeder_Side",
+  "choreoAuto": false
+}
