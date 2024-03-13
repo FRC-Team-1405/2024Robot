@@ -37,7 +37,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Feeder_Ga"
+                  "pathName": "PerfectFeeder_Ga"
                 }
               },
               {
@@ -52,7 +52,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Feeder_Gb"
+            "pathName": "PerfectFeeder_Gb"
           }
         },
         {
