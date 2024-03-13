@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.4324184098578374,
+      "y": 7.3144442023470555
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Raise Flyswatter"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Amp_Clear_Center_Auto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Lower Flyswatter"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Amp_Side",
+  "choreoAuto": false
+}
