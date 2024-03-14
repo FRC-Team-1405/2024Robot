@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.93,
-        "y": 4.58
+        "x": 1.86,
+        "y": 5.19
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.4054882924580663,
-        "y": 1.5787108497293916
+        "x": 1.9005279195573317,
+        "y": 5.19
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.048067606106722,
-        "y": 3.7772118849081013
+        "x": 3.19,
+        "y": 4.09
       },
       "prevControl": {
-        "x": 6.913734625190047,
-        "y": -0.4209895599278369
+        "x": 3.1742009797323285,
+        "y": 4.09
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,25 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Lower Intake",
+      "waypointRelativePos": 0.35,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pickup Note"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 2.0,
     "maxAcceleration": 2.0,
@@ -39,14 +57,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 43.295358850217816,
+    "rotation": -30.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Feeder_Side",
-  "previewStartingState": {
-    "rotation": -59.92980133145664,
-    "velocity": 0
-  },
+  "folder": "Center_Position",
+  "previewStartingState": null,
   "useDefaultConstraints": false
 }
