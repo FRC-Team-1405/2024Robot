@@ -62,10 +62,16 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Shoot Speaker"
+                  "name": "Set Speaker Speed"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Speaker"
           }
         },
         {
