@@ -12,6 +12,7 @@ import frc.robot.utils.TalonFXHelper;
 public class FlySwatter extends SubsystemBase {
   public enum Position {
     HIGH(102),
+    EJECT(45),
     MEDIUM(32),
     LOW(1),
     CLIMB(50);

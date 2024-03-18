@@ -15,7 +15,7 @@ public class ClearIntake extends SequentialCommandGroup {
   /** Creates a new ClearIntake. */
   public ClearIntake(FlySwatter flySwatter, Intake intake) {
     // Add your commands in the addCommands() call, e.g.
-    addCommands(new CommandFlySwatter(flySwatter, FlySwatter.Position.MEDIUM),
+    addCommands(new CommandFlySwatter(flySwatter, FlySwatter.Position.EJECT),
                 new ControlIntake(intake, Intake.Position.EJECT),
                 new OutputNote(intake),
                 new CloseIntake(intake, flySwatter));

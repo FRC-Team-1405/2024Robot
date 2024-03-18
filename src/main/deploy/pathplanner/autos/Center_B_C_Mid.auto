@@ -1,0 +1,106 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.6,
+      "y": 5.55
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Raise Flyswatter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shoot Speaker"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center_Ba_Test"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Pickup Note Short"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center_Bb_Test"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Speaker"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center_Ca_Test"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Pickup Note Short"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center_Cb_Test"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Speaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Lower Flyswatter"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Center_Position",
+  "choreoAuto": false
+}
