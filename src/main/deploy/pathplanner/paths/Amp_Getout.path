@@ -32,16 +32,48 @@
     },
     {
       "anchor": {
-        "x": 7.954514370560525,
-        "y": 7.531035460934162
+        "x": 6.060061350891932,
+        "y": 7.308846526524962
       },
       "prevControl": {
-        "x": 7.919431907233206,
-        "y": 7.507647152049281
+        "x": 6.024978887564612,
+        "y": 7.308846526524962
       },
       "nextControl": {
-        "x": 7.973974619852255,
-        "y": 7.544008960461983
+        "x": 6.08344965977681,
+        "y": 7.308846526524962
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.627078046178885,
+        "y": 7.145128364330803
+      },
+      "prevControl": {
+        "x": 7.591995582851566,
+        "y": 7.121740055445922
+      },
+      "nextControl": {
+        "x": 7.646538295470614,
+        "y": 7.158101863858623
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.440271165442615,
+        "y": 7.4842588431615615
+      },
+      "prevControl": {
+        "x": 5.479937657978465,
+        "y": 7.459467285326655
+      },
+      "nextControl": {
+        "x": 5.253164694363576,
+        "y": 7.601200387585961
       },
       "isLocked": false,
       "linkedName": null
@@ -64,11 +96,11 @@
     },
     {
       "anchor": {
-        "x": 0.77430354290908,
+        "x": 0.6222795351573609,
         "y": 6.6188914144210065
       },
       "prevControl": {
-        "x": 0.7859976973515196,
+        "x": 0.6339736895998005,
         "y": 6.6188914144210065
       },
       "nextControl": null,
@@ -83,23 +115,13 @@
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 2.2,
-      "rotationDegrees": 0.0,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 2.0,
-      "rotationDegrees": -15.068488159492146,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 3.0,
+      "waypointRelativePos": 5.0,
       "rotationDegrees": 0,
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 1.8,
-      "rotationDegrees": 0,
+      "waypointRelativePos": 2.6,
+      "rotationDegrees": -7.580227843029488,
       "rotateFast": false
     }
   ],
@@ -107,7 +129,7 @@
   "eventMarkers": [
     {
       "name": "Pickup Note Long",
-      "waypointRelativePos": 1.25,
+      "waypointRelativePos": 1.5,
       "command": {
         "type": "parallel",
         "data": {
@@ -124,7 +146,7 @@
     },
     {
       "name": "Set Speaker Speed",
-      "waypointRelativePos": 2.3,
+      "waypointRelativePos": 3.6,
       "command": {
         "type": "parallel",
         "data": {
@@ -141,8 +163,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 2.5,
+    "maxAcceleration": 2.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

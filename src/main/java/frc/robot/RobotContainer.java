@@ -275,7 +275,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Pickup Note Short", 
         new SequentialCommandGroup( new ParallelCommandGroup(new ControlIntake(intake, Intake.Position.EXTENDED),
                                     new InstantCommand(() -> intake.setSpeed(Intake.Speed.IN))),
-                                    new IntakeNote(intake).withTimeout(2),
+                                    new IntakeNote(intake).withTimeout(3),
                                     new ControlIntake(intake, Intake.Position.RETRACTED)));
 
     NamedCommands.registerCommand("Pickup Note Long", 
