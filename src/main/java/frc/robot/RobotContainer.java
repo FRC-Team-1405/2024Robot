@@ -13,6 +13,7 @@ import frc.robot.commands.ControlIntake;
 import frc.robot.commands.IntakeNote;
 import frc.robot.commands.OpenIntake;
 import frc.robot.commands.OutputNote;
+import frc.robot.commands.PrintTimestamp;
 import frc.robot.commands.RobotDriveCommand;
 import frc.robot.commands.Rumble;
 import frc.robot.commands.ShootNoteAmp;
@@ -299,6 +300,7 @@ public class RobotContainer {
                                     new OutputNote(intake),
                                     new ControlIntake(intake, Intake.Position.RETRACTED))
     );
+    NamedCommands.registerCommand("PrintTimestamp", new PrintTimestamp());
 
     var autoNames = AutoBuilder.getAllAutoNames();
     selectedAuto.addOption(NO_SELECTED_AUTO, NO_SELECTED_AUTO);
@@ -377,7 +379,8 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    String autoName = selectedAuto.getSelected();
+    // String autoName = selectedAuto.getSelected();
+    String autoName = "SJC_ATS_Benchmark";
     if (autoName == NO_SELECTED_AUTO)
       return new PrintCommand("No Auto Selected");
     else 
