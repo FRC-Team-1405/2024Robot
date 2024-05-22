@@ -1,10 +1,22 @@
 {
   "version": 1.0,
-  "startingPose": null,
+  "startingPose": {
+    "position": {
+      "x": 2,
+      "y": 2
+    },
+    "rotation": 0
+  },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "PrintTimestamp"
+          }
+        },
         {
           "type": "path",
           "data": {
@@ -12,15 +24,33 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "PrintTimestamp"
+          }
+        },
+        {
           "type": "wait",
           "data": {
-            "waitTime": 10.0
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PrintTimestamp"
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "SJC_ATS_Benchmark2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PrintTimestamp"
           }
         }
       ]

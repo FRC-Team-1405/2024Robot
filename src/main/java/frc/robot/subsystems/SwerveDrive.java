@@ -97,10 +97,10 @@ public class SwerveDrive extends SubsystemBase
    * @param config PID constants and other settings for autonomous driving
    */
   public SwerveDrive(double maxVelocity, double maxAngularSpeed, String moduleType, SwerveDriveKinematics kinematics, HolonomicPathFollowerConfig config) 
-    {
+    { 
       this.maxAngularSpeed = maxAngularSpeed; 
       this.maxVelocity = maxVelocity; 
-      this.moduleType = moduleType; 
+      this.moduleType = moduleType;
       this.kinematics = kinematics; 
       
       //Reset the gyro sensor on initialization of the SwerveDrive subsystem
