@@ -25,8 +25,8 @@ public final class Constants {
         new Translation2d(Units.inchesToMeters(10), Units.inchesToMeters(15))); // Back Right
         
         public static final HolonomicPathFollowerConfig config = new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-        new PIDConstants(2.5, .75, 0.0), // Translation PID constants
-        //new PIDConstants(0.0, 0.0, 0.0), // Translation PID constants
+        //new PIDConstants(2.5, .75, 0.0), // ORIGINAL Translation PID constants
+        new PIDConstants(1.0, 0, 0.0), // NEW Translation PID constants
         new PIDConstants(10, 0.0, 0.0), // Rotation PID constants.
         10, // Max module speed, in m/s
         Units.inchesToMeters(16), // Drive base radius in meters. Distance from robot center to furthest module.
