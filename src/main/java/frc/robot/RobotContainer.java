@@ -82,6 +82,7 @@ public class RobotContainer {
     vision.setSpeakerStart();
 
     driveBase.setDefaultCommand(new SwerveDriveCommand(this::getXSpeed, this::getYSpeed, this::getRotationSpeed, this::getSlideValue, driveBase));
+    driveBase.createNormalizeCommand();
   }
 
   public void disabledInit() {

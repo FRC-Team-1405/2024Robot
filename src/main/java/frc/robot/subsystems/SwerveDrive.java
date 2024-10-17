@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.function.BooleanSupplier;
+
 //Kauli Labs Dependencies
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -16,11 +18,16 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 //Class containing all functions and variables pertaining to the SwerveDrive
 public class SwerveDrive extends SubsystemBase 
@@ -48,6 +55,7 @@ public class SwerveDrive extends SubsystemBase
   //This switch is used as an external input to tell the SwerveDrive to reset the odometry
   private DigitalInput resetOdometry = new DigitalInput(1);
   private DigitalInput normalizeSwitch = new DigitalInput(0);  
+  private Trigger normalizTrigger;
 
   /**
    * The constructor for the swerve drive
@@ -56,6 +64,7 @@ public class SwerveDrive extends SubsystemBase
    * @param moduleType The module tyoe being used. Options: "geared flipped", "belted flipped"
    * @param kinematics A kinematics object containing the locations of each swerve module relative to robot center 
    */
+/* 
   public SwerveDrive(double maxVelocity, double maxAngularSpeed, String moduleType, SwerveDriveKinematics kinematics) 
     {
       this.maxAngularSpeed = maxAngularSpeed; 
@@ -72,21 +81,11 @@ public class SwerveDrive extends SubsystemBase
       backLeft.setModuleSettings(moduleType);
       backRight.setModuleSettings(moduleType);  
 
-      /*
-      * Initialize the odometry (if this is done outside of the constructor it will pass garbage values 
-      * for the distances of the Swerve Modules). 
-      */
+      // Initialize the odometry (if this is done outside of the constructor it will pass garbage values 
+      // for the distances of the Swerve Modules). 
       odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d(), getSwerveModulePositions());
-          
-      //This switch is used as an external input to tell the SwerveDrive to normalize the Swerve Modules
-
-      //Normalize the modules when the normalize switch is pressed (DIO switches are ACTIVE LOW)
-      if(!normalizeSwitch.get()) {
-          normalizeModules();
-      }
-      normalizeSwitch.close();
-
   }
+*/
 
   /**
    * The constructor for the swerve drive for pathplanner use
@@ -130,7 +129,30 @@ public class SwerveDrive extends SubsystemBase
           }
           return false;
       }, this);
+
+      createNormalizeCommand();
   }
+
+  public void createNormalizeCommand() {
+    SmartDashboard.putBoolean("SwerveDrive/Normalize/Trigger", false);
+    SmartDashboard.putBoolean("SwerveDrive/Normalize/Complete", false);
+
+    normalizTrigger = new Trigger( () -> !normalizeSwitch.get() || SmartDashboard.getBoolean("SwerveDrive/Normalize/Trigger", false) )
+      .onTrue( new InstantCommand( () -> { 
+        this.normalizeModules();
+        SmartDashboard.putBoolean("SwerveDrive/Normalize/Complete", true);
+      }) {
+        @Override
+        public boolean runsWhenDisabled() { return true; } 
+      } )
+      .onFalse( new InstantCommand( () -> { 
+        SmartDashboard.putBoolean("SwerveDrive/Normalize/Complete", false); 
+      }) {
+        @Override
+        public boolean runsWhenDisabled() { return true; } 
+      } );
+  }
+
 
   /**
    * Reset the gyro using NavX reset function and apply a user-specified adjustment to the angle
@@ -146,13 +168,8 @@ public class SwerveDrive extends SubsystemBase
 
   @Override 
   public void periodic() 
-    {
-      //Normalize the modules when the normalize switch is pressed (DIO switches are ACTIVE LOW)
-      if(!normalizeSwitch.get()) {
-          normalizeModules();
-      }
-      
-      //Periodically update the swerve odometry
+    {      
+    //Periodically update the swerve odometry
       updateOdometry(); 
 
       //Reset the odometry readings when reset odometry switch is pressed (DIO switches are ACTIVE LOW)

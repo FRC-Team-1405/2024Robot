@@ -2,7 +2,7 @@
   {
     "name": "/Preferences/SwerveModule/Offset_21",
     "type": "double",
-    "value": 0.0,
+    "value": -90.0,
     "properties": {
       "persistent": true
     }
@@ -10,7 +10,7 @@
   {
     "name": "/Preferences/SwerveModule/Offset_22",
     "type": "double",
-    "value": 0.0,
+    "value": -90.0,
     "properties": {
       "persistent": true
     }
@@ -18,7 +18,7 @@
   {
     "name": "/Preferences/SwerveModule/Offset_23",
     "type": "double",
-    "value": 0.0,
+    "value": -90.0,
     "properties": {
       "persistent": true
     }
@@ -26,7 +26,7 @@
   {
     "name": "/Preferences/SwerveModule/Offset_24",
     "type": "double",
-    "value": 0.0,
+    "value": -90.0,
     "properties": {
       "persistent": true
     }
@@ -187,6 +187,14 @@
     "name": "/Preferences/Shooter/Speed/REVERSE",
     "type": "double",
     "value": -5.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Preferences/FLySwatter/Position/EJECT",
+    "type": "double",
+    "value": 45.0,
     "properties": {
       "persistent": true
     }
