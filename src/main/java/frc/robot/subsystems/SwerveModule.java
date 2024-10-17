@@ -7,6 +7,12 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+
+import badlog.lib.BadLog;
+import badlog.lib.DataInferMode;
+
+import java.util.function.Supplier;
+
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
@@ -18,17 +24,26 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
+import frc.robot.utils.LogManager;
+import frc.robot.utils.Logger;
 
 /* This class contains all variables and functions pertaining to a single Swerve Module. A 
  * Swerve Module is a two motor device that allows a wheel's speed and angle to be commanded 
  * separately. 
  */
-public class SwerveModule extends SubsystemBase 
+public class SwerveModule extends SubsystemBase implements Logger 
   {
     //A Swerve Module has a drive motor, a steering motor, and an encoder angle sensor
     private final TalonFX driveMotor; 
     private final TalonFX steeringMotor; 
     private final CANcoder steeringEncoder; 
+
+    private final String driveLabel;
+    private final String steeringLabel;
+    private final Supplier<Double> driveError;
+    private final Supplier<Double> steeringError;
+
 
     private final StatusSignal<Double> steeringEncoderPosition;
     private final StatusSignal<Double> steeringEncoderVelocity; 
@@ -79,6 +94,12 @@ public class SwerveModule extends SubsystemBase
       driveMotorPosition = driveMotor.getRotorPosition();
 
       driveMotorVelocity = driveMotor.getRotorVelocity();
+
+      driveLabel = String.format("Drive %d",driveMotorID);
+      steeringLabel = String.format("Steering %d",steeringMotorID);
+      driveError = driveMotor.getClosedLoopError().asSupplier();
+      steeringError = steeringMotor.getClosedLoopError().asSupplier();
+      LogManager.register(this);
 
       //BaseStatusSignal.waitForAll(0.1, steeringEncoderPosition, steeringEncoderVelocity, driveMotorPosition, driveMotorVelocity);
     } //End SwerveModule constructor
@@ -293,5 +314,19 @@ public void setModuleSettings(String moduleType)
       System.out.printf("Module %d not configured properly, check for possible spelling error in moduleType argument to constructor\n", steeringMotor.getDeviceID()); 
     }
   }
+
+
+@Override
+public void initLogger() {
+  BadLog.createTopicSubscriber(driveLabel, "double", DataInferMode.LAST);
+  BadLog.createTopicSubscriber(steeringLabel, "double", DataInferMode.LAST);
+}
+
+
+@Override
+public void logEvents() {
+  BadLog.publish(driveLabel, driveError.get());
+  BadLog.publish(steeringLabel, steeringError.get());
+}
   
 }//End class Swerve Module

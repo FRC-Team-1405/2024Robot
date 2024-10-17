@@ -4,9 +4,16 @@
 
 package frc.robot;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import badlog.lib.BadLog;
+import badlog.lib.DataInferMode;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.utils.LogManager;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -16,11 +23,13 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
+    LogManager.init("badlog.bag");
   }
 
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+    LogManager.logEvents();
   }
 
   @Override
@@ -76,4 +85,5 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testExit() {}
+
 }
