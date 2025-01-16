@@ -1,3 +1,7 @@
+# TODO
+- Verify wheel diameter is 4in
+- look into raw absolute encoder value potentially wrapping
+
 # Yet Another Generic Swerve Library (YAGSL) Example project
 
 YAGSL is intended to be an easy implementation of a generic swerve drive that should work for most
