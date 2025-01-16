@@ -1,5 +1,6 @@
 # TODO
 - Verify wheel diameter is 4in
+- follow this thread and try adding push offset to controller method: https://www.chiefdelphi.com/t/issues-with-java-using-yagsl/446146/11
 - look into raw absolute encoder value potentially wrapping
 
 # Yet Another Generic Swerve Library (YAGSL) Example project
