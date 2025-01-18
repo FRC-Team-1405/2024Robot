@@ -49,9 +49,11 @@ import org.json.simple.parser.ParseException;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.SwerveDriveTest;
+import swervelib.SwerveModule;
 import swervelib.math.SwerveMath;
 import swervelib.parser.SwerveControllerConfiguration;
 import swervelib.parser.SwerveDriveConfiguration;
+import swervelib.parser.SwerveModuleConfiguration;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
@@ -364,6 +366,11 @@ public class SwerveSubsystem extends SubsystemBase
             new Config(),
             this, swerveDrive),
         3.0, 5.0, 3.0);
+  }
+
+  public Command pushOffsetsToControllers(){
+    return run( () -> Arrays.asList(swerveDrive.getModules())
+        .forEach(mod -> mod.pushOffsetsToEncoders()));
   }
 
   /**

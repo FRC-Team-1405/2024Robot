@@ -1,5 +1,6 @@
 # TODO
 - Verify wheel diameter is 4in
+   - Yes it is.
 - follow this thread and try adding push offset to controller method: https://www.chiefdelphi.com/t/issues-with-java-using-yagsl/446146/11
 - try using AdvantageScope and other debugging tools 
 - look into raw absolute encoder value potentially wrapping
