@@ -1,8 +1,14 @@
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -29,10 +35,14 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton testRotateWheel = new JoystickButton(driver, XboxController.Button.kStart.value);
     private final boolean robotCentricOverride = true;
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+
+    StructPublisher<Pose2d> publisher = NetworkTableInstance.getDefault().getStructTopic("MyPose", Pose2d.struct).publish();
+    StructArrayPublisher<SwerveModuleState> currentStatesPublisher = NetworkTableInstance.getDefault().getStructArrayTopic("swerve/advantagescope/currentStates", SwerveModuleState.struct).publish();
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -43,8 +53,8 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
-                () -> robotCentricOverride,
-                () -> robotCentric.getAsBoolean()
+                () -> robotCentric.getAsBoolean(),
+                () -> testRotateWheel.getAsBoolean()
             )
         );
 
@@ -71,5 +81,12 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
         return new exampleAuto(s_Swerve);
+    }
+
+    public void printRobotPoseToSmartDashboard() {
+        publisher.set(s_Swerve.getPose());
+        currentStatesPublisher.set(s_Swerve.getModuleStates());
+        // double[] currentPose = {s_Swerve.getPose().getX(), s_Swerve.getPose().getY()};
+        // SmartDashboard.putNumberArray("Robot Current Pose", currentPose);
     }
 }

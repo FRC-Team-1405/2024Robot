@@ -19,6 +19,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -32,6 +33,11 @@ public class Swerve extends SubsystemBase {
     DoublePublisher mod1AnglePublisher;
     DoublePublisher mod2AnglePublisher;
     DoublePublisher mod3AnglePublisher;
+
+    final private boolean invertGyro = true;
+
+    StructArrayPublisher<SwerveModuleState> desiredStatesPublisher = NetworkTableInstance.getDefault().getStructArrayTopic("swerve/advantagescope/desiredStates", SwerveModuleState.struct).publish();
+
 
     public Swerve() {
         gyro = new AHRS(NavXComType.kMXP_SPI);
@@ -74,6 +80,8 @@ public class Swerve extends SubsystemBase {
 
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
+        desiredStatesPublisher.set(swerveModuleStates);
+
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
         }
@@ -82,9 +90,11 @@ public class Swerve extends SubsystemBase {
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
+
+        desiredStatesPublisher.set(desiredStates);
         
         for(SwerveModule mod : mSwerveMods){
-            mod.setDesiredState(desiredStates[mod.moduleNumber], false);
+            mod.setDesiredState(desiredStates[mod.moduleNumber], false); // autonomouse closed loop / open loop
         }
     }
 
@@ -125,6 +135,10 @@ public class Swerve extends SubsystemBase {
     }
 
     public Rotation2d getGyroYaw() {
+        if (invertGyro){
+            return Rotation2d.kZero.minus(Rotation2d.fromDegrees(gyro.getYaw()));
+        }
+        
         return Rotation2d.fromDegrees(gyro.getYaw());
     }
 
@@ -138,10 +152,12 @@ public class Swerve extends SubsystemBase {
     public void periodic(){
         swerveOdometry.update(getGyroYaw(), getModulePositions());
 
+        SmartDashboard.putNumber("swerve/imu", getGyroYaw().getDegrees());
+
         for(SwerveModule mod : mSwerveMods){
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond); 
+            SmartDashboard.putNumber("swerve/modules/Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
+            SmartDashboard.putNumber("swerve/modules/Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
+            SmartDashboard.putNumber("swerve/modules/Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond); 
         }
     }
 }

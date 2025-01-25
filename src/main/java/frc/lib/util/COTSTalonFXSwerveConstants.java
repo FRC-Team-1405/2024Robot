@@ -37,7 +37,7 @@ public class COTSTalonFXSwerveConstants {
         public static final class SwerveXStandard{
             /** West Coast Products - SwerveX Standard (Falcon 500)*/
             public static final COTSTalonFXSwerveConstants Falcon500(double driveGearRatio){
-                double wheelDiameter = Units.inchesToMeters(4.0);
+                double wheelDiameter = Units.inchesToMeters(3.8585); // measured via caliper
         
                 /** (396 / 35) : 1 */
                 double angleGearRatio = ((396.0 / 35.0) / 1.0);
