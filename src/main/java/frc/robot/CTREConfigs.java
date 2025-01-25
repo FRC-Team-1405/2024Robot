@@ -1,6 +1,7 @@
 package frc.robot;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
+import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 
 public final class CTREConfigs {
@@ -16,6 +17,9 @@ public final class CTREConfigs {
         /* Motor Inverts and Neutral Mode */
         swerveAngleFXConfig.MotorOutput.Inverted = Constants.Swerve.angleMotorInvert;
         swerveAngleFXConfig.MotorOutput.NeutralMode = Constants.Swerve.angleNeutralMode;
+
+        // swerveAngleFXConfig.withFeedback(new FeedbackConfigs());
+        // swerveAngleFXConfig.Feedback.FeedbackRemoteSensorID = 21; testing setting feed forward sensor id, encoder id
 
         /* Gear Ratio and Wrapping Config */
         swerveAngleFXConfig.Feedback.SensorToMechanismRatio = Constants.Swerve.angleGearRatio;
