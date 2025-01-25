@@ -17,6 +17,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.DoublePublisher;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -25,6 +27,11 @@ public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
     public AHRS gyro;
+
+    DoublePublisher mod0AnglePublisher;
+    DoublePublisher mod1AnglePublisher;
+    DoublePublisher mod2AnglePublisher;
+    DoublePublisher mod3AnglePublisher;
 
     public Swerve() {
         gyro = new AHRS(NavXComType.kMXP_SPI);
@@ -36,6 +43,11 @@ public class Swerve extends SubsystemBase {
             new SwerveModule(2, Constants.Swerve.Mod2.constants),
             new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
+
+        mod0AnglePublisher = NetworkTableInstance.getDefault().getTable("SmartDashboard").getDoubleTopic("swerve/modules/0/Angle").publish();
+        mod1AnglePublisher = NetworkTableInstance.getDefault().getTable("SmartDashboard").getDoubleTopic("swerve/modules/1/Angle").publish();
+        mod2AnglePublisher = NetworkTableInstance.getDefault().getTable("SmartDashboard").getDoubleTopic("swerve/modules/2/Angle").publish();
+        mod3AnglePublisher = NetworkTableInstance.getDefault().getTable("SmartDashboard").getDoubleTopic("swerve/modules/3/Angle").publish();
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
     }
@@ -54,6 +66,12 @@ public class Swerve extends SubsystemBase {
                                     translation.getY(), 
                                     rotation)
                                 );
+             
+        this.mod0AnglePublisher.set(swerveModuleStates[0].angle.getDegrees());
+        this.mod1AnglePublisher.set(swerveModuleStates[1].angle.getDegrees());
+        this.mod2AnglePublisher.set(swerveModuleStates[2].angle.getDegrees());
+        this.mod3AnglePublisher.set(swerveModuleStates[3].angle.getDegrees());
+
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
 
         for(SwerveModule mod : mSwerveMods){
@@ -123,7 +141,7 @@ public class Swerve extends SubsystemBase {
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond); 
         }
     }
 }
